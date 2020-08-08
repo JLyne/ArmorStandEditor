@@ -19,6 +19,9 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -27,6 +30,7 @@ import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.CopySlots;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -355,7 +359,7 @@ public class PlayerEditor {
 				|| target.getLocation().distanceSquared(getPlayer().getLocation()) > 100)
 			return armorStand;
 		armorStand = target;
-		highlight(armorStand);
+		//highlight(armorStand);
 		return armorStand;
 	}
 
@@ -373,8 +377,30 @@ public class PlayerEditor {
 	}
 
 	private void highlight(ArmorStand armorStand){
-		armorStand.removePotionEffect(PotionEffectType.GLOWING);
-		armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 15, 1, false, false));
+		updateHighlight(armorStand, true);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> updateHighlight(armorStand, false), 5);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> updateHighlight(armorStand, true), 10);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> updateHighlight(armorStand, false), 15);
+	}
+
+	private void updateHighlight(ArmorStand armorStand, boolean state) {
+		boolean visible = armorStand.isVisible();
+		byte flag = (byte) (state ? (visible ? 0x20 : 0x0) : (visible ? 0x0 : 0x20));
+
+		PacketContainer packet = plugin.getProtocolManager().createPacket(PacketType.Play.Server.ENTITY_METADATA);
+
+		packet.getIntegers().write(0, armorStand.getEntityId());
+		WrappedDataWatcher watcher = new WrappedDataWatcher();
+		WrappedDataWatcher.Serializer serializer = WrappedDataWatcher.Registry.get(Byte.class);
+		watcher.setEntity(armorStand);
+		watcher.setObject(0, serializer, flag);
+		packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+		try {
+			plugin.getProtocolManager().sendServerPacket(getPlayer(), packet);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Cannot send packet " + packet, e);
+		}
 	}
 
 	public PlayerEditorManager getManager(){

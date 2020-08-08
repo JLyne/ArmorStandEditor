@@ -19,6 +19,8 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import io.github.rypofalem.armorstandeditor.language.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,6 +33,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
+	private ProtocolManager protocolManager = null;
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
@@ -52,6 +55,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	@Override
 	public void onEnable(){
+		protocolManager = ProtocolLibrary.getProtocolManager();
+
 		//saveResource doesn't accept File.seperator on windows, need to hardcode unix seperator "/" instead
 		updateConfig("", "config.yml");
 		updateConfig("lang/", "test_NA.yml");
@@ -142,6 +147,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	public NamespacedKey getIconKey() {
 		if(iconKey == null) iconKey = new NamespacedKey(this, "command_icon");
 		return iconKey;
+	}
+
+	public ProtocolManager getProtocolManager() {
+		return protocolManager;
 	}
 }
 //todo: 
