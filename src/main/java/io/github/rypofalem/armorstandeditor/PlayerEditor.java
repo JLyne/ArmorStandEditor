@@ -362,13 +362,7 @@ public class PlayerEditor {
 	void sendMessage(String path, String format, String option){
 		String message = plugin.getLang().getMessage(path, format, option);
 		if(plugin.sendToActionBar){
-			if(ArmorStandEditorPlugin.instance().hasSpigot){
-				plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-			} else{
-				String rawText = plugin.getLang().getRawMessage(path, format, option);
-				String command = String.format("title %s actionbar %s", plugin.getServer().getPlayer(getUUID()).getName(), rawText);
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-			}
+			plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
 		} else{
 			plugin.getServer().getPlayer(getUUID()).sendMessage(message);
 		}

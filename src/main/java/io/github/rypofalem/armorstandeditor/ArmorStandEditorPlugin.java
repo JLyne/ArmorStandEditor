@@ -35,7 +35,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
 	private Language lang;
-	public boolean hasSpigot;
 	public PlayerEditorManager editorManager;
 	public Material editTool = Material.FLINT;
 	boolean requireToolData = false;
@@ -82,13 +81,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute);
 		getServer().getPluginManager().registerEvents(editorManager, this);
-
-		hasSpigot = true;
-		try {
-			Class.forName("org.spigotmc.package-info", false, this.getClassLoader());
-		} catch (ClassNotFoundException e) {
-			hasSpigot = false;
-		}
 	}
 
 	private void updateConfig(String folder, String config) {
