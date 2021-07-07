@@ -101,28 +101,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 	}
 
-	public void log(String message){
-		this.getServer().getLogger().info("ArmorStandEditor: " + message);
-	}
-
-	public void print(String message){
-		if(debug){
-			this.getServer().broadcastMessage(message);
-			log(message);
-		}
-	}
-
-	public String listPlugins(){
-		Plugin[] plugins = getServer().getPluginManager().getPlugins();
-		StringBuilder list = new StringBuilder();
-		for(Plugin p : plugins){
-			if(p!=null){
-				list.append(" :").append(p.getName()).append(" ").append(p.getDescription().getVersion()).append(": ");
-			}
-		}
-		return list.toString();
-	}
-
 	public static ArmorStandEditorPlugin instance(){
 		return instance;
 	}
