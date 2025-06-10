@@ -200,13 +200,6 @@
             <version>7.11.10</version>
             <scope>provided</scope>
         </dependency>
-        <!-- ItemAdder -->
-        <dependency>
-            <groupId>com.github.LoneDev6</groupId>
-            <artifactId>api-itemsadder</artifactId>
-            <version>3.6.1</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- Lombok Support -->
         <dependency>

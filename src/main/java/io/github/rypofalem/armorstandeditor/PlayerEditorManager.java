@@ -77,8 +77,7 @@ public class PlayerEditorManager implements Listener {
         new PlotSquaredProtection(),
         new SkyblockProtection(),
         new TownyProtection(),
-        new WorldGuardProtection(),
-        new itemAdderProtection());
+        new WorldGuardProtection());
 
     PlayerEditorManager(ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
