@@ -7,7 +7,7 @@ website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared]
 
 commands:
   ase:
@@ -112,9 +112,6 @@ permissions:
   asedit.ignoreProtection.skyblock:
     description: Allows user to ignore Skyblock's Protection Limitations.
     default: false
-  asedit.ignoreProtection.lands:
-    description: Allows user to ignore Lands Protection Limitations.
-    default: false
 
   asedit.townyProtection.canEditInWild:
     description: Allows for editing in the Wilderness - ONLY use IF you have Towny
@@ -129,7 +126,6 @@ permissions:
       asedit.ignoreProtection.plotSquared: true
       asedit.ignoreProtection.worldGuard:  true
       asedit.ignoreProtection.skyblock: true
-      asedit.ignoreProtection.lands: true
 
   asedit.permpack.dontIgnoreProtections:
     children:
@@ -138,7 +134,6 @@ permissions:
       asedit.ignoreProtection.plotSquared: false
       asedit.ignoreProtection.worldGuard:  false
       asedit.ignoreProtection.skyblock: false
-      asedit.ignoreProtection.lands: false
 
   asedit.permpack.basic:
     default: true

@@ -193,13 +193,6 @@
             <version>2024.1</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Lands -->
-        <dependency>
-            <groupId>com.github.angeschossen</groupId>
-            <artifactId>LandsAPI</artifactId>
-            <version>7.11.10</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- Lombok Support -->
         <dependency>

@@ -73,7 +73,6 @@ public class PlayerEditorManager implements Listener {
     //NOTE: GriefPreventionProtection is Depreciated as of v1.19.3-40
     private final List<Protection> protections = ImmutableList.of(
         new GriefPreventionProtection(),
-        new LandsProtection(),
         new PlotSquaredProtection(),
         new SkyblockProtection(),
         new TownyProtection(),
