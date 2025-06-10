@@ -19,10 +19,6 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import com.jeff_media.updatechecker.UpdateCheckSource;
-import com.jeff_media.updatechecker.UpdateChecker;
-import com.jeff_media.updatechecker.UserAgentBuilder;
-
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
@@ -42,7 +38,6 @@ import java.util.logging.Level;
 public class ArmorStandEditorPlugin extends JavaPlugin {
 
     //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and UpdateChecker !!!
-    public static final int SPIGOT_RESOURCE_ID = 94503;  //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
     private Debug debug = new Debug(this);
 
@@ -59,11 +54,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
-
-    //Output for Updates
-    boolean opUpdateNotification = false;
-    boolean runTheUpdateChecker = false;
-    double updateCheckerInterval;
 
     //Edit Tool Information
     Material editTool;
@@ -223,13 +213,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
-        //Add ability to enable ot Disable the running of the Updater
-        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
-
-        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
-        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
-        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
-
         //Ability to get Player Heads via a command
         allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
 
@@ -238,17 +221,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         debugFlag = getConfig().getBoolean("debugFlag", false);
         if (debugFlag) {
             getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
-        }
-
-        //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if (!hasFolia && runTheUpdateChecker) {
-
-            if (opUpdateNotification) {
-                runUpdateCheckerWithOPNotifyOnJoinEnabled();
-            } else {
-                runUpdateCheckerConsoleUpdateCheck();
-            }
-
         }
 
         //Get Metrics from bStats
@@ -263,45 +235,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(editorManager, this);
 
-    }
-
-    private void runUpdateCheckerConsoleUpdateCheck() {
-        if (ASE_VERSION.contains(".x")) {
-            getLogger().warning("Note from the development team: ");
-            getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
-            getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
-            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor. ");
-            getLogger().warning("This warning is intended to be displayed when using a Dev build and is NOT A BUG!");
-            getLogger().info("Update Checker does not work on Development Builds.");
-        } else {
-            new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
-                .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
-                .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
-                .setColoredConsoleOutput(true)
-                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
-                .checkEveryXHours(updateCheckerInterval)
-                .checkNow();
-        }
-    }
-
-    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() {
-        if (ASE_VERSION.contains(".x")) {
-            getLogger().warning("Note from the development team: ");
-            getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
-            getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
-            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor . ");
-            getLogger().warning("This warning is intended to be displayed when using a Dev build and is NOT A BUG!");
-            getLogger().info("Update Checker does not work on Development Builds.");
-        } else {
-            new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
-                .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
-                .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
-                .setColoredConsoleOutput(true)
-                .setNotifyOpsOnJoin(true)
-                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
-                .checkEveryXHours(updateCheckerInterval)
-                .checkNow();
-        }
     }
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
@@ -377,10 +310,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public Material getEditTool() {
         return this.editTool;
-    }
-
-    public boolean getRunTheUpdateChecker() {
-        return this.getConfig().getBoolean("runTheUpdateChecker");
     }
 
     public Integer getCustomModelDataInt() {
@@ -553,34 +482,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
-        //Add ability to enable ot Disable the running of the Updater
-        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
-
         //Ability to get Player Heads via a command
         allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
-
-        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
-        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
-        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
 
 
         // Add Debug Reload
         debugFlag = getConfig().getBoolean("debugFlag", false);
         if (debugFlag) {
             getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
-        }
-
-
-        //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if (!hasFolia && runTheUpdateChecker) {
-
-            if (opUpdateNotification) {
-                runUpdateCheckerWithOPNotifyOnJoinEnabled();
-            } else {
-                runUpdateCheckerConsoleUpdateCheck();
-            }
-
         }
     }
 

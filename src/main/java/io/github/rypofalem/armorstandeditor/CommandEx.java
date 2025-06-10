@@ -19,9 +19,6 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import com.jeff_media.updatechecker.UpdateCheckSource;
-import com.jeff_media.updatechecker.UpdateChecker;
-
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
@@ -53,8 +50,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String LISTADJUSTMENT = ChatColor.YELLOW + "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
     final String LISTSLOT = ChatColor.YELLOW + "/ase slot <1-9>";
     final String HELP = ChatColor.YELLOW + "/ase help or /ase ?";
-    final String VERSION = ChatColor.YELLOW + "/ase version";
-    final String UPDATE = ChatColor.YELLOW + "/ase update";
     final String RELOAD = ChatColor.YELLOW + "/ase reload";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
     final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead";
@@ -73,7 +68,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (sender instanceof ConsoleCommandSender) { //Fix to Support #267
             debug.log("Sender is CONSOLE!");
             if (args.length == 0) {
-                sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
                 sender.sendMessage(RELOAD);
                 return true;
@@ -81,7 +75,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 switch (args[0].toLowerCase()) {
                     case "reload" -> commandReloadConsole(sender);
                     case "help", "?" -> commandHelpConsole(sender);
-                    case "version" -> commandVersionConsole(sender);
                     default -> {
                         sender.sendMessage(plugin.getLang().getMessage("noconsolecom", "warn"));
                     }
@@ -104,8 +97,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 player.sendMessage(LISTAXIS);
                 player.sendMessage(LISTSLOT);
                 player.sendMessage(LISTADJUSTMENT);
-                player.sendMessage(VERSION);
-                player.sendMessage(UPDATE);
                 player.sendMessage(HELP);
                 player.sendMessage(RELOAD);
                 player.sendMessage(GIVECUSTOMMODEL);
@@ -119,8 +110,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 case "adj" -> commandAdj(player, args);
                 case "slot" -> commandSlot(player, args);
                 case "help", "?" -> commandHelp(player);
-                case "version" -> commandVersion(player);
-                case "update" -> commandUpdate(player);
                 case "give" -> commandGive(player);
                 case "playerhead" -> commandGivePlayerHead(player);
                 case "reload" -> commandReload(player);
@@ -130,8 +119,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     sender.sendMessage(LISTAXIS);
                     sender.sendMessage(LISTSLOT);
                     sender.sendMessage(LISTADJUSTMENT);
-                    sender.sendMessage(VERSION);
-                    sender.sendMessage(UPDATE);
                     sender.sendMessage(HELP);
                     sender.sendMessage(RELOAD);
                     sender.sendMessage(GIVECUSTOMMODEL);
@@ -271,41 +258,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
         sender.sendMessage(plugin.getLang().getMessage("helpurl", "info"));
         sender.sendMessage(plugin.getLang().getMessage("helpdiscord", "info"));
-    }
-
-    private void commandUpdate(Player player) {
-        if (!(checkPermission(player, "update", true))) return;
-
-        //Only Run if the Update Command Works
-        debug.log("Current ArmorStandEditor Version is: " + plugin.ASE_VERSION);
-        if (plugin.ASE_VERSION.contains(".x")) {
-            debug.log("Plugin version is DEVELOPMENT");
-            player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
-            player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
-        } else {
-            if (!plugin.getHasFolia() && plugin.getRunTheUpdateChecker()) {
-                debug.log("Plugin is on Server: Paper/Spigot or a fork thereof.");
-                new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID).checkNow(player); //Runs Update Check
-            } else if (plugin.getHasFolia()) {
-                debug.log("Plugin is on Folia");
-                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
-                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
-            } else {
-                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker is not enabled on this server");
-            }
-        }
-    }
-
-    private void commandVersion(Player player) {
-        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.update: " + getPermissionUpdate(player));
-        if (!(getPermissionUpdate(player))) return;
-        String verString = plugin.ASE_VERSION;
-        player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
-    }
-
-    private void commandVersionConsole(CommandSender sender) {
-        String verString = plugin.ASE_VERSION;
-        sender.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
     }
 
     private void commandReload(Player player) {
@@ -469,10 +421,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         return checkPermission(player, "give", false);
     }
 
-    private boolean getPermissionUpdate(Player player) {
-        return checkPermission(player, "update", false);
-    }
-
     private boolean getPermissionReload(Player player) {
         return checkPermission(player, "reload", false);
     }
@@ -505,9 +453,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 if (getPermissionGive(player)) {
                     argList.add("give");
                 }
-                if (getPermissionUpdate(player)) {
-                    argList.add("update");
-                }
+
                 if (getPermissionReload(player)) {
                     argList.add("reload");
                 }

@@ -44,9 +44,6 @@ permissions:
   asedit.give:
     description: Gives player the EditTool with Proper CustomModelData
     default: false
-  asedit.update:
-    description: Allows the checking for updates.
-    default: false
   asedit.reload:
     description: Allows Reloading of the ASE Config.
     default: false
@@ -130,7 +127,6 @@ permissions:
       asedit.disableSlots: true
       asedit.rename: true
       asedit.rename.color: true
-      asedit.update: false
       asedit.give: false
       asedit.reload: false
       asedit.head: false
@@ -158,7 +154,6 @@ permissions:
       asedit.disableSlots: true
       asedit.rename: true
       asedit.rename.color: true
-      asedit.update: true
       asedit.reload: true
       asedit.head: true
       asedit.give: true

@@ -237,10 +237,6 @@
                         </goals>
                         <configuration>
                             <relocations>
-                                <relocation>
-                                    <pattern>com.jeff_media.updatechecker</pattern>
-                                    <shadedPattern>io.github.rypofalem.armorstandeditor.updatechecker</shadedPattern>
-                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
