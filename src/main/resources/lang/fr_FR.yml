@@ -81,8 +81,6 @@ unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 stats:
   msg: Here are the statistics for your ArmorStand.
-playerheadhelp:
-  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 help:
   msg: "1. Tenez l'outil d'édition (<x>) dans votre main principale.
   
@@ -107,10 +105,6 @@ helpdiscord:
   msg: "ou rejoignez notre Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: CustomModelData donné au joueur.
-playerhead:
-  msg: Player Head retrieved.
-playerheaderror:
-  msg: Unable to Retrieve Player Head.
 
 #warn
 cantedit:
@@ -145,8 +139,6 @@ nomodecom:
   msg: Vous devez préciser un mode !
 nogive:
   msg: Vous n'avez pas le droit d'utiliser cette commande!
-noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file.
 
 #menutitle
 mainmenutitle:
@@ -263,10 +255,6 @@ itemframevisible:
   msg: Visibilité (Item Frame)
   description:
     msg: Rend visible ou invisible un Item Frame
-playerheadmenu:
-  msg: Player Head
-  description:
-    msg: Please use /ase playerhead <name>
 blankslot:
   msg: Nothing here
   description:

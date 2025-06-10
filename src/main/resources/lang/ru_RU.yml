@@ -34,7 +34,6 @@ setmode:
   paste: Вставить
   reset: Сбросить позу
   itemframe: Показать/Скрыть видимость рамки
-  playerhead: Получить голову игрока
 setaxis:
   msg: Устанавливаю ось на <x>.
   x: X
@@ -80,10 +79,6 @@ nodoubletarget:
   msg: Пожалуйста, смотри на стойку для брони или на рамку предмета перед переключением рук!
 reloaded:
   msg: Конфиг перезагружен.
-playerhead:
-  msg: Голова игрока получена.
-playerheaderror:
-  msg: Не удалось дать тебе голову игрока.
 unabledestroycreative:
   msg: Невозможно уничтожить эту неуязвимую стойку для брони в креативном режиме.
 notincorrectworld:
@@ -270,10 +265,6 @@ itemframevisible:
   msg: Видимость рамки предмета
   description:
     msg: Включить или выключить видимость рамки предмета
-playerheadmenu:
-  msg: Голова игрока
-  description:
-    msg: Кликни, чтобы получить копию своей головы
 blankslot:
   msg: " "
   description:

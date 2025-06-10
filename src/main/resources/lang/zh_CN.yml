@@ -100,12 +100,6 @@ helpdiscord:
   msg: "或加入我们的讨论区: https://discord.gg/3BbJKWpTCj"
 give:
   msg: 玩家已获取自定义模型数据的物品
-playerhead:
-  msg: 玩家头颅已获取
-noplayerhead:
-  msg: 请先在配置文件中开启获取玩家头颅功能
-playerheaderror:
-  msg: 无法获取玩家头颅
 notincorrectworld:
   msg: 对不起，您没有在正确的世界中使用盔甲架编辑器。
 unabledestroycreative:
@@ -268,10 +262,6 @@ blankslot:
   msg: 这里什么都没有
   description:
     msg: 只是一个占位符项。单击“我”不会执行任何操作。
-playerheadmenu:
-  msg: 玩家头
-  description:
-    msg: 请使用 /ase playerhead <name>
 armorstandglow:
   msg: 切换盔甲架发光
   description:

@@ -80,7 +80,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     boolean armorStandVisibility = true;
 
     //Misc Options
-    boolean allowedToRetrieveOwnPlayerHead = false;
     boolean adminOnlyNotifications = false;
 
     //Glow Entity Colors
@@ -210,9 +209,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
-        //Ability to get Player Heads via a command
-        allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
-
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         debugFlag = getConfig().getBoolean("debugFlag", false);
@@ -308,11 +304,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public Integer getCustomModelDataInt() {
         return this.getConfig().getInt("customModelDataInt");
-    }
-
-    //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
-    public boolean getallowedToRetrieveOwnPlayerHead() {
-        return this.getConfig().getBoolean("allowedToRetrieveOwnPlayerHead");
     }
 
     public boolean getAdminOnlyNotifications() {
@@ -476,8 +467,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
-        //Ability to get Player Heads via a command
-        allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
 

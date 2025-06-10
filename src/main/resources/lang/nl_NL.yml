@@ -79,8 +79,6 @@ unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
-playerheadhelp:
-  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 #Help
 help:
   msg: "1. Houd het wijzigingsgereedschap (<x>) in uw hoofdhand.
@@ -104,10 +102,6 @@ helpurl:
   msg: "Meer info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
   msg: "or kom naar onze Discord: https://discord.gg/3BbJKWpTCj"
-playerhead:
-  msg: Player Head opgehaald.
-playerheaderror:
-  msg: Probleem om Player Head af te halen.
 stats:
   msg: Here are the statistics for your ArmorStand.
 
@@ -144,8 +138,6 @@ nomodecom:
   msg: Je moet een modus opgeven!
 nogive:
   msg: Sorry, je hebt geen tostemming om dit command te gebruiken!
-noplayerhead:
-  msg: Schakel de mogelijkheid in om een player head op te halen in het configuratiebestand.
 
 #menutitle
 mainmenutitle:
@@ -258,10 +250,6 @@ itemframevisible:
   msg: Itemframe Visibility
   description:
     msg: Toggles an itemframes visibility
-playerheadmenu:
-  msg: Player Head
-  description:
-    msg: Please use /ase playerhead <name>
 blankslot:
   msg: Nothing here
   description:

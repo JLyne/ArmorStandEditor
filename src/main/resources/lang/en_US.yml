@@ -38,7 +38,6 @@ setmode:
   paste: Paste
   reset: Reset Pose
   itemframe: Toggle Itemframe Visibility
-  playerhead: Get a Players Head
 setaxis:
   msg: Setting axis to <x>.
   x: X
@@ -84,10 +83,6 @@ nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
 reloaded:
   msg: Configuration File has been reloaded.
-playerhead:
-  msg: Player Head retrieved.
-playerheaderror:
-  msg: Unable to give you a playerhead.
 unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 notincorrectworld:
@@ -276,10 +271,6 @@ itemframevisible:
   msg: Itemframe Visibility
   description:
     msg: Toggles an itemframes visibility
-playerheadmenu:
-  msg: Player Head
-  description:
-    msg: Click me to get a copy of your own head
 blankslot:
   msg: Nothing here
   description:

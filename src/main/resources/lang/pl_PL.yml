@@ -75,12 +75,6 @@ give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
-playerhead:
-  msg: Player Head retrieved.
-noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file.
-playerheaderror:
-  msg: Unable to Retrieve Player Head.
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 unabledestroycreative:
@@ -236,10 +230,6 @@ itemframevisible:
   msg: Itemframe Visibility
   description:
     msg: Toggles an itemframes visibility
-playerheadmenu:
-  msg: Player Head
-  description:
-    msg: Please use /ase playerhead <name>
 blankslot:
   msg: Nothing here
   description:

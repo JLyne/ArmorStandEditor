@@ -24,7 +24,6 @@ permissions:
     children:
       asedit.permpack.admin: true
       asedit.ignoreProtection.*: true
-      asedit.head: true
 
   asedit.basic:
     description: Allow use armorstand edit functions. If set to false it will override all other functions.
@@ -46,9 +45,6 @@ permissions:
     default: false
   asedit.reload:
     description: Allows Reloading of the ASE Config.
-    default: false
-  asedit.head:
-    description: Allows players to trigger a command to retrieve a player head
     default: false
   asedit.movement:
     description: Changes whether the armor stand can be moved using the item for editing
@@ -129,7 +125,6 @@ permissions:
       asedit.rename.color: true
       asedit.give: false
       asedit.reload: false
-      asedit.head: false
       asedit.rotation: true
       asedit.copy: true
       asedit.paste: true
@@ -155,7 +150,6 @@ permissions:
       asedit.rename: true
       asedit.rename.color: true
       asedit.reload: true
-      asedit.head: true
       asedit.give: true
       asedit.rotation: true
       asedit.copy: true

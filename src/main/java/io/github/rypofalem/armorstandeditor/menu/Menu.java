@@ -88,7 +88,6 @@ public class Menu {
         ItemStack equipment = null;
         ItemStack disableSlots = null;
         ItemStack gravity = null;
-        ItemStack playerHead = null;
         ItemStack toggleVulnerabilty = null;
 
         //Slots with No Value
@@ -241,14 +240,6 @@ public class Menu {
                 "paste", "mode paste");
         }
 
-        if (pe.getPlayer().hasPermission("asedit.head") || pe.plugin.getallowedToRetrieveOwnPlayerHead()) {
-            playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
-                "playerheadmenu",
-                "playerhead");
-        } else {
-            playerHead = blankSlot;
-        }
-
         if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")) {
             glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
                 "armorstandglow",
@@ -262,7 +253,7 @@ public class Menu {
         ItemStack[] items = {
 
             blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-            copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
+            copy, paste, blankSlot, blankSlot, headPos, reset, blankSlot, itemFrameVisible, glowing,
             slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
             slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
             presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
