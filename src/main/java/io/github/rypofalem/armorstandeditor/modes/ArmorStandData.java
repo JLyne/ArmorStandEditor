@@ -40,9 +40,7 @@ public class ArmorStandData {
         this.leftLegPos = as.getLeftLegPose();
         this.rightLegPos = as.getRightLegPose();
         this.size = as.isSmall();
-        if (plugin.getNmsVersion().compareTo("1.21.4") >= 0 || plugin.getNmsVersion().compareTo("v1_21_R3") >= 0) {
-            this.attributeScale = as.getAttribute(Attribute.SCALE).getValue();
-        }
+        this.attributeScale = as.getAttribute(Attribute.SCALE).getValue();
         this.basePlate = as.hasBasePlate();
         this.gravity = as.hasGravity();
         this.showArms = as.hasArms();

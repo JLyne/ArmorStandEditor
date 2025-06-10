@@ -50,14 +50,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     private static ArmorStandEditorPlugin instance;
     private Language lang;
 
-    //Server Version Detection: Paper or Spigot and Invalid NMS Version
-    String nmsVersion;
+    //Server Version Detection
     String languageFolderLocation = "lang/";
-    String warningMCVer = "Minecraft Version: ";
-    public boolean hasSpigot = false;
-    public boolean hasPaper = false;
     public boolean hasFolia = false;
-    String nmsVersionNotLatest = null;
 
     //Hardcode the ASE Version
     public static final String ASE_VERSION = "1.21.5-48.3";
@@ -120,74 +115,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        if (!Scheduler.isFolia())
+        if (!Util.isFolia())
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
         getLogger().info("Plugin Version: v" + ASE_VERSION);
 
-        //Spigot Check
-        hasSpigot = getHasSpigot();
-        hasPaper = getHasPaper();
-        hasFolia = Scheduler.isFolia();
-
-        //Get NMS Version
-        if (hasPaper || hasFolia) {
-            nmsVersion = getServer().getMinecraftVersion();
-
-            // Check if the Minecraft version is supported
-            if (nmsVersion.contains("1.21")) {
-                getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
-                getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
-            } else if (nmsVersion.contains("1.17") || nmsVersion.contains("1.18") || nmsVersion.contains("1.19") || nmsVersion.contains("1.20")) {
-                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
-                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
-            } else {
-                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
-                getServer().getPluginManager().disablePlugin(this);
-                getLogger().info(SEPARATOR_FIELD);
-            }
-        } else { // Spigot Detected
-            nmsVersion = getNmsVersion();
-            // Check if the Minecraft version is supported
-            if (nmsVersion.compareTo("v1_17") < 0) {
-                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
-                getServer().getPluginManager().disablePlugin(this);
-                getLogger().info(SEPARATOR_FIELD);
-                return;
-            }
-
-            //Also Warn People to Update if using nmsVersion lower than latest
-            if (nmsVersion.compareTo("v1_21") < 0) {
-                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
-                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
-            } else {
-                getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
-                getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
-            }
-
-        }
-
-
-        //If Paper and Spigot are both FALSE - Disable the plugin
-        if (!hasPaper && !hasSpigot) {
-            getLogger().severe("This plugin requires either Paper, Spigot or one of its forks to run. This is not an error, please do not report this!");
-            getServer().getPluginManager().disablePlugin(this);
-            getLogger().info(SEPARATOR_FIELD);
-            return;
-        } else {
-            if (hasSpigot) {
-                getLogger().log(Level.INFO, "SpigotMC: {0}", hasSpigot);
-            } else {
-                getLogger().log(Level.INFO, "PaperMC: {0}", hasPaper);
-            }
-        }
-        getServer().getPluginManager().enablePlugin(this);
+        hasFolia = Util.isFolia();
 
         asTeams.add(lockedTeam);
         asTeams.add(inUseTeam);
@@ -424,47 +359,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
     }
 
-    public String getNmsVersion() {
-        //  return this.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-        if (getHasPaper() || getHasFolia()){
-            return this.getMinecraftVersion();
-        } else { 
-            return this.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-        }
-    }
-
-    public boolean getHasSpigot() {
-        try {
-            Class.forName("org.spigotmc.CustomTimingsHandler");
-            nmsVersionNotLatest = "SpigotMC ASAP.";
-            return true;
-        } catch (ClassNotFoundException e) {
-            nmsVersionNotLatest = "";
-            return false;
-        }
-    }
-
-    public boolean getHasPaper() {
-        try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
-            nmsVersionNotLatest = "PaperMC ASAP.";
-            return true;
-        } catch (ClassNotFoundException e) {
-            nmsVersionNotLatest = "";
-            return false;
-        }
-    }
-
-    public boolean getHasFolia() {
-        return Scheduler.isFolia();
-    }
-
-    //Will be useful for later.....
-    public String getMinecraftVersion() {
-        return this.nmsVersion;
-    }
-
-    public boolean getArmorStandVisibility() {
+	public boolean getArmorStandVisibility() {
         return getConfig().getBoolean("armorStandVisibility");
     }
 

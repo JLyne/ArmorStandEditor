@@ -30,7 +30,7 @@
     </developers>
 
     <repositories>
-        <!-- Spigot MC -->
+        <!-- Paper -->
         <repository>
             <id>paper-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -78,7 +78,7 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--Spigot + Folia API -->
+        <!--Paper API -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -100,9 +100,9 @@
         </dependency>
 
         <dependency>
-            <groupId>dev.folia</groupId>
-            <artifactId>folia-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

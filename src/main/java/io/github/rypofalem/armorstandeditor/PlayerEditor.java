@@ -75,7 +75,6 @@ public class PlayerEditor {
     EquipmentMenu equipMenu;
     PresetArmorPosesMenu presetPoseMenu;
     SizeMenu sizeModificationMenu;
-    long lastCancelled = 0;
 
     public PlayerEditor(UUID uuid, ArmorStandEditorPlugin plugin) {
         this.uuid = uuid;
@@ -265,16 +264,10 @@ public class PlayerEditor {
             sendMessage("nopermoption", "warn", "size");
             return;
         } else {
-            if (plugin.getNmsVersion().compareTo("1.21.4") >= 0 || plugin.getNmsVersion().compareTo("v1_21_R3") >= 0) {
-                //NOTE: New Sizing Menu ONLY WORKS IN 1.21.3 and HIGHER
-                debug.log("Player '" + getPlayer().getDisplayName() + "' has triggered the AS Attribute Size Menu");
-                getPlayer().closeInventory();
-                sizeModificationMenu = new SizeMenu(this, armorStand);
-                sizeModificationMenu.openMenu();
-            } else {
-                armorStand.setSmall(!armorStand.isSmall());
-            }
-
+           debug.log("Player '" + getPlayer().getDisplayName() + "' has triggered the AS Attribute Size Menu");
+           getPlayer().closeInventory();
+           sizeModificationMenu = new SizeMenu(this, armorStand);
+           sizeModificationMenu.openMenu();
         }
     }
 
@@ -338,7 +331,7 @@ public class PlayerEditor {
                 break;
         }
         debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
-        Scheduler.teleport(armorStand, loc);
+        armorStand.teleportAsync(loc);
     }
 
     private void reverseMove(ArmorStand armorStand) {
@@ -356,7 +349,7 @@ public class PlayerEditor {
                 break;
         }
         debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
-        Scheduler.teleport(armorStand, loc);
+        armorStand.teleportAsync(loc);
     }
 
     private void rotate(ArmorStand armorStand) {
@@ -365,7 +358,7 @@ public class PlayerEditor {
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 + (float) degreeAngleChange) % 360 - 180);
         debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
-        Scheduler.teleport(armorStand, loc);
+        armorStand.teleportAsync(loc);
     }
 
     private void reverseRotate(ArmorStand armorStand) {
@@ -374,7 +367,7 @@ public class PlayerEditor {
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 - (float) degreeAngleChange) % 360 - 180);
         debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
-        Scheduler.teleport(armorStand, loc);
+        armorStand.teleportAsync(loc);
     }
 
     private void copy(ArmorStand armorStand) {
@@ -401,11 +394,7 @@ public class PlayerEditor {
             armorStand.setLeftLegPose(data.leftLegPos);
             armorStand.setRightLegPose(data.rightLegPos);
 
-            if (plugin.getNmsVersion().compareTo("1.21.4") >= 0 || plugin.getNmsVersion().compareTo("v1_21_R3") >= 0) {
-                armorStand.getAttribute(Attribute.SCALE).setBaseValue(data.attributeScale);
-            } else {
-                armorStand.setSmall(data.size);
-            }
+            armorStand.getAttribute(Attribute.SCALE).setBaseValue(data.attributeScale);
 
             armorStand.setGravity(data.gravity);
             armorStand.setBasePlate(data.basePlate);
@@ -448,7 +437,7 @@ public class PlayerEditor {
         } else {
             debug.log("Adding DisabledSlots on ArmorStand near the Player " + getPlayer().getDisplayName());
             if (armorStand.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING)) { //Adds a lock to every slot or removes it
-                team = Scheduler.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
+                team = Util.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
                 armorStandID = armorStand.getUniqueId();
 
                 for (final EquipmentSlot slot : EquipmentSlot.values()) { // UNLOCKED
@@ -687,13 +676,7 @@ public class PlayerEditor {
     void sendMessage(String path, String format, String option) {
         String message = plugin.getLang().getMessage(path, format, option);
         if (plugin.sendToActionBar) {
-            if (ArmorStandEditorPlugin.instance().getHasPaper() || ArmorStandEditorPlugin.instance().getHasSpigot()) { //Paper and Spigot having the same Interaction for sendToActionBar
-                plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-            } else {
-                String rawText = plugin.getLang().getRawMessage(path, format, option);
-                String command = "minecraft:title %s actionbar %s".formatted(plugin.getServer().getPlayer(getUUID()).getName(), rawText);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-            }
+            plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
         } else {
             plugin.getServer().getPlayer(getUUID()).sendMessage(message);
         }
@@ -721,31 +704,11 @@ public class PlayerEditor {
     }
 
     public void openMenu() {
-        if (!isMenuCancelled()) {
-            Scheduler.runTaskLater(plugin, new OpenMenuTask(), 1);
-        }
-    }
+        //API: PlayerOpenMenuEvent
+        PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
+        Bukkit.getPluginManager().callEvent(event); //TODO: Folia Refactor
+        if (event.isCancelled()) return;
 
-    public void cancelOpenMenu() {
-        lastCancelled = getManager().getTime();
-    }
-
-    boolean isMenuCancelled() {
-        return getManager().getTime() - lastCancelled < 2;
-    }
-
-    private class OpenMenuTask implements Runnable {
-
-        @Override
-        public void run() {
-            if (isMenuCancelled()) return;
-
-            //API: PlayerOpenMenuEvent
-            PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
-            Bukkit.getPluginManager().callEvent(event); //TODO: Folia Refactor
-            if (event.isCancelled()) return;
-
-            chestMenu.openMenu();
-        }
+        chestMenu.openMenu();
     }
 }

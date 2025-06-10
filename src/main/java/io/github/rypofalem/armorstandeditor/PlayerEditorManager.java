@@ -63,7 +63,6 @@ public class PlayerEditorManager implements Listener {
     double coarseMov;
     double fineMov;
     private boolean ignoreNextInteract = false;
-    private TickCounter counter;
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
     private Integer noSize = 0;
@@ -84,8 +83,6 @@ public class PlayerEditorManager implements Listener {
         fineAdj = Util.FULL_CIRCLE / plugin.fineRot;
         coarseMov = 1;
         fineMov = .03125; // 1/32
-        counter = new TickCounter();
-        Scheduler.runTaskTimer(plugin, counter, 1, 1);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -102,14 +99,12 @@ public class PlayerEditorManager implements Listener {
         if (event.getEntity() instanceof ArmorStand) {
             debug.log("Player '" + player.getDisplayName() + "' has left clicked the ArmorStand");
             ArmorStand as = (ArmorStand) event.getEntity();
-            getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
             event.setCancelled(true);
             if (canEdit(player, as))
                 applyLeftTool(player, as);
         } else if (event.getEntity() instanceof ItemFrame) {
             debug.log(" Player '" + player.getDisplayName() + "' has right clicked on an ItemFrame");
             ItemFrame itemf = (ItemFrame) event.getEntity();
-            getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
             event.setCancelled(true);
             if (canEdit(player, itemf)) applyLeftTool(player, itemf);
         }
@@ -128,7 +123,6 @@ public class PlayerEditorManager implements Listener {
 
             if (!canEdit(player, as)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-                getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
                 event.setCancelled(true);
                 applyRightTool(player, as);
                 return;
@@ -170,12 +164,8 @@ public class PlayerEditorManager implements Listener {
                         player.getInventory().setItemInMainHand(nameTag);
                     }
 
-                    //minecraft will set the name after this event even if the event is cancelled.
-                    //change it 1 tick later to apply formatting without it being overwritten
-                    Scheduler.runTaskLater(plugin, () -> {
-                        as.setCustomName(name);
-                        as.setCustomNameVisible(true);
-                    }, 1);
+                    as.setCustomName(name);
+                    as.setCustomNameVisible(true);
                 }
             }
         } else if (event.getRightClicked() instanceof ItemFrame) {
@@ -183,7 +173,6 @@ public class PlayerEditorManager implements Listener {
 
             if (!canEdit(player, itemFrame)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-                getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
                 if (!itemFrame.getItem().getType().equals(Material.AIR)) {
                     event.setCancelled(true);
                 }
@@ -350,25 +339,21 @@ public class PlayerEditorManager implements Listener {
 
     void applyLeftTool(Player player, ArmorStand as) {
         debug.log("Applying Left Tool on ArmorStand for Player: " + player.getDisplayName());
-        getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editArmorStand(as);
     }
 
     void applyLeftTool(Player player, ItemFrame itemf) {
         debug.log("Applying Left Tool on ItemFrame for Player: " + player.getDisplayName());
-        getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editItemFrame(itemf);
     }
 
     void applyRightTool(Player player, ItemFrame itemf) {
         debug.log("Applying Right Tool on ItemFrame for Player: " + player.getDisplayName());
-        getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editItemFrame(itemf);
     }
 
     void applyRightTool(Player player, ArmorStand as) {
         debug.log("Applying Right Tool on ArmorStand for Player: " + player.getDisplayName());
-        getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).reverseEditArmorStand(as);
     }
 
@@ -471,7 +456,7 @@ public class PlayerEditorManager implements Listener {
             pe.equipMenu.equipArmorstand();
 
             // Remove the In Use Lock
-            if(!Scheduler.isFolia()){
+            if(!Util.isFolia()){
                 team = plugin.scoreboard.getTeam(plugin.inUseTeam);
                 if (team != null) {
                     team.removeEntry(pe.armorStandInUseId.toString());
@@ -513,23 +498,5 @@ public class PlayerEditorManager implements Listener {
 
     public ASEHolder getPresetHolder() {
         return presetHolder;
-    }
-
-    long getTime() {
-        return counter.ticks;
-    }
-
-
-    class TickCounter implements Runnable {
-        long ticks = 0; //I am optimistic
-
-        @Override
-        public void run() {
-            ticks++;
-        }
-
-        public long getTime() {
-            return ticks;
-        }
     }
 }
