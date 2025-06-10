@@ -77,11 +77,6 @@
             <id>bg-repo</id>
             <url>https://repo.bg-software.com/repository/api/</url>
         </repository>
-        <!-- Bentobox API -->
-        <repository>
-            <id>codemc-repo</id>
-            <url>https://repo.codemc.org/repository/maven-public/</url>
-        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -216,13 +211,6 @@
             <groupId>com.github.angeschossen</groupId>
             <artifactId>LandsAPI</artifactId>
             <version>7.11.10</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Bentobox -->
-        <dependency>
-            <groupId>world.bentobox</groupId>
-            <artifactId>bentobox</artifactId>
-            <version>1.23.2</version>
             <scope>provided</scope>
         </dependency>
         <!-- ItemAdder -->

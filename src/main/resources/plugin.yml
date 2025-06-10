@@ -7,7 +7,7 @@ website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox, ItemAdder]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, ItemAdder]
 
 commands:
   ase:
@@ -118,9 +118,6 @@ permissions:
   asedit.ignoreProtection.lands:
     description: Allows user to ignore Lands Protection Limitations.
     default: false
-  asedit.ignoreProtection.bentobox:
-    description: Allows user to ignore Bentobox Protection Limitations.
-    default: false
   asedit.ignoreProtection.itemAdder:
     description: Allows user to ignore ItemAdder/LoneDev Protection Limitations.
     default: false
@@ -140,7 +137,6 @@ permissions:
       asedit.ignoreProtection.skyblock: true
       asedit.ignoreProtection.griefDefender: true
       asedit.ignoreProtection.lands: true
-      asedit.ignoreProtection.bentobox: true
       asedit.ignoreProtection.itemAdder: true
 
   asedit.permpack.dontIgnoreProtections:
@@ -152,7 +148,6 @@ permissions:
       asedit.ignoreProtection.skyblock: false
       asedit.ignoreProtection.griefDefender: false
       asedit.ignoreProtection.lands: false
-      asedit.ignoreProtection.bentobox: false
       asedit.ignoreProtection.itemAdder: false
 
   asedit.permpack.basic:
