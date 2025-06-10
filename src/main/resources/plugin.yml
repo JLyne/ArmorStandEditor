@@ -7,7 +7,7 @@ website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared]
+softdepend: [WorldGuard, GriefPrevention, PlotSquared]
 
 commands:
   ase:
@@ -25,7 +25,6 @@ permissions:
       asedit.permpack.admin: true
       asedit.ignoreProtection.*: true
       asedit.head: true
-      asedit.townyProtection.canEditInTheWild: true
 
   asedit.basic:
     description: Allow use armorstand edit functions. If set to false it will override all other functions.
@@ -97,9 +96,6 @@ permissions:
     description: Ability to view ArmorStand Stats.
     default: true
 
-  asedit.ignoreProtection.towny:
-    description: Allows user to ignore Towny's Protection Limitations.
-    default: false
   asedit.ignoreProtection.griefProtection:
     description: Allows user to ignore GriefProtection's Protection Limitations.
     default: false
@@ -113,15 +109,10 @@ permissions:
     description: Allows user to ignore Skyblock's Protection Limitations.
     default: false
 
-  asedit.townyProtection.canEditInWild:
-    description: Allows for editing in the Wilderness - ONLY use IF you have Towny
-    default: false
-
   asedit.ignoreProtection.*:
     description: Ignore all Protection Limitations
     default: op
     children:
-      asedit.ignoreProtection.towny: true
       asedit.ignoreProtection.griefProtection: true
       asedit.ignoreProtection.plotSquared: true
       asedit.ignoreProtection.worldGuard:  true
@@ -129,7 +120,6 @@ permissions:
 
   asedit.permpack.dontIgnoreProtections:
     children:
-      asedit.ignoreProtection.towny: false
       asedit.ignoreProtection.griefProtection: false
       asedit.ignoreProtection.plotSquared: false
       asedit.ignoreProtection.worldGuard:  false

@@ -75,7 +75,6 @@ public class PlayerEditorManager implements Listener {
         new GriefPreventionProtection(),
         new PlotSquaredProtection(),
         new SkyblockProtection(),
-        new TownyProtection(),
         new WorldGuardProtection());
 
     PlayerEditorManager(ArmorStandEditorPlugin plugin) {

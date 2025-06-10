@@ -53,15 +53,6 @@
             <id>sonatype-oss-snapshots1</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
-        <!-- Towny -->
-        <repository>
-            <id>glaremasters repo</id>
-            <url>https://repo.glaremasters.me/repository/towny/</url>
-        </repository>
-        <repository>
-            <id>glaremasters</id>
-            <url>https://repo.glaremasters.me/repository/bloodshot/</url>
-        </repository>
         <!--- Update Checker -->
         <repository>
             <id>jeff-media-public</id>
@@ -170,13 +161,6 @@
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>17.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--- Towny -->
-        <dependency>
-            <groupId>com.palmergames.bukkit.towny</groupId>
-            <artifactId>towny</artifactId>
-            <version>0.101.0.5</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->

@@ -59,7 +59,7 @@ subject to change in the future. The minimum enforced API Version is 1.13.
 * Storage of Copied Settings in one of 9 available slots.
 * Naming of ArmorStands through the use of Vanilla Name tags, with colored name support
 * Multiple Language Support through the use of community translations
-* Respects multiple protection plugins: WorldGuard, Towny, GriefPrevention, PlotSquared etc.
+* Respects multiple protection plugins: WorldGuard, GriefPrevention, PlotSquared etc.
 * Targeting of an ArmorStand by pressing F with the tool in your hand
 * Toggle for Vulnerability of the ArmorStand (New in 1.20)
 * Ability to get Player Heads via a Command (New in 1.20)
