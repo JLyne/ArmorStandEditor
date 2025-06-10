@@ -105,9 +105,6 @@ permissions:
   asedit.ignoreProtection.worldGuard:
     description: Allows user to ignore WorldGuard's Protection Limitations.
     default: false
-  asedit.ignoreProtection.skyblock:
-    description: Allows user to ignore Skyblock's Protection Limitations.
-    default: false
 
   asedit.ignoreProtection.*:
     description: Ignore all Protection Limitations
@@ -116,14 +113,12 @@ permissions:
       asedit.ignoreProtection.griefProtection: true
       asedit.ignoreProtection.plotSquared: true
       asedit.ignoreProtection.worldGuard:  true
-      asedit.ignoreProtection.skyblock: true
 
   asedit.permpack.dontIgnoreProtections:
     children:
       asedit.ignoreProtection.griefProtection: false
       asedit.ignoreProtection.plotSquared: false
       asedit.ignoreProtection.worldGuard:  false
-      asedit.ignoreProtection.skyblock: false
 
   asedit.permpack.basic:
     default: true

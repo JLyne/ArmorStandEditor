@@ -74,7 +74,6 @@ public class PlayerEditorManager implements Listener {
     private final List<Protection> protections = ImmutableList.of(
         new GriefPreventionProtection(),
         new PlotSquaredProtection(),
-        new SkyblockProtection(),
         new WorldGuardProtection());
 
     PlayerEditorManager(ArmorStandEditorPlugin plugin) {
