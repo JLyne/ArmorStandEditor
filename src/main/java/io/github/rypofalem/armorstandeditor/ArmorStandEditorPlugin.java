@@ -19,7 +19,6 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import io.github.rypofalem.armorstandeditor.Metrics.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
 import org.bukkit.*;
@@ -37,8 +36,6 @@ import java.util.logging.Level;
 
 public class ArmorStandEditorPlugin extends JavaPlugin {
 
-    //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and UpdateChecker !!!
-    private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
     private Debug debug = new Debug(this);
 
     private NamespacedKey iconKey;
@@ -222,9 +219,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         if (debugFlag) {
             getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
         }
-
-        //Get Metrics from bStats
-        getMetrics();
 
         editorManager = new PlayerEditorManager(this);
         CommandEx execute = new CommandEx(this);
@@ -496,74 +490,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public static ArmorStandEditorPlugin instance() {
         return instance;
-    }
-
-    //Metrics/bStats Support
-    private void getMetrics() {
-
-        Metrics metrics = new Metrics(this, PLUGIN_ID);
-
-        //RequireToolLore Metric
-        metrics.addCustomChart(new SimplePie("tool_lore_enabled", () -> getConfig().getString("requireToolLore")));
-
-        //RequireToolData
-        metrics.addCustomChart(new SimplePie("tool_data_enabled", () -> getConfig().getString("requireToolData")));
-
-        //Send Messages to ActionBar
-        metrics.addCustomChart(new SimplePie("action_bar_messages", () -> getConfig().getString("sendMessagesToActionBar")));
-
-        //Check for Sneaking
-        metrics.addCustomChart(new SimplePie("require_sneaking", () -> getConfig().getString("requireSneaking")));
-
-        //Language is used
-        metrics.addCustomChart(new DrilldownPie("language_used", () -> {
-            Map<String, Map<String, Integer>> map = new HashMap<>();
-            Map<String, Integer> entry = new HashMap<>();
-
-            String languageUsed = getConfig().getString("lang");
-            assert languageUsed != null;
-
-            if (languageUsed.startsWith("nl")) {
-                map.put("Dutch", entry);
-            } else if (languageUsed.startsWith("de")) {
-                map.put("German", entry);
-            } else if (languageUsed.startsWith("es")) {
-                map.put("Spanish", entry);
-            } else if (languageUsed.startsWith("fr")) {
-                map.put("French", entry);
-            } else if (languageUsed.startsWith("ja")) {
-                map.put("Japanese", entry);
-            } else if (languageUsed.startsWith("pl")) {
-                map.put("Polish", entry);
-            } else if (languageUsed.startsWith("ru")) { //See PR# 41 by KPidS
-                map.put("Russian", entry);
-            } else if (languageUsed.startsWith("ro")) {
-                map.put("Romanian", entry);
-            } else if (languageUsed.startsWith("uk")) {
-                map.put("Ukrainian", entry);
-            } else if (languageUsed.startsWith("zh")) {
-                map.put("Chinese", entry);
-            } else if (languageUsed.startsWith("pt")) {
-                map.put("Brazilian", entry);
-            } else {
-                map.put("English", entry);
-            }
-            return map;
-        }));
-
-        //ArmorStandInvis Config
-        metrics.addCustomChart(new SimplePie("armor_stand_invisibility_usage", () -> getConfig().getString("armorStandVisibility")));
-
-        //ArmorStandInvis Config
-        metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> getConfig().getString("invisibleItemFrames")));
-
-        //Add tracking to see who is using Custom Naming in BStats
-        metrics.addCustomChart(new SimplePie("custom_toolname_enabled", () -> getConfig().getString("requireToolName")));
-
-        metrics.addCustomChart(new SimplePie("using_the_update_checker", () -> getConfig().getString("runTheUpdateChecker")));
-        metrics.addCustomChart(new SimplePie("op_updates", () -> getConfig().getString("opUpdateNotification")));
-
-
     }
 
     public NamespacedKey getIconKey() {
