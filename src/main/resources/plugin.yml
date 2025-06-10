@@ -112,9 +112,6 @@ permissions:
   asedit.ignoreProtection.skyblock:
     description: Allows user to ignore Skyblock's Protection Limitations.
     default: false
-  asedit.ignoreProtection.griefDefender:
-    description: Allows user to ignore GriefDefender's Protection Limitations.
-    default: false
   asedit.ignoreProtection.lands:
     description: Allows user to ignore Lands Protection Limitations.
     default: false
@@ -135,7 +132,6 @@ permissions:
       asedit.ignoreProtection.plotSquared: true
       asedit.ignoreProtection.worldGuard:  true
       asedit.ignoreProtection.skyblock: true
-      asedit.ignoreProtection.griefDefender: true
       asedit.ignoreProtection.lands: true
       asedit.ignoreProtection.itemAdder: true
 
@@ -146,7 +142,6 @@ permissions:
       asedit.ignoreProtection.plotSquared: false
       asedit.ignoreProtection.worldGuard:  false
       asedit.ignoreProtection.skyblock: false
-      asedit.ignoreProtection.griefDefender: false
       asedit.ignoreProtection.lands: false
       asedit.ignoreProtection.itemAdder: false
 
