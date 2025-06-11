@@ -434,6 +434,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 if (getPermissionStats(player)) {
                     argList.add("stats");
                 }
+
+                return argList.stream().filter(a -> a.startsWith(args[0].toLowerCase())).toList();
             }
 
             if (args.length == 2 && args[0].equalsIgnoreCase("mode")) {
@@ -452,7 +454,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 argList.addAll(getAdjOptions());
             }
 
-            return argList.stream().filter(a -> a.startsWith(args[0])).toList();
+            return argList.stream().filter(a -> a.toLowerCase().startsWith(args[1].toLowerCase())).toList();
         }
 
         return Collections.emptyList();
