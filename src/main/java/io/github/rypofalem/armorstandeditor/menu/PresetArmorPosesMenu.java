@@ -33,6 +33,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
@@ -53,23 +54,6 @@ public class PresetArmorPosesMenu {
         name = plugin.getLang().getMessage("presettitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
-
-    //PRESET NAMES
-    final String VALUETOREPLACE = "§"+plugin.getLang().getFormat("info");
-    final String SITTING = plugin.getLang().getMessage("sitting").replace(VALUETOREPLACE, "§2§n");
-    final String WAVING = plugin.getLang().getMessage("waving").replace(VALUETOREPLACE, "§2§n");
-    final String GREETING_1 = plugin.getLang().getMessage("greeting 1").replace(VALUETOREPLACE, "§2§n");
-    final String GREETING_2 = plugin.getLang().getMessage("greeting 2").replace(VALUETOREPLACE, "§2§n");
-    final String CHEERS = plugin.getLang().getMessage("cheers").replace(VALUETOREPLACE, "§2§n");
-    final String ARCHER = plugin.getLang().getMessage("archer").replace(VALUETOREPLACE, "§2§n");
-    final String DANCING = plugin.getLang().getMessage("dancing").replace(VALUETOREPLACE, "§2§n");
-    final String HANGING = plugin.getLang().getMessage("hanging").replace(VALUETOREPLACE, "§2§n");
-    final String PRESENTING = plugin.getLang().getMessage("present").replace(VALUETOREPLACE, "§2§n");
-    final String FISHING = plugin.getLang().getMessage("fishing").replace(VALUETOREPLACE, "§2§n");
-
-    //Menu Stuff
-    final String BACKTOMENU = plugin.getLang().getMessage("backtomenu").replace(VALUETOREPLACE, "§2§n");
-    final String HOWTO = plugin.getLang().getMessage("howtopreset").replace(VALUETOREPLACE, "§2§n");
 
     private void fillInventory() {
         menuInv.clear();
@@ -114,6 +98,7 @@ public class PresetArmorPosesMenu {
         assert meta != null;
         meta.setDisplayName(getIconName(path));
         ArrayList<String> loreList = new ArrayList<>();
+        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, path);
         loreList.add(getIconDescription(path));
         meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -147,51 +132,51 @@ public class PresetArmorPosesMenu {
 
         debug.log("Player '" + player.getDisplayName() + "' has chosen the Preset AS Pose '" + itemName + "'");
         //Do the Preset
-        if (itemName.equals(SITTING)) {
+        if (itemName.equals("sitting")) {
             setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(WAVING)) {
+        } else if (itemName.equals("waving")) {
             setPresetPose(player, 220, 20, 0, 350, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(GREETING_1)) {
+        } else if (itemName.equals("greeting 1")) {
             setPresetPose(player, 260, 20, 0, 260, 340, 0, 340, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(GREETING_2)) {
+        } else if (itemName.equals("greeting 2")) {
             setPresetPose(player, 260, 10, 0, 260, 350, 0, 320, 0, 0, 10, 0, 0, 340, 0, 350, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(ARCHER)) {
+        } else if (itemName.equals("archer")) {
             setPresetPose(player, 270, 350, 0, 280, 50, 0, 340, 0, 10, 20, 0, 350, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(DANCING)) {
+        } else if (itemName.equals("dancing")) {
             setPresetPose(player, 14, 0, 110, 20, 0, 250, 250, 330, 0, 15, 330, 0, 350, 350, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(CHEERS)) {
+        } else if (itemName.equals("cheers")) {
             setPresetPose(player, 250, 60, 0, 20, 10, 0, 10, 0, 0, 350, 0, 0, 340, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(HANGING)) {
+        } else if (itemName.equals("hanging")) {
             setPresetPose(player, 1, 33, 67, -145, -33, -4, -42, 21, 1, -100, 0, -1, -29, -38, -18, 0, -4, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(PRESENTING)) {
+        } else if (itemName.equals("present")) {
             setPresetPose(player, 280, 330, 0, 10, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(FISHING)) {
+        } else if (itemName.equals("fishing")) {
             setPresetPose(player, 300, 320, 0, 300, 40, 0, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(BACKTOMENU)) {
+        } else if (itemName.equals("backtomenu")) {
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
             pe.openMenu();
-        } else if (itemName.equals(HOWTO)) {
+        } else if (itemName.equals("howtopreset")) {
             player.sendMessage(pe.plugin.getLang().getMessage("howtopresetmsg"));
             player.sendMessage(pe.plugin.getLang().getMessage("helpurl"));
             player.sendMessage(pe.plugin.getLang().getMessage("helpdiscord"));

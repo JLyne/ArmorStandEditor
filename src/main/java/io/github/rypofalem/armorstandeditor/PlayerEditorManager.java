@@ -428,7 +428,7 @@ public class PlayerEditorManager implements Listener {
             ItemStack item = e.getCurrentItem();
             if (item != null && item.hasItemMeta()) {
                 Player player = (Player) e.getWhoClicked();
-                String itemName = item.getItemMeta().getDisplayName();
+                String itemName = item.getItemMeta().getPersistentDataContainer().get(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING);
                 PlayerEditor pe = players.get(player.getUniqueId());
                 pe.presetPoseMenu.handlePresetPose(itemName, player);
             }
@@ -439,7 +439,7 @@ public class PlayerEditorManager implements Listener {
             ItemStack item = e.getCurrentItem();
             if (item != null && item.hasItemMeta()) {
                 Player player = (Player) e.getWhoClicked();
-                String itemName = item.getItemMeta().getDisplayName();
+                String itemName = item.getItemMeta().getPersistentDataContainer().get(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING);
                 PlayerEditor pe = players.get(player.getUniqueId());
                 pe.sizeModificationMenu.handleAttributeScaling(itemName, player);
             }

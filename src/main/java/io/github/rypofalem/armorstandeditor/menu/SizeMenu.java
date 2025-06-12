@@ -37,32 +37,6 @@ public class SizeMenu extends ASEHolder {
         menuInv = Bukkit.createInventory(pe.getManager().getSizeMenuHolder(), 27, name);
     }
 
-    //Replace Values.
-    final String VALUETOREPLACE = "§" + plugin.getLang().getFormat("info"); //VALUE WE DONT WANT: §6
-    final String VALUEWEWANT = "§" +plugin.getLang().getFormat("iconname").substring(0, 1) +
-            "§" + plugin.getLang().getFormat("iconname").substring(1); //VALUE WE WANT IS: §2§nScale = 9
-
-    //Preset Strings.
-    final String SCALE1 = plugin.getLang().getMessage("scale1").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE2 = plugin.getLang().getMessage("scale2").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE3 = plugin.getLang().getMessage("scale3").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE4 = plugin.getLang().getMessage("scale4").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE5 = plugin.getLang().getMessage("scale5").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE6 = plugin.getLang().getMessage("scale6").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE7 = plugin.getLang().getMessage("scale7").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE8 = plugin.getLang().getMessage("scale8").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE9 = plugin.getLang().getMessage("scale9").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALE10 = plugin.getLang().getMessage("scale10").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALEPLUS12 = plugin.getLang().getMessage("scaleadd12").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALEMINUS12 = plugin.getLang().getMessage("scaleremove12").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALEPLUS110 = plugin.getLang().getMessage("scaleadd110").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String SCALEMINUS110 = plugin.getLang().getMessage("scaleremove110").replace(VALUETOREPLACE, VALUEWEWANT);
-
-    //Menu Stuff
-    final String BACKTOMENU = plugin.getLang().getMessage("backtomenu").replace(VALUETOREPLACE, VALUEWEWANT);
-    final String RESET = plugin.getLang().getMessage("reset").replace(VALUETOREPLACE, VALUEWEWANT);
-
-
     private void fillInventory() {
         menuInv.clear();
         ItemStack blankSlot = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1), "blankslot");
@@ -99,11 +73,11 @@ public class SizeMenu extends ASEHolder {
     private ItemStack createIcon(ItemStack icon, String path, String option) {
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
-        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + option);
         meta.setDisplayName(getIconName(path, option));
         ArrayList<String> loreList = new ArrayList<>();
         loreList.add(getIconDescription(path, option));
         meta.setLore(loreList);
+        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, path);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         icon.setItemMeta(meta);
         return icon;
@@ -124,32 +98,32 @@ public class SizeMenu extends ASEHolder {
 
         // Separate maps for positive and negative scaling options
         Map<String, Double> positiveScaleMap = Map.ofEntries(
-            Map.entry(SCALE1, 1.0),
-            Map.entry(SCALE2, 2.0),
-            Map.entry(SCALE3, 3.0),
-            Map.entry(SCALE4, 4.0),
-            Map.entry(SCALE5, 5.0),
-            Map.entry(SCALE6, 6.0),
-            Map.entry(SCALE7, 7.0),
-            Map.entry(SCALE8, 8.0),
-            Map.entry(SCALE9, 9.0),
-            Map.entry(SCALE10, 10.0),
-            Map.entry(SCALEPLUS12, 0.5),
-            Map.entry(SCALEPLUS110, 0.1)
+            Map.entry("scale1", 1.0),
+            Map.entry("scale2", 2.0),
+            Map.entry("scale3", 3.0),
+            Map.entry("scale4", 4.0),
+            Map.entry("scale5", 5.0),
+            Map.entry("scale6", 6.0),
+            Map.entry("scale7", 7.0),
+            Map.entry("scale8", 8.0),
+            Map.entry("scale9", 9.0),
+            Map.entry("scale10", 10.0),
+            Map.entry("scaleadd12", 0.5),
+            Map.entry("scaleadd110", 0.1)
         );
 
         Map<String, Double> negativeScaleMap = Map.ofEntries(
-            Map.entry(SCALEMINUS12, 0.5), // Changed value to negative for decrement
-            Map.entry(SCALEMINUS110, 0.1) // Changed value to negative for decrement
+            Map.entry("scaleremove12", 0.5), // Changed value to negative for decrement
+            Map.entry("scaleremove110", 0.1) // Changed value to negative for decrement
         );
 
         if (positiveScaleMap.containsKey(itemName)) {
             handleScaleChange(player, itemName, positiveScaleMap.get(itemName));
         } else if (negativeScaleMap.containsKey(itemName)) {
             handleScaleChange(player, itemName, negativeScaleMap.get(itemName));
-        } else if (itemName.equals(BACKTOMENU)) {
+        } else if (itemName.equals("backtomenu")) {
             handleBackToMenu(player);
-        } else if (itemName.equals(RESET)) {
+        } else if (itemName.equals("reset")) {
             handleReset(player);
         }
     }
@@ -168,7 +142,7 @@ public class SizeMenu extends ASEHolder {
     }
 
     private void handleReset(Player player) {
-        setArmorStandScale(player, RESET, 1);
+        setArmorStandScale(player, "reset", 1);
         playChimeSound(player);
         player.closeInventory();
     }
@@ -192,10 +166,10 @@ public class SizeMenu extends ASEHolder {
                 currentScaleValue = 0;
 
                 // Basically go from 0 directly to ItemSize
-                if (itemName.equals(SCALE1) || itemName.equals(SCALE2) || itemName.equals(SCALE3)
-                    || itemName.equals(SCALE4) || itemName.equals(SCALE5) || itemName.equals(SCALE6)
-                    || itemName.equals(SCALE7) || itemName.equals(SCALE8) || itemName.equals(SCALE9)
-                    || itemName.equals(SCALE10)) {
+                if (itemName.equals("scale1") || itemName.equals("scale2") || itemName.equals("scale3")
+                    || itemName.equals("scale4") || itemName.equals("scale5") || itemName.equals("scale6")
+                    || itemName.equals("scale7") || itemName.equals("scale8") || itemName.equals("scale9")
+                    || itemName.equals("scale10")) {
                     newScaleValue = currentScaleValue + scaleValue;
                     debug.log("Result of the scale Calculation: " + newScaleValue);
                     if (newScaleValue > plugin.getMaxScaleValue()) {
@@ -208,7 +182,7 @@ public class SizeMenu extends ASEHolder {
                         as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                     }
                     // Add either 0.1 or 0.5 to the current
-                    } else if (itemName.equals(SCALEPLUS12) || itemName.equals(SCALEPLUS110)) {
+                    } else if (itemName.equals("scaleadd12") || itemName.equals("scaleadd110")) {
                     currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                     newScaleValue = currentScaleValue + scaleValue; // Add for increments
                     debug.log("Result of the scale Calculation: " + newScaleValue);
@@ -218,7 +192,7 @@ public class SizeMenu extends ASEHolder {
                     }
                     as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                     //Subtract either 0.1 or 0.5 from the current
-                } else if (itemName.equals(SCALEMINUS12) || itemName.equals(SCALEMINUS110)) {
+                } else if (itemName.equals("scaleremove12") || itemName.equals("scaleremove110")) {
                     currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                     newScaleValue = currentScaleValue - scaleValue; // Subtract for decrements
                     debug.log("Result of the scale Calculation: " + newScaleValue);
@@ -227,7 +201,7 @@ public class SizeMenu extends ASEHolder {
                         return;
                     }
                     as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
-                } else if (itemName.equals(RESET)) { // Set it back to 1
+                } else if (itemName.equals("reset")) { // Set it back to 1
                     newScaleValue = 1;
                     as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                 }
