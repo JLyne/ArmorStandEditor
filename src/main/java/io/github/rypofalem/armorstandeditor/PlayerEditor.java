@@ -312,11 +312,6 @@ public class PlayerEditor {
     private void move(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.movement")) return;
 
-        //Generate a new ArmorStandManipulationEvent and call it out.
-        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
-        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
-        if (event.isCancelled()) return; //do nothing if cancelled
-
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:
@@ -329,6 +324,16 @@ public class PlayerEditor {
                 loc.add(0, 0, movChange);
                 break;
         }
+
+        if (!getManager().canMoveTo(getPlayer(), loc)) {
+            return;
+        }
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
+        if (event.isCancelled()) return; //do nothing if cancelled
+
         debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
         armorStand.teleportAsync(loc);
     }
@@ -347,6 +352,11 @@ public class PlayerEditor {
                 loc.subtract(0, 0, movChange);
                 break;
         }
+
+        if (!getManager().canMoveTo(getPlayer(), loc)) {
+            return;
+        }
+
         debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
         armorStand.teleportAsync(loc);
     }

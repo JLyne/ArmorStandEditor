@@ -329,8 +329,11 @@ public class PlayerEditorManager implements Listener {
 
 
     boolean canEdit(Player player, Entity entity) {
-        //Get the Entity being checked for editing
-        Block block = entity.getLocation().getBlock();
+        return canMoveTo(player, entity.getLocation());
+    }
+
+    boolean canMoveTo(Player player, Location location) {
+        Block block = location.getBlock();
 
         // Check if all protections allow this edit, if one fails, don't allow edit
         return protections.stream().allMatch(protection -> protection.checkPermission(block, player));
