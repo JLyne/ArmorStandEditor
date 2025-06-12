@@ -69,7 +69,6 @@ public class PlayerEditorManager implements Listener {
     Team team;
 
     // Instantiate protections used to determine whether a player may edit an armor stand or item frame
-    //NOTE: GriefPreventionProtection is Depreciated as of v1.19.3-40
     private final List<Protection> protections = ImmutableList.of(
         new GriefPreventionProtection(),
         new PlotSquaredProtection(),

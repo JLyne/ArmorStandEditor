@@ -33,7 +33,6 @@ import io.github.rypofalem.armorstandeditor.modes.ArmorStandData;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.CopySlots;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
-import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;

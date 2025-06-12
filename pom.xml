@@ -58,7 +58,6 @@
             <id>jeff-media-public</id>
             <url>https://repo.jeff-media.com/public/</url>
         </repository>
-        <!--- Grief Prevention: DEPRECATION - Discuss Keeping or Removing -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -151,7 +150,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--- GriefPrevention: Depreciated -->
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
