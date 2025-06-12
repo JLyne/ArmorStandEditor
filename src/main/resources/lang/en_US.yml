@@ -26,8 +26,8 @@ setmode:
   rightarm: Right Arm Position
   equipment: Equipment
   showarms: Toggle Show Arms
-  invisible: Toggle Visibility
-  size: Toggle Size
+  visibility: Toggle Visibility
+  size: Size
   disableslots: Toggle Disable Slots
   vulnerability: Toggle Vulnerability
   gravity: Toggle Gravity

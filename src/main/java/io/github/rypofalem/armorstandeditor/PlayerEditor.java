@@ -151,7 +151,7 @@ public class PlayerEditor {
                 case SIZE:
                     chooseSize(armorStand);
                     break;
-                case INVISIBLE:
+                case VISIBILITY:
                     toggleVisible(armorStand);
                     break;
                 case BASEPLATE:
@@ -184,7 +184,7 @@ public class PlayerEditor {
                 case RESET:
                     resetPosition(armorStand);
                     break;
-                case GLOWING:
+                case GLOW:
                     toggleGlowing(armorStand);
                     break;
                 case PRESET:
@@ -208,7 +208,7 @@ public class PlayerEditor {
             if (event.isCancelled()) return; //do nothing if cancelled
 
             switch (eMode) {
-                case ITEMFRAME:
+                case ITEMFRAMEVISIBILITY:
                     toggleItemFrameVisible(itemFrame);
                     break;
                 case RESET:

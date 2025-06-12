@@ -23,7 +23,7 @@ import org.bukkit.permissions.Permissible;
 
 public enum EditMode {
     NONE(null),
-    INVISIBLE("asedit.togglearmorstandvisibility"),
+    VISIBILITY("asedit.togglearmorstandvisibility"),
     SHOWARMS("asedit.togglearms"),
     GRAVITY("asedit.togglegravity"),
     BASEPLATE("asedit.togglebaseplate"),
@@ -42,9 +42,9 @@ public enum EditMode {
     EQUIPMENT("asedit.equipment"),
     PRESET("asedit.basic"),
     RESET("asedit.reset"),
-    ITEMFRAME("asedit.toggleitemframevisibility"),
+    ITEMFRAMEVISIBILITY("asedit.toggleitemframevisibility"),
     VULNERABILITY("asedit.toggleInvulnerability"),
-    GLOWING("asedit.togglearmorstandglow");
+    GLOW("asedit.togglearmorstandglow");
 
     private final String permission;
 

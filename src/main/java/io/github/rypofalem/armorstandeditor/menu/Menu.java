@@ -148,14 +148,14 @@ public class Menu {
                 potionMeta.addCustomEffect(effect, true);
             }
             visibility.setItemMeta(potionMeta);
-            createIcon(visibility, "invisible", "mode invisible");
+            createIcon(visibility, "invisible", "mode visibility");
         } else {
             visibility = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility")) {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
-            createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
+            createIcon(itemFrameVisible, "itemframevisible", "mode itemframevisibility");
         } else {
             itemFrameVisible = blankSlot;
         }
@@ -241,7 +241,7 @@ public class Menu {
         if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")) {
             glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
                 "armorstandglow",
-                "mode armorstandglow");
+                "mode glow");
         } else {
             glowing = blankSlot;
         }
