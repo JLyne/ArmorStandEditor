@@ -76,8 +76,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     double coarseRot;
     double fineRot;
     boolean glowItemFrames = false;
-    boolean invisibleItemFrames = true;
-    boolean armorStandVisibility = true;
 
     //Misc Options
     boolean adminOnlyNotifications = false;
@@ -175,9 +173,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
         }
 
-        //ArmorStandVisibility Node
-        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
-
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
 
@@ -207,7 +202,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         //All ItemFrame Stuff
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
@@ -280,14 +274,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
             unregisterScoreboards(scoreboard);
         }
-    }
-
-	public boolean getArmorStandVisibility() {
-        return getConfig().getBoolean("armorStandVisibility");
-    }
-
-    public boolean getItemFrameVisibility() {
-        return getConfig().getBoolean("invisibleItemFrames");
     }
 
     public Language getLang() {
@@ -432,9 +418,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
         }
 
-        //ArmorStandVisibility Node
-        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
-
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
 
@@ -465,7 +448,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         //All ItemFrame Stuff
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 

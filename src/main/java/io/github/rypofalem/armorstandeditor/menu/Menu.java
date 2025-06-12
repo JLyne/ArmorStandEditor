@@ -140,8 +140,7 @@ public class Menu {
         presetItem = createIcon(new ItemStack(Material.BOOKSHELF), "presetmenu", "mode preset");
 
         //Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility") ||
-            pe.plugin.getArmorStandVisibility()) {
+        if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility")) {
             visibility = new ItemStack(Material.POTION, 1);
             PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
             PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
@@ -154,8 +153,7 @@ public class Menu {
             visibility = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility") ||
-            pe.plugin.getItemFrameVisibility()) {
+        if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility")) {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
         } else {

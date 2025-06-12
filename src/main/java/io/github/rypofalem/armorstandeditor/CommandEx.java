@@ -207,8 +207,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (args.length > 1) {
             for (EditMode mode : EditMode.values()) {
                 if (mode.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-                    if (args[1].equals("invisible") && !(checkPermission(player, "togglearmorstandvisibility", true) || plugin.getArmorStandVisibility())) return;
-                    if (args[1].equals("itemframe") && !(checkPermission(player, "toggleitemframevisibility", true) || plugin.getItemFrameVisibility())) return;
+                    if (args[1].equals("invisible") && !checkPermission(player, "togglearmorstandvisibility", true)) return;
+                    if (args[1].equals("itemframe") && !checkPermission(player, "toggleitemframevisibility", true)) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
                     debug.log("Player '" + player.getDisplayName() + "' chose the mode: " + mode);
                     return;

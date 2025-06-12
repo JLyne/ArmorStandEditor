@@ -200,7 +200,7 @@ public class PlayerEditor {
     }
 
     public void editItemFrame(ItemFrame itemFrame) {
-        if (getPlayer().hasPermission("asedit.toggleitemframevisibility") || plugin.invisibleItemFrames) {
+        if (getPlayer().hasPermission("asedit.toggleitemframevisibility")) {
 
             //Generate a new ArmorStandManipulationEvent and call it out.
             ItemFrameManipulatedEvent event = new ItemFrameManipulatedEvent(itemFrame, getPlayer());
@@ -524,7 +524,7 @@ public class PlayerEditor {
     }
 
     void toggleVisible(ArmorStand armorStand) {
-        if (getPlayer().hasPermission("asedit.togglearmorstandvisibility") || plugin.getArmorStandVisibility()) {
+        if (getPlayer().hasPermission("asedit.togglearmorstandvisibility")) {
             debug.log("Toggling the Visiblity of an ArmorStand near player: " + getPlayer().getDisplayName());
             armorStand.setVisible(!armorStand.isVisible());
         } else { //Throw No Permission Message
@@ -533,7 +533,7 @@ public class PlayerEditor {
     }
 
     void toggleItemFrameVisible(ItemFrame itemFrame) {
-        if (getPlayer().hasPermission("asedit.toggleitemframevisibility") || plugin.invisibleItemFrames) { //Option to use perms or Config
+        if (getPlayer().hasPermission("asedit.toggleitemframevisibility")) {
             debug.log("Toggling the Visibility of an ItemFrame near player: " + getPlayer().getDisplayName());
             itemFrame.setVisible(!itemFrame.isVisible());
         } else {

@@ -65,13 +65,6 @@ fine: 120
 minScaleValue: 0.1
 maxScaleValue: 10
 
-#Allow the option to toggle invisibility for ItemFrames and ArmorStand
-#You can either use this or the below permissions to allow visibility changes
-#asedit.togglearmorstandvisibility
-armorStandVisibility: false
-#asedit.toggleitemframevisibility
-invisibleItemFrames: false
-
 #------ GUI Options
 
 #If true, the GUI will only open if the player is sneaking
