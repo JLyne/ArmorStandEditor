@@ -35,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -439,7 +440,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             }
 
             if (args.length == 2 && args[0].equalsIgnoreCase("mode")) {
-                argList.addAll(getModeOptions());
+                return getModeOptions(player, args[1].toLowerCase());
             }
 
             if (args.length == 2 && args[0].equalsIgnoreCase("axis")) {
@@ -466,14 +467,12 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             commandName.equalsIgnoreCase("asedit");
     }
 
-    private List<String> getModeOptions() {
-        return List.of(
-            "None", "Invisible", "ShowArms", "Gravity", "BasePlate",
-            "Size", "Copy", "Paste", "Head", "Body", "LeftArm",
-            "RightArm", "LeftLeg", "RightLeg", "Placement",
-            "DisableSlots", "Rotate", "Equipment", "Reset",
-            "ItemFrame", "ItemFrameGlow", "Vulnerability", "ArmorStandGlow"
-        );
+    private List<String> getModeOptions(Player player, String query) {
+        return Arrays.stream(EditMode.values())
+                .filter(m -> m.hasPermission(player))
+                .map(m -> m.name().toLowerCase())
+                .filter(m -> m.startsWith(query))
+                .toList();
     }
 
     private List<String> getAxisOptions() {

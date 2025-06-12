@@ -19,20 +19,44 @@
 
 package io.github.rypofalem.armorstandeditor.modes;
 
+import org.bukkit.permissions.Permissible;
+
 public enum EditMode {
-    NONE("None"), INVISIBLE("Invisible"), SHOWARMS("ShowArms"), GRAVITY("Gravity"), BASEPLATE("BasePlate"), SIZE("Size"),
-    COPY("Copy"), PASTE("Paste"), HEAD("Head"), BODY("Body"), LEFTARM("LeftArm"), RIGHTARM("RightArm"), LEFTLEG("LeftLeg"),
-    RIGHTLEG("RightLeg"), PLACEMENT("Placement"), DISABLESLOTS("DisableSlots"), ROTATE("Rotate"), EQUIPMENT("Equipment"), PRESET("Preset"),
-    RESET("Reset"), ITEMFRAME("ItemFrame"), ITEMFRAMEGLOW("ItemFrameGlow"),  VULNERABILITY("Vulnerability"),
-    GLOWING("armorstandglow");
+    NONE(null),
+    INVISIBLE("asedit.togglearmorstandvisibility"),
+    SHOWARMS("asedit.togglearms"),
+    GRAVITY("asedit.togglegravity"),
+    BASEPLATE("asedit.togglebaseplate"),
+    SIZE("asedit.togglesize"),
+    COPY("asedit.copy"),
+    PASTE("asedit.paste"),
+    HEAD("asedit.basic"),
+    BODY("asedit.basic"),
+    LEFTARM("asedit.basic"),
+    RIGHTARM("asedit.basic"),
+    LEFTLEG("asedit.basic"),
+    RIGHTLEG("asedit.basic"),
+    PLACEMENT("asedit.movement"),
+    DISABLESLOTS("asedit.disableslots"),
+    ROTATE("asedit.rotation"),
+    EQUIPMENT("asedit.equipment"),
+    PRESET("asedit.basic"),
+    RESET("asedit.reset"),
+    ITEMFRAME("asedit.toggleitemframevisibility"),
+    VULNERABILITY("asedit.toggleInvulnerability"),
+    GLOWING("asedit.togglearmorstandglow");
 
-    private String name;
+    private final String permission;
 
-    EditMode(String name) {
-        this.name = name;
+    EditMode(String permission) {
+        this.permission = permission;
     }
 
     public String toString() {
-        return name;
+        return name();
+    }
+
+    public boolean hasPermission(Permissible permissible) {
+        return permission == null || permissible.hasPermission(permission);
     }
 }
