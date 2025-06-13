@@ -21,11 +21,11 @@ package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
 
-import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
+import io.papermc.paper.event.player.PlayerNameEntityEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -124,47 +124,6 @@ public class PlayerEditorManager implements Listener {
                 applyRightTool(player, as);
                 return;
             }
-
-
-            //Attempt rename
-            if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
-                ItemStack nameTag = player.getInventory().getItemInMainHand();
-                String name;
-                String name2;
-                if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
-                    name = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
-                } else {
-                    name = null;
-                }
-
-                //API: ArmorStandRenameEvent
-                ArmorStandRenameEvent e = new ArmorStandRenameEvent(as, player, name);
-                Bukkit.getPluginManager().callEvent(e);
-                if (e.isCancelled()) return;
-
-                if (name == null) {
-                    as.setCustomName(null);
-                    as.setCustomNameVisible(false);
-                    event.setCancelled(true);
-                } else if (name.startsWith("" + ChatColor.COLOR_CHAR + "") && !player.hasPermission("asedit.rename.color")) {
-                    event.setCancelled(true);
-                    player.sendMessage(plugin.getLang().getMessage("renamestopped"));
-                } else if (!name.equals("")) { // nametag is not blank
-                    event.setCancelled(true);
-
-                    if ((player.getGameMode() != GameMode.CREATIVE)) {
-                        if (nameTag.getAmount() > 1) {
-                            nameTag.setAmount(nameTag.getAmount() - 1);
-                        } else {
-                            nameTag = new ItemStack(Material.AIR);
-                        }
-                        player.getInventory().setItemInMainHand(nameTag);
-                    }
-
-                    as.setCustomName(name);
-                    as.setCustomNameVisible(true);
-                }
-            }
         } else if (event.getRightClicked() instanceof ItemFrame) {
             ItemFrame itemFrame = (ItemFrame) event.getRightClicked();
 
@@ -211,6 +170,31 @@ public class PlayerEditorManager implements Listener {
 
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onEntityRename(PlayerNameEntityEvent event) {
+        if (!(event.getEntity() instanceof ArmorStand)) {
+            return;
+        }
+
+        if (!event.getPlayer().hasPermission("asedit.rename")) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEntityRenamed(PlayerNameEntityEvent event) {
+        if (!(event.getEntity() instanceof ArmorStand armorStand)) {
+            return;
+        }
+
+        if (event.getName() == null) {
+            return;
+        }
+
+        // Make new name visible
+        armorStand.setCustomNameVisible(true);
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

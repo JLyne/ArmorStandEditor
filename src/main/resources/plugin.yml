@@ -31,9 +31,6 @@ permissions:
   asedit.rename:
     description: Rename armorstands - Now Supports Color
     default: true
-  asedit.rename.color:
-    description: Give players the ability to use colored nametags or not
-    default: true
   asedit.equipment:
     description: Access armorstand equipment GUI
     default: true
@@ -122,7 +119,6 @@ permissions:
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
-      asedit.rename.color: true
       asedit.give: false
       asedit.reload: false
       asedit.rotation: true
@@ -148,7 +144,6 @@ permissions:
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
-      asedit.rename.color: true
       asedit.reload: true
       asedit.give: true
       asedit.rotation: true
