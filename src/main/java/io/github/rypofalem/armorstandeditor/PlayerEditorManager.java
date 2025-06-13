@@ -58,7 +58,6 @@ public class PlayerEditorManager implements Listener {
     double fineAdj;
     double coarseMov;
     double fineMov;
-    private boolean ignoreNextInteract = false;
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
     private Integer noSize = 0;
@@ -105,11 +104,13 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true)
     void onArmorStandInteract(PlayerInteractAtEntityEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND) return;
+        if (event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
+
         Player player = event.getPlayer();
-        if (!((event.getRightClicked() instanceof ArmorStand) || event.getRightClicked() instanceof ItemFrame)) return;
 
         if (event.getRightClicked() instanceof ArmorStand) {
             debug.log("Player '" + player.getDisplayName() + "' has right clicked on an ArmorStand");
@@ -120,10 +121,22 @@ public class PlayerEditorManager implements Listener {
                 event.setCancelled(true);
                 applyRightTool(player, as);
             }
-        } else if (event.getRightClicked() instanceof ItemFrame) {
-            ItemFrame itemFrame = (ItemFrame) event.getRightClicked();
+        }
+    }
 
-            if (!canEdit(player, itemFrame)) return;
+    @EventHandler(ignoreCancelled = true)
+    void onEntityInteract(PlayerInteractEntityEvent event) {
+        if (event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+
+        if (event.getRightClicked() instanceof ItemFrame itemFrame) {
+			if (!canEdit(player, itemFrame)) {
+                return;
+            }
+
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
                 event.setCancelled(true);
                 applyRightTool(player, itemFrame);
@@ -131,7 +144,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onEntityRename(PlayerNameEntityEvent event) {
         if (!(event.getEntity() instanceof ArmorStand)) {
             return;
