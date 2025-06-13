@@ -19,18 +19,17 @@
 
 package io.github.rypofalem.armorstandeditor.api;
 
-import lombok.Getter;
-
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.event.Event;
 
 public abstract class ArmorStandEvent extends Event {
+	protected final ArmorStand armorStand;
 
-    @Getter
-    protected final ArmorStand armorStand;
+	public ArmorStandEvent(ArmorStand armorStand) {
+		this.armorStand = armorStand;
+	}
 
-    public ArmorStandEvent(ArmorStand armorStand) {
-        this.armorStand = armorStand;
-    }
-
+	public ArmorStand getArmorStand() {
+		return armorStand;
+	}
 }

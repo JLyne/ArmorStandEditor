@@ -114,15 +114,6 @@
             <version>17.0.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Lombok Support -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
     <!--Java 8-->
 

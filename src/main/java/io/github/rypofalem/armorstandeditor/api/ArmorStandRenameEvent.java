@@ -18,42 +18,48 @@
  */
 package io.github.rypofalem.armorstandeditor.api;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 public class ArmorStandRenameEvent extends ArmorStandEvent implements Cancellable {
+	/* Generated for Bukkit */
+	private static final HandlerList handlers = new HandlerList();
+	protected final Player player;
+	protected String name;
+	private boolean cancelled = false;
 
-    @Getter
-    @Setter
-    private boolean cancelled = false;
-    @Getter
-    @Setter
-    protected String name;
+	public ArmorStandRenameEvent(ArmorStand armorStand, Player player, String name) {
+		super(armorStand);
+		this.player = player;
+		this.name = name;
+	}
 
-    @Getter
-    protected final Player player;
+	public static HandlerList getHandlerList() {
+		return (handlers);
+	}
 
-    public ArmorStandRenameEvent(ArmorStand armorStand, Player player, String name) {
-        super(armorStand);
-        this.player = player;
-        this.name = name;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return (handlers);
+	}
 
-    /* Generated for Bukkit */
-    private static final HandlerList handlers = new HandlerList();
+	@Override
+	public boolean isCancelled() {
+		return cancelled;
+	}
 
-    public static HandlerList getHandlerList() {
-        return (handlers);
-    }
+	@Override
+	public void setCancelled(boolean cancel) {
+		cancelled = cancel;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return (handlers);
-    }
+	public String getName() {
+		return name;
+	}
 
+	public Player getPlayer() {
+		return player;
+	}
 }

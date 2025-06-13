@@ -18,37 +18,43 @@
  */
 package io.github.rypofalem.armorstandeditor.api;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 public class ArmorStandManipulatedEvent extends ArmorStandEvent implements Cancellable {
+	/* Generated for Bukkit */
+	private static final HandlerList handlers = new HandlerList();
+	protected final Player player;
+	private boolean cancelled = false;
 
-    @Getter
-    @Setter
-    private boolean cancelled = false;
+	public ArmorStandManipulatedEvent(ArmorStand armorStand, Player player) {
+		super(armorStand);
+		this.player = player;
+	}
 
-    @Getter
-    protected final Player player;
+	public static HandlerList getHandlerList() {
+		return (handlers);
+	}
 
-    public ArmorStandManipulatedEvent(ArmorStand armorStand, Player player) {
-        super(armorStand);
-        this.player = player;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return (handlers);
+	}
 
-    /* Generated for Bukkit */
-    private static final HandlerList handlers = new HandlerList();
 
-    public static HandlerList getHandlerList() {
-        return (handlers);
-    }
+	@Override
+	public boolean isCancelled() {
+		return cancelled;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return (handlers);
-    }
+	@Override
+	public void setCancelled(boolean cancel) {
+		cancelled = cancel;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
 }
