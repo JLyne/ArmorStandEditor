@@ -79,7 +79,7 @@ public class PlayerEditorManager implements Listener {
         fineMov = .03125; // 1/32
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true)
     void onArmorStandDamage(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
@@ -169,7 +169,7 @@ public class PlayerEditorManager implements Listener {
         armorStand.setCustomNameVisible(true);
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     void onArmorStandBreak(EntityDamageByEntityEvent event) { // Fixes issue #309
         if (!(event.getDamager() instanceof Player)) return; // If the damager is not a player, ignore.
         if (!(event.getEntity()  instanceof ArmorStand)) return; // If the damaged entity is not an ArmorStand, ignore.
@@ -195,7 +195,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
         debug.log("PlayerSwapHandItemsEvent trigger for Player: " + event.getPlayer().getDisplayName());
         if (!plugin.isEditTool(event.getOffHandItem())) return; //event assumes they are already switched
@@ -313,8 +313,7 @@ public class PlayerEditorManager implements Listener {
         getPlayerEditor(player.getUniqueId()).reverseEditArmorStand(as);
     }
 
-    //Unused?
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler
     void onRightClickTool(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.LEFT_CLICK_AIR
             || e.getAction() == Action.RIGHT_CLICK_AIR
@@ -336,7 +335,7 @@ public class PlayerEditorManager implements Listener {
         getPlayerEditor(player.getUniqueId()).openMenu();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     void onScrollNCrouch(PlayerItemHeldEvent e) {
         Player player = e.getPlayer();
         if (!player.isSneaking()) return;
@@ -350,7 +349,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true)
     void onPlayerMenuSelect(InventoryClickEvent e) {
         final InventoryHolder holder = e.getInventory().getHolder();
 
