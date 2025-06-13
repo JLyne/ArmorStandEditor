@@ -186,13 +186,6 @@ public class PlayerEditorManager implements Listener {
                 }
             }
         }
-
-        if (event.getEntity() instanceof ArmorStand entityAS && entityAS.isDead()) {
-            //TODO: Find a more permanent fix for "Once you destroy that armor stand, the armor stand will keep it's name and colour given by the name tag." THIS IS A TEMP SOLUTION FOR NOW.
-            event.getEntity().setCustomName(null);
-            event.getEntity().setCustomNameVisible(false);
-            event.setCancelled(false);
-        }
     }
 
     @EventHandler(ignoreCancelled = true)
