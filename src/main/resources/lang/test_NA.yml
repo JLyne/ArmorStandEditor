@@ -21,7 +21,7 @@ setmode:
   equipment: Equipment
   showarms: Toggle Show Arms
   invisible: Toggle Visibility
-  size: Toggle Size
+  size: Size
   disableslots: Toggle Disable Slots
   vulnerability: Toggle Vulnerability
   gravity: Toggle Gravity

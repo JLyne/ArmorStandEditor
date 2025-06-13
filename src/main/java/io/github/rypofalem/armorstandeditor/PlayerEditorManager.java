@@ -56,7 +56,6 @@ public class PlayerEditorManager implements Listener {
     private ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
     private ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
     private ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
-    private ASEHolder sizeMenuHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
     double coarseAdj;
     double fineAdj;
     double coarseMov;
@@ -432,17 +431,6 @@ public class PlayerEditorManager implements Listener {
                 pe.presetPoseMenu.handlePresetPose(itemName, player);
             }
         }
-
-        if (holder == sizeMenuHolder) {
-            e.setCancelled(true);
-            ItemStack item = e.getCurrentItem();
-            if (item != null && item.hasItemMeta()) {
-                Player player = (Player) e.getWhoClicked();
-                String itemName = item.getItemMeta().getPersistentDataContainer().get(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING);
-                PlayerEditor pe = players.get(player.getUniqueId());
-                pe.sizeModificationMenu.handleAttributeScaling(itemName, player);
-            }
-        }
     }
 
 
@@ -491,10 +479,6 @@ public class PlayerEditorManager implements Listener {
 
     public ASEHolder getEquipmentHolder() {
         return equipmentHolder;
-    }
-
-    public ASEHolder getSizeMenuHolder() {
-        return sizeMenuHolder;
     }
 
     public ASEHolder getPresetHolder() {

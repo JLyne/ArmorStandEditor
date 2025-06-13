@@ -18,7 +18,6 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
-import io.github.rypofalem.armorstandeditor.menu.SizeMenu;
 import net.kyori.adventure.text.Component;
 
 import io.github.rypofalem.armorstandeditor.api.*;
@@ -72,7 +71,6 @@ public class PlayerEditor {
     int frameTargetIndex = 0;
     EquipmentMenu equipMenu;
     PresetArmorPosesMenu presetPoseMenu;
-    SizeMenu sizeModificationMenu;
 
     public PlayerEditor(UUID uuid, ArmorStandEditorPlugin plugin) {
         this.uuid = uuid;
@@ -156,7 +154,7 @@ public class PlayerEditor {
                 toggleArms(armorStand);
                 break;
             case SIZE:
-                chooseSize(armorStand);
+                increaseSize(armorStand);
                 break;
             case VISIBILITY:
                 toggleVisible(armorStand);
@@ -263,14 +261,6 @@ public class PlayerEditor {
         presetPoseMenu.openMenu();
     }
 
-    //Size Menu Refactor
-    private void chooseSize(ArmorStand armorStand) {
-        debug.log("Player '" + getPlayer().getDisplayName() + "' has triggered the AS Attribute Size Menu");
-        getPlayer().closeInventory();
-        sizeModificationMenu = new SizeMenu(this, armorStand);
-        sizeModificationMenu.openMenu();
-    }
-
     public void reverseEditArmorStand(ArmorStand armorStand) {
         if (!eMode.hasPermission(getPlayer())) {
             sendMessage("nopermoption", "warn", eMode.name().toLowerCase());
@@ -301,6 +291,9 @@ public class PlayerEditor {
                 break;
             case RIGHTLEG:
                 armorStand.setRightLegPose(addEulerAngle(armorStand.getRightLegPose()));
+                break;
+            case SIZE:
+                decreaseSize(armorStand);
                 break;
             case PLACEMENT:
                 reverseMove(armorStand);
@@ -461,7 +454,6 @@ public class PlayerEditor {
         sendMessage("toggleinvulnerability", String.valueOf(armorStand.isInvulnerable()));
     }
 
-
     private void toggleGravity(ArmorStand armorStand) {
         debug.log("Toggling the Gravity of an ArmorStand near player: " + getPlayer().getDisplayName());
         armorStand.setGravity(!armorStand.hasGravity());
@@ -497,6 +489,37 @@ public class PlayerEditor {
         itemFrame.setVisible(!itemFrame.isVisible());
     }
 
+    private void increaseSize(ArmorStand armorStand) {
+        double currentScaleValue = armorStand.getAttribute(Attribute.SCALE).getBaseValue();
+
+        if (currentScaleValue >= plugin.getMaxScaleValue()) {
+            getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn", "warn"));
+            return;
+        }
+
+        double newScaleValue = Math.min(plugin.getMaxScaleValue(),
+                                        currentScaleValue + (adjMode == AdjustmentMode.COARSE ? 0.5 : 0.1));
+        debug.log("Result of the scale Calculation: " + newScaleValue);
+
+        armorStand.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
+        sendMessage("scaleset", "info", String.format("%.2f", newScaleValue));
+    }
+
+    private void decreaseSize(ArmorStand armorStand) {
+        double currentScaleValue = armorStand.getAttribute(Attribute.SCALE).getBaseValue();
+
+        if (currentScaleValue <= plugin.getMinScaleValue()) {
+            sendMessage("scaleminwarn", "warn");
+            return;
+        }
+
+        double newScaleValue = Math.max(plugin.getMinScaleValue(),
+                                        currentScaleValue - (adjMode == AdjustmentMode.COARSE ? 0.5 : 0.1));
+        debug.log("Result of the scale Calculation: " + newScaleValue);
+
+        armorStand.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
+        sendMessage("scaleset", "info", String.format("%.2f", newScaleValue));
+    }
 
     void cycleAxis(int i) {
         int index = axis.ordinal();
