@@ -77,7 +77,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     //Armor Stand Specific Settings
     double coarseRot;
     double fineRot;
-    boolean glowItemFrames = false;
 
     //Misc Options
     boolean adminOnlyNotifications = false;
@@ -200,9 +199,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
-
-        //All ItemFrame Stuff
-        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
@@ -445,9 +441,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
-
-        //All ItemFrame Stuff
-        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 

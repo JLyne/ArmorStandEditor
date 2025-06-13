@@ -82,6 +82,7 @@ public class Menu {
         ItemStack slot4 = null;
         ItemStack help;
         ItemStack itemFrameVisible;
+        ItemStack itemFrameGlow;
         ItemStack blankSlot;
         ItemStack presetItem = null;
 
@@ -159,6 +160,13 @@ public class Menu {
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframevisibility");
         } else {
             itemFrameVisible = blankSlot;
+        }
+
+        if (EditMode.ITEMFRAMEGLOW.hasPermission(pe.getPlayer())) {
+            itemFrameGlow = new ItemStack(Material.GLOW_ITEM_FRAME, 1);
+            createIcon(itemFrameGlow, "itemframevisible", "mode itemframeglow");
+        } else {
+            itemFrameGlow = blankSlot;
         }
 
         if (EditMode.VULNERABILITY.hasPermission(pe.getPlayer())) {
@@ -248,13 +256,12 @@ public class Menu {
         help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
 
         ItemStack[] items = {
-
-            blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-            copy, paste, blankSlot, blankSlot, headPos, reset, blankSlot, itemFrameVisible, glowing,
+            help, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, itemFrameVisible, itemFrameGlow,
+            copy, paste, blankSlot, blankSlot, headPos, reset, blankSlot, blankSlot, blankSlot,
             slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
             slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
             presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
-            blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
+            blankSlot, showArms, visibility, glowing, size, plate, toggleVulnerabilty, gravity, blankSlot
         };
 
         menuInv.setContents(items);

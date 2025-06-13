@@ -85,6 +85,9 @@ permissions:
   asedit.stats:
     description: Ability to view ArmorStand Stats.
     default: true
+  asedit.toggleitemframeglow:
+    description: Allows toggling of the Glowing State of an ItemFrame.
+    default: true
 
   asedit.ignoreProtection.griefProtection:
     description: Allows user to ignore GriefProtection's Protection Limitations.
@@ -133,6 +136,7 @@ permissions:
       asedit.togglearmorstandvisibility: true
       asedit.toggleitemframevisibility: true
       asedit.togglearmorstandglow: true
+      asedit.toggleitemframeglow: true
       asedit.permpack.dontIgnoreProtections: true
 
   asedit.permpack.admin:

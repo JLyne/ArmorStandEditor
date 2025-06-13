@@ -21,14 +21,12 @@ package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
 
-import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
 import io.papermc.paper.event.player.PlayerNameEntityEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.block.Action;
@@ -109,7 +107,6 @@ public class PlayerEditorManager implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     void onArmorStandInteract(PlayerInteractAtEntityEvent event) {
-        if (ignoreNextInteract) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
         Player player = event.getPlayer();
         if (!((event.getRightClicked() instanceof ArmorStand) || event.getRightClicked() instanceof ItemFrame)) return;
@@ -122,52 +119,14 @@ public class PlayerEditorManager implements Listener {
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
                 event.setCancelled(true);
                 applyRightTool(player, as);
-                return;
             }
         } else if (event.getRightClicked() instanceof ItemFrame) {
             ItemFrame itemFrame = (ItemFrame) event.getRightClicked();
 
             if (!canEdit(player, itemFrame)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-                if (!itemFrame.getItem().getType().equals(Material.AIR)) {
-                    event.setCancelled(true);
-                }
+                event.setCancelled(true);
                 applyRightTool(player, itemFrame);
-                return;
-            }
-
-            if (player.getInventory().getItemInMainHand().getType().equals(Material.GLOW_INK_SAC) //attempt glowing
-                && player.hasPermission("asedit.basic")
-                && plugin.glowItemFrames && player.isSneaking()) {
-
-                ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, player);
-                Bukkit.getPluginManager().callEvent(e);
-                if (e.isCancelled()) return;
-
-                ItemStack glowSacs = player.getInventory().getItemInMainHand();
-                ItemStack contents = null;
-                Rotation rotation = null;
-                if (itemFrame.getItem().getType() != Material.AIR) {
-                    contents = itemFrame.getItem(); //save item
-                    rotation = itemFrame.getRotation(); // save item rotation
-                }
-                Location itemFrameLocation = itemFrame.getLocation();
-                BlockFace facing = itemFrame.getFacing();
-
-                if (player.getGameMode() != GameMode.CREATIVE) {
-                    if (glowSacs.getAmount() > 1) {
-                        glowSacs.setAmount(glowSacs.getAmount() - 1);
-                    } else glowSacs = new ItemStack(Material.AIR);
-                }
-
-                itemFrame.remove();
-                GlowItemFrame glowFrame = (GlowItemFrame) player.getWorld().spawnEntity(itemFrameLocation, EntityType.GLOW_ITEM_FRAME);
-                glowFrame.setFacingDirection(facing);
-                if (contents != null) {
-                    glowFrame.setItem(contents);
-                    glowFrame.setRotation(rotation);
-                }
-
             }
         }
     }

@@ -34,10 +34,14 @@ import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.GlowItemFrame;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
@@ -217,6 +221,9 @@ public class PlayerEditor {
         switch (eMode) {
             case ITEMFRAMEVISIBILITY:
                 toggleItemFrameVisible(itemFrame);
+                break;
+            case ITEMFRAMEGLOW:
+                toggleItemFrameGlow(itemFrame);
                 break;
             case RESET:
                 itemFrame.setVisible(true);
@@ -487,6 +494,35 @@ public class PlayerEditor {
     void toggleItemFrameVisible(ItemFrame itemFrame) {
         debug.log("Toggling the Visibility of an ItemFrame near player: " + getPlayer().getDisplayName());
         itemFrame.setVisible(!itemFrame.isVisible());
+    }
+
+    private void toggleItemFrameGlow(ItemFrame itemFrame) {
+        debug.log("Toggling the Glow of an ItemFrame near player: " + getPlayer().getDisplayName());
+        ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, getPlayer());
+        Bukkit.getPluginManager().callEvent(e);
+
+        if (e.isCancelled()) {
+            return;
+        }
+
+        boolean glowing = itemFrame instanceof GlowItemFrame;
+        Location itemFrameLocation = itemFrame.getLocation();
+
+        // Save current state
+        ItemStack contents = itemFrame.getItem();
+        Rotation rotation = itemFrame.getRotation();
+        BlockFace facing = itemFrame.getFacing();
+        boolean visible = itemFrame.isVisible();
+
+        itemFrame.remove();
+        ItemFrame newFrame = (ItemFrame) itemFrameLocation.getWorld().spawnEntity(
+                itemFrameLocation, glowing ? EntityType.ITEM_FRAME : EntityType.GLOW_ITEM_FRAME);
+
+        // Restore state
+        newFrame.setFacingDirection(facing);
+        newFrame.setItem(contents);
+        newFrame.setVisible(visible);
+        newFrame.setRotation(rotation);
     }
 
     private void increaseSize(ArmorStand armorStand) {

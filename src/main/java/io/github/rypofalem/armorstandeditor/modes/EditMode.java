@@ -43,6 +43,7 @@ public enum EditMode {
     PRESET("asedit.basic"),
     RESET("asedit.reset"),
     ITEMFRAMEVISIBILITY("asedit.toggleitemframevisibility"),
+    ITEMFRAMEGLOW("asedit.toggleitemframeglow"),
     VULNERABILITY("asedit.toggleInvulnerability"),
     GLOW("asedit.togglearmorstandglow");
 
