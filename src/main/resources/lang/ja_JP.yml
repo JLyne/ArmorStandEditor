@@ -72,8 +72,6 @@ unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
-stats:
-  msg: Here are the statistics for your ArmorStand.
 help:
   msg: "1. 編集ツール(<x>)を手に持ちます。
 
@@ -116,21 +114,7 @@ nopermoption:
   paste: Paste ArmorStand Config
   copy: Copy ArmorStand Config
   reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
   armorstandglow: Toggle ArmorStand Glow
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
-noslotnumcom:
-  msg: スロット番号を指定する必要があります！
-noadjcom:
-  msg: 微調整か粗調整を選択する必要があります！
-noaxiscom:
-  msg: 軸方向を指定する必要があります！
-nomodecom:
-  msg: 目的の設定を指定する必要があります！
-nogive:
-  msg: You have no permission to use the give command!
-
 
 #menutitle
 mainmenutitle:

@@ -116,10 +116,10 @@ public class PlayerEditor {
         sendMessage("setadj", adjMode.toString().toLowerCase());
     }
 
-    public void setCopySlot(byte slot) {
-        copySlots.changeSlots(slot);
-        debug.log("Copy Slot set to: "+ (slot + 1));
-        sendMessage("setslot", String.valueOf((slot + 1)));
+    public void setCopySlot(int slot) {
+        copySlots.changeSlots(slot - 1);
+        debug.log("Copy Slot set to: " + slot);
+        sendMessage("setslot", String.valueOf(slot));
     }
 
     public void editArmorStand(ArmorStand armorStand) {

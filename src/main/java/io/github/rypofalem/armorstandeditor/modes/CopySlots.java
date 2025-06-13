@@ -23,10 +23,10 @@ import org.bukkit.entity.ArmorStand;
 
 public class CopySlots {
     ArmorStandData[] slots = new ArmorStandData[9];
-    public byte currentSlot = 0;
+    public int currentSlot = 0;
 
     //returns true if parameters are acceptable, false otherwise.
-    public boolean changeSlots(byte slot) {
+    public boolean changeSlots(int slot) {
         if (slot < slots.length && slot >= 0) {
             currentSlot = slot;
             return true;

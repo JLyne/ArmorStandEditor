@@ -96,16 +96,12 @@ helpdiscord:
   msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
-stats:
-  msg: Here are the statistics for your ArmorStand.
 
 #warn
 cantedit:
   msg: Lo siento, no puedes editar soportes aqui.
 noperm:
   msg: No tienes permiso para usar esto
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
 nopermoption:
   msg: You don't have permission to use the <x> Option!
   basic: Normal ArmorStand
@@ -120,18 +116,7 @@ nopermoption:
   paste: Paste ArmorStand Config
   copy: Copy ArmorStand Config
   reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
   armorstandglow: Toggle ArmorStand Glow
-noslotnumcom: 
-  msg: Tienes que especificar un número de soot
-noadjcom:
-  msg: tienes que especificar un ajuste de Coarse or Fine 
-noaxiscom:
-  msg: Tienes que especificar un eje.
-nomodecom:
-  msg: Tienes que especificar un modo
-nogive:
-  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

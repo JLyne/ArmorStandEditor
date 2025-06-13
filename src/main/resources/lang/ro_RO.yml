@@ -67,8 +67,6 @@ give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
-stats:
-  msg: Here are the statistics for your ArmorStand.
 
 #warn
 cantedit:
@@ -89,20 +87,7 @@ nopermoption:
   paste: Paste ArmorStand Config
   copy: Copy ArmorStand Config
   reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
   armorstandglow: Toggle ArmorStand Glow
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
-noslotnumcom: 
-  msg: Trebuie sa specifici numarul unui slot.
-noadjcom:
-  msg: Trebuie sa specifici ajustarile!
-noaxiscom:
-  msg: Trebuie sa specifici o axa!
-nomodecom:
-  msg: Trebuie sa specifici un mod!
-nogive:
-  msg: You have no permission to use the give command!
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 unabledestroycreative:

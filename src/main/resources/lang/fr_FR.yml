@@ -74,8 +74,6 @@ notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
-stats:
-  msg: Here are the statistics for your ArmorStand.
 help:
   msg: "1. Tenez l'outil d'édition (<x>) dans votre main principale.
   
@@ -120,20 +118,7 @@ nopermoption:
   paste: Paste ArmorStand Config
   copy: Copy ArmorStand Config
   reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
   armorstandglow: Toggle ArmorStand Glow
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
-noslotnumcom: 
-  msg: Vous devez spécifier un numéro d'emplacement de copie !
-noadjcom:
-  msg: Vous devez préciser si l'ajustement doit être fin ou grossier !
-noaxiscom:
-  msg: Vous devez préciser un axe !
-nomodecom:
-  msg: Vous devez préciser un mode !
-nogive:
-  msg: Vous n'avez pas le droit d'utiliser cette commande!
 
 #menutitle
 mainmenutitle:

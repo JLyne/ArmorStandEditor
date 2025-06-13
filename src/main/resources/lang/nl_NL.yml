@@ -95,8 +95,6 @@ helpurl:
   msg: "Meer info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
   msg: "or kom naar onze Discord: https://discord.gg/3BbJKWpTCj"
-stats:
-  msg: Here are the statistics for your ArmorStand.
 
 #warn
 cantedit:
@@ -117,20 +115,7 @@ nopermoption:
   paste: Paste ArmorStand Config
   copy: Copy ArmorStand Config
   reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
   armorstandglow: Toggle ArmorStand Glow
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
-noslotnumcom:
-  msg: Je moet een slot nummer opgeven!
-noadjcom:
-  msg: Je moet een grove of fijne aanpassing opgeven!
-noaxiscom:
-  msg: Je moet een as opgeven!
-nomodecom:
-  msg: Je moet een modus opgeven!
-nogive:
-  msg: Sorry, je hebt geen tostemming om dit command te gebruiken!
 
 #menutitle
 mainmenutitle:

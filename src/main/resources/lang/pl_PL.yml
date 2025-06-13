@@ -76,8 +76,7 @@ notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
-stats:
-  msg: Here are the statistics for your ArmorStand.
+
 #warn
 cantedit:
   msg: Nie możesz tego zrobić
@@ -97,20 +96,7 @@ nopermoption:
   paste: Paste ArmorStand Config
   copy: Copy ArmorStand Config
   reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
   armorstandglow: Toggle ArmorStand Glow
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
-noslotnumcom: 
-  msg: Musisz wybrać slot!
-noadjcom:
-  msg: Musisz wybrać wielkość edycji.
-noaxiscom:
-  msg: Musisz wybrać oś.
-nomodecom:
-  msg: Musisz wybrać tryb.
-nogive:
-  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

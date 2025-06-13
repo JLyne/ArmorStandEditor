@@ -90,16 +90,6 @@ cantedit:
   msg: Entschuldigung, du kannst hier keine Rüstungsständer bearbeiten!
 noperm:
   msg: Du hast keine Erlaubnis diesen Befehl zu nutzen!
-noslotnumcom:
-  msg: Du musst eine Slotnummer angeben!
-noadjcom:
-  msg: Du musst Grob oder Fein auswählen!
-noaxiscom:
-  msg: Du musst eine Achse auswählen!
-nomodecom:
-  msg: Du musst einen Modus auswählen!
-nogive:
-  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

@@ -21,21 +21,29 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.language.Language;
 
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ArmorStandEditorPlugin extends JavaPlugin {
 
     private Debug debug = new Debug(this);
@@ -208,14 +216,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         editorManager = new PlayerEditorManager(this);
-        CommandEx execute = new CommandEx(this);
 
-        //CommandExecution and TabCompletion
-        Objects.requireNonNull(getCommand("ase")).setExecutor(execute);
-        Objects.requireNonNull(getCommand("ase")).setTabCompleter(execute);
+        LifecycleEventManager<@NotNull Plugin> manager = getLifecycleManager();
+        manager.registerEventHandler(LifecycleEvents.COMMANDS,
+                                     event -> new Commands(this, event.registrar()));
 
         getServer().getPluginManager().registerEvents(editorManager, this);
-
     }
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default

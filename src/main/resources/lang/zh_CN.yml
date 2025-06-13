@@ -96,8 +96,6 @@ notincorrectworld:
   msg: 对不起，您没有在正确的世界中使用盔甲架编辑器。
 unabledestroycreative:
   msg: 无法在创造模式中摧毁这个不可破坏的盔甲架。
-stats:
-  msg: 以下是盔甲架的统计数据。
 
 #警告
 cantedit:
@@ -118,22 +116,7 @@ nopermoption:
   paste: 粘贴盔甲架配置
   copy: 复制盔甲架配置
   reset: 重置盔甲架配置
-  stats: 查看盔甲架统计数据
   armorstandglow: 切换盔甲架发光
-norangestats:
-  msg: 在运行此命令之前，请靠近盔甲架。
-noslotnumcom:
-  msg: 你必须选择一个物品栏!
-noadjcom:
-  msg: 你必须选择一个调整模式(粗调/微调)!
-noaxiscom:
-  msg: 你必须选择一个坐标轴!
-nomodecom:
-  msg: 你必须选择一个部位!
-noreloadcom:
-  msg: 你没有权限运行重载命令!
-nogive:
-  msg: 你没有权限运行给予命令!
 
 #菜单标题
 mainmenutitle:
