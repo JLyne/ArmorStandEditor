@@ -23,6 +23,7 @@ import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
+import io.github.rypofalem.armorstandeditor.modes.EditMode;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -140,8 +141,7 @@ public class Menu {
 
         presetItem = createIcon(new ItemStack(Material.BOOKSHELF), "presetmenu", "mode preset");
 
-        //Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility")) {
+        if (EditMode.VISIBILITY.hasPermission(pe.getPlayer())) {
             visibility = new ItemStack(Material.POTION, 1);
             PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
             PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
@@ -154,70 +154,68 @@ public class Menu {
             visibility = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility")) {
+        if (EditMode.ITEMFRAMEVISIBILITY.hasPermission(pe.getPlayer())) {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframevisibility");
         } else {
             itemFrameVisible = blankSlot;
         }
 
-        //Praise end
-
-        if (pe.getPlayer().hasPermission("asedit.toggleInvulnerability")) {
+        if (EditMode.VULNERABILITY.hasPermission(pe.getPlayer())) {
             toggleVulnerabilty = createIcon(new ItemStack(Material.TOTEM_OF_UNDYING, 1),
                 "vulnerability", "mode vulnerability");
         } else {
             toggleVulnerabilty = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.togglesize")) {
+        if (EditMode.SIZE.hasPermission(pe.getPlayer())) {
             size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
                 "size", "mode size");
         } else {
             size = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.disableslots")) {
+        if (EditMode.DISABLESLOTS.hasPermission(pe.getPlayer())) {
             disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
         } else {
             disableSlots = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.togglegravity")) {
+        if (EditMode.GRAVITY.hasPermission(pe.getPlayer())) {
             gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
         } else {
             gravity = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.togglebaseplate")) {
+        if (EditMode.BASEPLATE.hasPermission(pe.getPlayer())) {
             plate = createIcon(new ItemStack(Material.SMOOTH_STONE_SLAB, 1),
                 "baseplate", "mode baseplate");
         } else {
             plate = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.movement")) {
+        if (EditMode.PLACEMENT.hasPermission(pe.getPlayer())) {
             place = createIcon(new ItemStack(Material.RAIL, 1),
                 "placement", "mode placement");
         } else {
             place = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.rotation")) {
+        if (EditMode.ROTATE.hasPermission(pe.getPlayer())) {
             rotate = createIcon(new ItemStack(Material.COMPASS, 1),
                 "rotate", "mode rotate");
         } else {
             rotate = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.equipment")) {
+        if (EditMode.EQUIPMENT.hasPermission(pe.getPlayer())) {
             equipment = createIcon(new ItemStack(Material.CHEST, 1),
                 "equipment", "mode equipment");
         } else {
             equipment = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.copy")) {
+        if (EditMode.COPY.hasPermission(pe.getPlayer())) {
             copy = createIcon(new ItemStack(Material.FLOWER_BANNER_PATTERN),
                 "copy", "mode copy");
 
@@ -234,12 +232,12 @@ public class Menu {
                 "copyslot", "slot 4", "4");
         }
 
-        if (pe.getPlayer().hasPermission("asedit.paste")) {
+        if (EditMode.PASTE.hasPermission(pe.getPlayer())) {
             paste = createIcon(new ItemStack(Material.FEATHER),
                 "paste", "mode paste");
         }
 
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")) {
+        if (EditMode.GLOW.hasPermission(pe.getPlayer())) {
             glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
                 "armorstandglow",
                 "mode glow");

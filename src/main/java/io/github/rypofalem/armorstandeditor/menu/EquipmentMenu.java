@@ -22,6 +22,7 @@ package io.github.rypofalem.armorstandeditor.menu;
 import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
+import io.github.rypofalem.armorstandeditor.modes.EditMode;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -97,7 +98,7 @@ public class EquipmentMenu {
 
     public void openMenu() {
         pe.getPlayer().closeInventory();
-        if (pe.getPlayer().hasPermission("asedit.equipment")) {
+        if (EditMode.EQUIPMENT.hasPermission(pe.getPlayer())) {
             fillInventory();
             debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Equipment Menu.");
             pe.getPlayer().openInventory(menuInv);
