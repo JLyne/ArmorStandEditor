@@ -205,16 +205,18 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             player.sendMessage(LISTMODE);
         }
 
-        if (args.length > 1) {
-            for (EditMode mode : EditMode.values()) {
-                if (mode.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-                    if (args[1].equals("invisible") && !checkPermission(player, "togglearmorstandvisibility", true)) return;
-                    if (args[1].equals("itemframe") && !checkPermission(player, "toggleitemframevisibility", true)) return;
-                    plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-                    debug.log("Player '" + player.getDisplayName() + "' chose the mode: " + mode);
-                    return;
-                }
+        try {
+            EditMode mode = EditMode.valueOf(args[1].toUpperCase());
+
+            if (!mode.hasPermission(player)) {
+                player.sendMessage(plugin.getLang().getMessage("nopermoption", "warn", mode.name().toLowerCase()));
+                return;
             }
+
+            plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
+            debug.log("Player '" + player.getDisplayName() + "' chose the mode: " + mode);
+        } catch(IllegalArgumentException e) {
+
         }
     }
 
@@ -376,35 +378,24 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
-
-    private boolean checkPermission(Player player, String permName, boolean sendMessageOnInvalidation) {
-        if (permName.equalsIgnoreCase("paste")) {
-            permName = "copy";
-        }
-        if (player.hasPermission("asedit." + permName.toLowerCase())) {
-            return true;
-        } else {
-            if (sendMessageOnInvalidation) {
-                player.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
-            }
-            return false;
-        }
+    private boolean checkPermission(Player player, String permName) {
+		return player.hasPermission("asedit." + permName.toLowerCase());
     }
 
     private boolean getPermissionBasic(Player player) {
-        return checkPermission(player, "basic", false);
+        return checkPermission(player, "basic");
     }
 
     private boolean getPermissionGive(Player player) {
-        return checkPermission(player, "give", false);
+        return checkPermission(player, "give");
     }
 
     private boolean getPermissionReload(Player player) {
-        return checkPermission(player, "reload", false);
+        return checkPermission(player, "reload");
     }
 
     private boolean getPermissionStats(Player player) {
-        return checkPermission(player, "stats", false);
+        return checkPermission(player, "stats");
     }
 
     //REFACTOR COMPLETION
