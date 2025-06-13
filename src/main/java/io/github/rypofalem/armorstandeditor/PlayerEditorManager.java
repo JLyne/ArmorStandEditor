@@ -21,7 +21,6 @@ package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
 
-import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;

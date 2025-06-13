@@ -23,7 +23,6 @@ import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -53,8 +52,8 @@ public class GriefPreventionProtection implements Protection {
             Material blockMat = block.getType();
 
             if (landClaim != null && landClaim.allowEdit(player) != null && landClaim.allowBuild(player, blockMat) != null) {
-                player.sendMessage(ChatColor.RED + landClaim.allowEdit(player));
-                player.sendMessage(ChatColor.RED + landClaim.allowBuild(player, blockMat));
+                player.sendRichMessage("<red>" + landClaim.allowEdit(player));
+                player.sendRichMessage("<red>" + landClaim.allowBuild(player, blockMat));
                 return false;
             }
         } else {

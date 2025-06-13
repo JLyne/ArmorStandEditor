@@ -1,15 +1,12 @@
 # Translated by KPidS+Hopak120
 # Fixed by Szarkan, GENIIY
 
-#NOTE from Author:
-# Do NOT Add CustomColors to icons (PresetMenu or SizeMenu) as it will break how presets work and do the translation
-# Please change the info number if you want to mess with the color of those - It will change it globally however.
-
-iconname: 2n
-icondescription: 5
-info: 6
-warn: c
-menutitle: 8
+#formatting
+iconname: <!i><dark_green><u>
+icondescription: <!i><dark_purple>
+info: <gold>
+warn: <red>
+menutitle: <dark_gray>
 
 #info
 setmode:

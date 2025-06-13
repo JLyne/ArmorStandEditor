@@ -19,8 +19,7 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.SizeMenu;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
 
 import io.github.rypofalem.armorstandeditor.api.*;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
@@ -683,11 +682,11 @@ public class PlayerEditor {
     }
 
     void sendMessage(String path, String format, String option) {
-        String message = plugin.getLang().getMessage(path, format, option);
+        Component message = plugin.getLang().getMessage(path, format, option);
         if (plugin.sendToActionBar) {
-            plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+            getPlayer().sendActionBar(message);
         } else {
-            plugin.getServer().getPlayer(getUUID()).sendMessage(message);
+            getPlayer().sendMessage(message);
         }
     }
 

@@ -22,6 +22,7 @@ package io.github.rypofalem.armorstandeditor.menu;
 import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -39,7 +40,7 @@ public class EquipmentMenu {
     private Debug debug;
     private PlayerEditor pe;
     private ArmorStand armorstand;
-    static String name = "ArmorStand Equipment";
+    static Component name = Component.text("ArmorStand Equipment");
     ItemStack helmet, chest, pants, feetsies, rightHand, leftHand;
 
     public EquipmentMenu(PlayerEditor pe, ArmorStand as) {
@@ -63,7 +64,7 @@ public class EquipmentMenu {
         
         ItemStack disabledIcon = new ItemStack(Material.BARRIER);
         ItemMeta meta = disabledIcon.getItemMeta();
-        meta.setDisplayName(pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
+        meta.displayName(pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"); // mark as icon
         disabledIcon.setItemMeta(meta);
 
@@ -85,10 +86,10 @@ public class EquipmentMenu {
         ItemStack icon = new ItemStack(mat);
         ItemMeta meta = icon.getItemMeta();
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
-        meta.setDisplayName(pe.plugin.getLang().getMessage("equipslot", "iconname", slot)); //equipslot.msg <option>
-        ArrayList<String> loreList = new ArrayList<>();
+        meta.displayName(pe.plugin.getLang().getMessage("equipslot", "iconname", slot)); //equipslot.msg <option>
+        ArrayList<Component> loreList = new ArrayList<>();
         loreList.add(pe.plugin.getLang().getMessage("equipslot.description", "icondescription", slot)); //equioslot.description.msg <option>
-        meta.setLore(loreList);
+        meta.lore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         icon.setItemMeta(meta);
         return icon;
@@ -128,7 +129,7 @@ public class EquipmentMenu {
         armorstand.getEquipment().setItemInOffHand(leftHand);
     }
 
-    public static String getName() {
+    public static Component getName() {
         return name;
     }
 }

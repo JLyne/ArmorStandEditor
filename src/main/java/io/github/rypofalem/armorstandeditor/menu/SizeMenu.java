@@ -4,6 +4,7 @@ import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -27,7 +28,7 @@ public class SizeMenu extends ASEHolder {
     private Debug debug;
     private PlayerEditor pe;
     private ArmorStand as;
-    static String name = "Size Menu";
+    static Component name = Component.text("Size Menu");
 
     public SizeMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
@@ -67,29 +68,25 @@ public class SizeMenu extends ASEHolder {
     }
 
     private ItemStack createIcon(ItemStack icon, String path) {
-        return createIcon(icon, path, null);
-    }
-
-    private ItemStack createIcon(ItemStack icon, String path, String option) {
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
-        meta.setDisplayName(getIconName(path, option));
-        ArrayList<String> loreList = new ArrayList<>();
-        loreList.add(getIconDescription(path, option));
-        meta.setLore(loreList);
         meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, path);
+        meta.displayName(getIconName(path));
+        ArrayList<Component> loreList = new ArrayList<>();
+        loreList.add(getIconDescription(path));
+        meta.lore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         icon.setItemMeta(meta);
         return icon;
     }
 
-    private String getIconName(String path, String option) {
-        return pe.plugin.getLang().getMessage(path, "iconname", option);
+    private Component getIconName(String path) {
+        return pe.plugin.getLang().getMessage(path, "iconname");
     }
 
 
-    private String getIconDescription(String path, String option) {
-        return pe.plugin.getLang().getMessage(path + ".description", "icondescription", option);
+    private Component getIconDescription(String path) {
+        return pe.plugin.getLang().getMessage(path + ".description", "icondescription");
     }
 
 

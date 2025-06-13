@@ -23,7 +23,6 @@ import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.*;
@@ -42,14 +41,14 @@ import java.util.Objects;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
-    final String LISTMODE = ChatColor.YELLOW + "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
-    final String LISTAXIS = ChatColor.YELLOW + "/ase axis <" + Util.getEnumList(Axis.class) + ">";
-    final String LISTADJUSTMENT = ChatColor.YELLOW + "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
-    final String LISTSLOT = ChatColor.YELLOW + "/ase slot <1-9>";
-    final String HELP = ChatColor.YELLOW + "/ase help or /ase ?";
-    final String RELOAD = ChatColor.YELLOW + "/ase reload";
-    final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
-    final String GETARMORSTATS = ChatColor.YELLOW + "/ase stats";
+    final String LISTMODE = "<yellow>/ase mode <" + Util.getEnumList(EditMode.class) + ">";
+    final String LISTAXIS = "<yellow>/ase axis <" + Util.getEnumList(Axis.class) + ">";
+    final String LISTADJUSTMENT = "<yellow>/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
+    final String LISTSLOT = "<yellow>/ase slot <1-9>";
+    final String HELP = "<yellow>/ase help or /ase ?";
+    final String RELOAD = "<yellow>/ase reload";
+    final String GIVECUSTOMMODEL = "<yellow>/ase give";
+    final String GETARMORSTATS = "<yellow>/ase stats";
     private Debug debug;
 
     public CommandEx(ArmorStandEditorPlugin armorStandEditorPlugin) {
@@ -89,14 +88,14 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
             debug.log("Sender is Player and asedit.basic is " + getPermissionBasic(player));
             if (args.length == 0) {
-                player.sendMessage(LISTMODE);
-                player.sendMessage(LISTAXIS);
-                player.sendMessage(LISTSLOT);
-                player.sendMessage(LISTADJUSTMENT);
-                player.sendMessage(HELP);
-                player.sendMessage(RELOAD);
-                player.sendMessage(GIVECUSTOMMODEL);
-                player.sendMessage(GETARMORSTATS);
+                player.sendRichMessage(LISTMODE);
+                player.sendRichMessage(LISTAXIS);
+                player.sendRichMessage(LISTSLOT);
+                player.sendRichMessage(LISTADJUSTMENT);
+                player.sendRichMessage(HELP);
+                player.sendRichMessage(RELOAD);
+                player.sendRichMessage(GIVECUSTOMMODEL);
+                player.sendRichMessage(GETARMORSTATS);
                 return true;
             }
             switch (args[0].toLowerCase()) {
@@ -109,14 +108,14 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 case "reload" -> commandReload(player);
                 case "stats" -> commandStats(player);
                 default -> {
-                    sender.sendMessage(LISTMODE);
-                    sender.sendMessage(LISTAXIS);
-                    sender.sendMessage(LISTSLOT);
-                    sender.sendMessage(LISTADJUSTMENT);
-                    sender.sendMessage(HELP);
-                    sender.sendMessage(RELOAD);
-                    sender.sendMessage(GIVECUSTOMMODEL);
-                    sender.sendMessage(GETARMORSTATS);
+                    sender.sendRichMessage(LISTMODE);
+                    sender.sendRichMessage(LISTAXIS);
+                    sender.sendRichMessage(LISTSLOT);
+                    sender.sendRichMessage(LISTADJUSTMENT);
+                    sender.sendRichMessage(HELP);
+                    sender.sendRichMessage(RELOAD);
+                    sender.sendRichMessage(GIVECUSTOMMODEL);
+                    sender.sendRichMessage(GETARMORSTATS);
                 }
             }
             return true;
@@ -227,8 +226,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         player.sendMessage("");
         player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
         player.sendMessage("");
-        player.sendRawMessage(plugin.getLang().getMessage("helpurl", ""));
-        player.sendRawMessage(plugin.getLang().getMessage("helpdiscord", ""));
+        player.sendMessage(plugin.getLang().getMessage("helpurl", ""));
+        player.sendMessage(plugin.getLang().getMessage("helpdiscord", ""));
     }
 
     private void commandHelpConsole(CommandSender sender) {
@@ -353,23 +352,22 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     boolean basePlateVisible = as.hasBasePlate();
                     boolean isVulnerable = as.isInvulnerable();
                     boolean hasGravity = as.hasGravity();
-                    boolean isSmall = as.isSmall();
                     boolean isGlowing = as.isGlowing();
                     boolean isLocked = plugin.scoreboard.getTeam(plugin.lockedTeam).hasEntry(as.getUniqueId().toString());
 
-                    player.sendMessage(ChatColor.YELLOW + "----------- Armor Stand Statistics -----------");
-                    player.sendMessage(ChatColor.YELLOW + plugin.getLang().getMessage("stats"));
-                    player.sendMessage(ChatColor.YELLOW + "Head: " + ChatColor.AQUA + headX + " / " + headY + " / " + headZ);
-                    player.sendMessage(ChatColor.YELLOW + "Body: " + ChatColor.AQUA + bodyX + " / " + bodyY + " / " + bodyZ);
-                    player.sendMessage(ChatColor.YELLOW + "Right Arm: " + ChatColor.AQUA + rightArmX + " / " + rightArmY + " / " + rightArmZ);
-                    player.sendMessage(ChatColor.YELLOW + "Left Arm: " + ChatColor.AQUA + leftArmX + " / " + leftArmY + " / " + leftArmZ);
-                    player.sendMessage(ChatColor.YELLOW + "Right Leg: " + ChatColor.AQUA + rightLegX + " / " + rightLegY + " / " + rightLegZ);
-                    player.sendMessage(ChatColor.YELLOW + "Left Leg: " + ChatColor.AQUA + leftLegX + " / " + leftLegY + " / " + leftLegZ);
-                    player.sendMessage(ChatColor.YELLOW + "Coordinates: " + ChatColor.AQUA + " X: " + locationX + " / Y: " + locationY + " / Z: " + locationZ);
-                    player.sendMessage(ChatColor.YELLOW + "Is Visible: " + ChatColor.AQUA + isVisible + ". " + ChatColor.YELLOW + "Arms Visible: " + ChatColor.AQUA + armsVisible + ". " + ChatColor.YELLOW + "Base Plate Visible: " + ChatColor.AQUA + basePlateVisible);
-                    player.sendMessage(ChatColor.YELLOW + "Is Vulnerable: " + ChatColor.AQUA + isVulnerable + ". " + ChatColor.YELLOW + "Affected by Gravity: " + ChatColor.AQUA + hasGravity);
-                    player.sendMessage(ChatColor.YELLOW + "Size: " + ChatColor.AQUA + sizeAttribute + "/" + plugin.getMaxScaleValue() + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". " + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);
-                    player.sendMessage(ChatColor.YELLOW + "----------------------------------------------");
+                    player.sendRichMessage("<yellow>----------- Armor Stand Statistics -----------");
+                    player.sendRichMessage("<yellow>" + plugin.getLang().getMessage("stats"));
+                    player.sendRichMessage("<yellow>Head: <aqua>" + headX + " / " + headY + " / " + headZ);
+                    player.sendRichMessage("<yellow>Body: <aqua>" + bodyX + " / " + bodyY + " / " + bodyZ);
+                    player.sendRichMessage("<yellow>Right Arm: <aqua>" + rightArmX + " / " + rightArmY + " / " + rightArmZ);
+                    player.sendRichMessage("<yellow>Left Arm: <aqua>" + leftArmX + " / " + leftArmY + " / " + leftArmZ);
+                    player.sendRichMessage("<yellow>Right Leg: <aqua>" + rightLegX + " / " + rightLegY + " / " + rightLegZ);
+                    player.sendRichMessage("<yellow>Left Leg: <aqua>" + leftLegX + " / " + leftLegY + " / " + leftLegZ);
+                    player.sendRichMessage("<yellow>Coordinates: <aqua>X: " + locationX + " / Y: " + locationY + " / Z: " + locationZ);
+                    player.sendRichMessage("<yellow>Is Visible: <aqua>" + isVisible + ". <yellow>Arms Visible: <aqua>" + armsVisible + ". <yellow>Base Plate Visible: <aqua>" + basePlateVisible);
+                    player.sendRichMessage("<yellow>Is Vulnerable: <aqua>" + isVulnerable + ". <yellow>Affected by Gravity: <aqua>" + hasGravity);
+                    player.sendRichMessage("<yellow>Size: <aqua>" + sizeAttribute + "/" + plugin.getMaxScaleValue() + ". <yellow>Is Glowing: <aqua>" + isGlowing + ". <yellow>Is Locked: <aqua>" + isLocked);
+                    player.sendRichMessage("<yellow>----------------------------------------------");
 
                 }
             }

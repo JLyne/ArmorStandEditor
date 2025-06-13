@@ -21,6 +21,8 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.language.Language;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -58,7 +60,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     int editToolData = Integer.MIN_VALUE;
     boolean requireToolData = false;
     boolean requireToolName = false;
-    String editToolName = null;
+    Component editToolName = null;
     boolean requireToolLore = false;
     List<?> editToolLore = null;
     boolean enablePerWorld = false;
@@ -162,8 +164,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Do we require a custom tool name?
         requireToolName = getConfig().getBoolean("requireToolName", false);
         if (requireToolName) {
-            editToolName = getConfig().getString("toolName", null);
-            if (editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+            editToolName = getConfig().getRichMessage("toolName", null);
         }
 
         //Custom Model Data
@@ -231,7 +232,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
             scoreboard.registerNewTeam(lockedTeam);
-            scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
+            scoreboard.getTeam(lockedTeam).color(NamedTextColor.RED);
         } else {
             getServer().getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
         }
@@ -323,7 +324,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             }
 
             //Get the name of the Edit Tool - If Null, return false
-            String itemName = itemMeta.getDisplayName();
+            Component itemName = itemMeta.displayName();
 
             //If the name of the Edit Tool is not the Name specified in Config then Return false
             if (!itemName.equals(editToolName)) {
@@ -407,8 +408,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Do we require a custom tool name?
         requireToolName = getConfig().getBoolean("requireToolName", false);
         if (requireToolName) {
-            editToolName = getConfig().getString("toolName", null);
-            if (editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+            editToolName = getConfig().getRichMessage("toolName", null);
         }
 
         //Custom Model Data

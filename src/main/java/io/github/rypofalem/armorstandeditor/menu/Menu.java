@@ -23,6 +23,7 @@ import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 public class Menu {
     private final Inventory menuInv;
     private final PlayerEditor pe;
-    private static String name = "Armor Stand Editor Menu";
+    private static Component name = Component.text("Armor Stand Editor Menu");
     private Debug debug;
 
     public Menu(PlayerEditor pe) {
@@ -269,22 +270,22 @@ public class Menu {
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
         meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + command);
-        meta.setDisplayName(getIconName(path, option));
-        ArrayList<String> loreList = new ArrayList<>();
+        meta.displayName(getIconName(path, option));
+        ArrayList<Component> loreList = new ArrayList<>();
         loreList.add(getIconDescription(path, option));
-        meta.setLore(loreList);
+        meta.lore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         icon.setItemMeta(meta);
         return icon;
     }
 
 
-    private String getIconName(String path, String option) {
+    private Component getIconName(String path, String option) {
         return pe.plugin.getLang().getMessage(path, "iconname", option);
     }
 
 
-    private String getIconDescription(String path, String option) {
+    private Component getIconDescription(String path, String option) {
         return pe.plugin.getLang().getMessage(path + ".description", "icondescription", option);
     }
 
@@ -296,7 +297,7 @@ public class Menu {
         }
     }
 
-    public static String getName() {
+    public static Component getName() {
         return name;
     }
 }
