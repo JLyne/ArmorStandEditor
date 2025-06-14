@@ -108,10 +108,10 @@ public class Menu {
 
         //Movement Speed
         coarseAdj = createIcon(new ItemStack(Material.COARSE_DIRT, 1),
-            "coarseadj", "adj coarse");
+            "coarseadj", "adjustment coarse");
 
         fineAdj = createIcon(new ItemStack(Material.SMOOTH_SANDSTONE),
-            "fineadj", "adj fine");
+            "fineadj", "adjustment fine");
 
         //Reset Changes
         reset = createIcon(new ItemStack(Material.WATER_BUCKET),
