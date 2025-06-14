@@ -233,10 +233,6 @@ itemframevisible:
   msg: 物品展示框显隐切换
   description:
     msg: 显示/隐形物品展示框
-blankslot:
-  msg: 这里什么都没有
-  description:
-    msg: 只是一个占位符项。单击“我”不会执行任何操作。
 armorstandglow:
   msg: 切换盔甲架发光
   description:

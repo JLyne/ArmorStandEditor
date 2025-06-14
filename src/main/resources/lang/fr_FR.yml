@@ -235,10 +235,6 @@ itemframevisible:
   msg: Visibilité (Item Frame)
   description:
     msg: Rend visible ou invisible un Item Frame
-blankslot:
-  msg: Nothing here
-  description:
-    msg: Just a placeholder item. Clicking me will not do anything.
 armorstandglow:
   msg: Toggle ArmorStand Glow
   description:

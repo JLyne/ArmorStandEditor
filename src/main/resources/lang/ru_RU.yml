@@ -241,10 +241,6 @@ itemframevisible:
   msg: Видимость рамки предмета
   description:
     msg: Включить или выключить видимость рамки предмета
-blankslot:
-  msg: " "
-  description:
-    msg: " "
 armorstandglow:
   msg: Включить свечение стойки для брони
   description:

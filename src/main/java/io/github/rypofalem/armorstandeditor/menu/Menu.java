@@ -273,7 +273,13 @@ public class Menu {
     private ItemStack createIcon(ItemStack icon, String path, String command, String option) {
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
-        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + command);
+
+        if (!command.isEmpty()) {
+            meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + command);
+        } else {
+            meta.setHideTooltip(true);
+        }
+
         meta.displayName(getIconName(path, option));
         ArrayList<Component> loreList = new ArrayList<>();
         loreList.add(getIconDescription(path, option));
