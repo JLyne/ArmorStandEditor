@@ -24,6 +24,9 @@ import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,13 +34,9 @@ import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.EulerAngle;
-
-import java.util.ArrayList;
 
 public class PresetArmorPosesMenu {
     private final Inventory menuInv;
@@ -87,16 +86,16 @@ public class PresetArmorPosesMenu {
         menuInv.setContents(items);
     }
 
-    private ItemStack createIcon(ItemStack icon, String path) {
-        ItemMeta meta = icon.getItemMeta();
-        assert meta != null;
-        meta.displayName(getIconName(path));
-        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, path);
-        ArrayList<Component> loreList = new ArrayList<>();
-        loreList.add(getIconDescription(path));
-        meta.lore(loreList);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        icon.setItemMeta(meta);
+    @SuppressWarnings("UnstableApiUsage")
+	private ItemStack createIcon(ItemStack icon, String path) {
+        icon.setData(DataComponentTypes.CUSTOM_NAME, getIconName(path));
+        icon.editPersistentDataContainer(
+				pdc -> pdc.set(ArmorStandEditorPlugin.instance().getIconKey(),
+							   PersistentDataType.STRING, path));
+        icon.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(getIconDescription(path)).build());
+        icon.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+				.addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS).build());
+;
         return icon;
     }
 

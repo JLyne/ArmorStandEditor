@@ -390,9 +390,9 @@ public class PlayerEditorManager implements Listener {
         if (holder == menuHolder) {
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
-            if (item != null && item.hasItemMeta()) {
+            if (item != null) {
                 Player player = (Player) e.getWhoClicked();
-                String command = item.getItemMeta().getPersistentDataContainer().get(plugin.getIconKey(), PersistentDataType.STRING);
+                String command = item.getPersistentDataContainer().get(plugin.getIconKey(), PersistentDataType.STRING);
                 if (command != null) {
                     player.performCommand(command);
                     Bukkit.getScheduler().runTask(plugin, () -> player.closeInventory());
@@ -404,8 +404,7 @@ public class PlayerEditorManager implements Listener {
         if (holder == equipmentHolder) {
             ItemStack item = e.getCurrentItem();
             if (item == null) return;
-            if (item.getItemMeta() == null) return;
-            if (item.getItemMeta().getPersistentDataContainer().has(plugin.getIconKey(), PersistentDataType.STRING)) {
+            if (item.getPersistentDataContainer().has(plugin.getIconKey(), PersistentDataType.STRING)) {
                 e.setCancelled(true);
             }
         }
@@ -413,9 +412,9 @@ public class PlayerEditorManager implements Listener {
         if (holder == presetHolder) {
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
-            if (item != null && item.hasItemMeta()) {
+            if (item != null) {
                 Player player = (Player) e.getWhoClicked();
-                String itemName = item.getItemMeta().getPersistentDataContainer().get(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING);
+                String itemName = item.getPersistentDataContainer().get(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING);
                 PlayerEditor pe = players.get(player.getUniqueId());
                 pe.presetPoseMenu.handlePresetPose(itemName, player);
                 Bukkit.getScheduler().runTask(plugin, () -> player.closeInventory());

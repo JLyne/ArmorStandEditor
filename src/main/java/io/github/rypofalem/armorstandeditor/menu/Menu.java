@@ -24,19 +24,17 @@ import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.PotionContents;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
-import java.util.ArrayList;
+import org.bukkit.potion.PotionType;
 
 public class Menu {
     private final Inventory menuInv;
@@ -51,7 +49,8 @@ public class Menu {
         fillInventory();
     }
 
-    private void fillInventory() {
+    @SuppressWarnings("UnstableApiUsage")
+	private void fillInventory() {
 
         menuInv.clear();
 
@@ -143,12 +142,8 @@ public class Menu {
 
         if (EditMode.VISIBILITY.hasPermission(pe.getPlayer())) {
             visibility = new ItemStack(Material.POTION, 1);
-            PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
-            PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
-            if (potionMeta != null) {
-                potionMeta.addCustomEffect(effect, true);
-            }
-            visibility.setItemMeta(potionMeta);
+            visibility.setData(DataComponentTypes.POTION_CONTENTS,
+                               PotionContents.potionContents().potion(PotionType.INVISIBILITY).build());
             createIcon(visibility, "invisible", "mode visibility");
         } else {
             visibility = blankSlot;
@@ -270,22 +265,22 @@ public class Menu {
         return createIcon(icon, path, command, null);
     }
 
-    private ItemStack createIcon(ItemStack icon, String path, String command, String option) {
-        ItemMeta meta = icon.getItemMeta();
-        assert meta != null;
-
+    @SuppressWarnings("UnstableApiUsage")
+	private ItemStack createIcon(ItemStack icon, String path, String command, String option) {
         if (!command.isEmpty()) {
-            meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + command);
+            icon.editPersistentDataContainer(
+                    pdc -> pdc.set(ArmorStandEditorPlugin.instance().getIconKey(),
+                                   PersistentDataType.STRING, "ase " + command));
+            icon.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(DataComponentTypes.POTION_CONTENTS)
+                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS).build());
         } else {
-            meta.setHideTooltip(true);
+            icon.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().hideTooltip(true).build());
         }
 
-        meta.displayName(getIconName(path, option));
-        ArrayList<Component> loreList = new ArrayList<>();
-        loreList.add(getIconDescription(path, option));
-        meta.lore(loreList);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        icon.setItemMeta(meta);
+        icon.setData(DataComponentTypes.CUSTOM_NAME, getIconName(path, option));
+        icon.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(getIconDescription(path, option)).build());
+
         return icon;
     }
 

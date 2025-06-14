@@ -23,19 +23,19 @@ import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-
+@SuppressWarnings("UnstableApiUsage")
 public class EquipmentMenu {
     private final Inventory menuInv;
     private final Debug debug;
@@ -62,11 +62,10 @@ public class EquipmentMenu {
         equipment.clear();
         
         ItemStack disabledIcon = new ItemStack(Material.BARRIER);
-        ItemMeta meta = disabledIcon.getItemMeta();
-        meta.displayName(pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
-        meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"); // mark as icon
-        disabledIcon.setItemMeta(meta);
-
+        disabledIcon.setData(DataComponentTypes.CUSTOM_NAME,
+                             pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
+        disabledIcon.editPersistentDataContainer(
+                pdc -> pdc.set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon")); // mark as icon)
 
         ItemStack helmetIcon = createIcon(Material.LEATHER_HELMET, "helm");
         ItemStack chestIcon = createIcon(Material.LEATHER_CHESTPLATE, "chest");
@@ -83,14 +82,17 @@ public class EquipmentMenu {
 
     private ItemStack createIcon(Material mat, String slot) {
         ItemStack icon = new ItemStack(mat);
-        ItemMeta meta = icon.getItemMeta();
-        meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
-        meta.displayName(pe.plugin.getLang().getMessage("equipslot", "iconname", slot)); //equipslot.msg <option>
-        ArrayList<Component> loreList = new ArrayList<>();
-        loreList.add(pe.plugin.getLang().getMessage("equipslot.description", "icondescription", slot)); //equioslot.description.msg <option>
-        meta.lore(loreList);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        icon.setItemMeta(meta);
+
+        icon.editPersistentDataContainer(
+                pdc -> pdc.set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"));
+        icon.setData(DataComponentTypes.CUSTOM_NAME,
+                     pe.plugin.getLang().getMessage("equipslot", "iconname", slot)); //equipslot.msg <option>
+
+        icon.setData(DataComponentTypes.LORE, ItemLore.lore()
+                .addLine(pe.plugin.getLang().getMessage("equipslot.description", "icondescription", slot))); //equioslot.description.msg <option>));
+        icon.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS).build());
+
         return icon;
     }
 
