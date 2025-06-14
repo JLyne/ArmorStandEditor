@@ -19,19 +19,20 @@ setmode:
   leftarm: Left Arm Position
   rightarm: Right Arm Position
   equipment: Equipment
-  showarms: Toggle Show Arms
-  invisible: Toggle Visibility
+  showarms: Show Arms
+  visibility: Visibility
   size: Size
-  disableslots: Toggle Disable Slots
-  vulnerability: Toggle Vulnerability
-  gravity: Toggle Gravity
-  baseplate: Toggle BasePlate
+  disableslots: Disable Slots
+  vulnerability: Vulnerability
+  gravity: Gravity
+  baseplate: BasePlate
   placement: Placement
   rotate: Rotate
   copy: Copy
   paste: Paste
   reset: Reset Pose
-  itemframe: Toggle Itemframe Visibility
+  itemframevisibility: Item Frame Visibility
+  itemframeglow: Item Frame Glow
 setaxis:
   msg: Setting axis to <x>.
   x: X
@@ -50,35 +51,35 @@ setgravity:
 nomode:
   msg: Click with the edit tool away from an armorstand to select an editing mode first!
 nomodeif:
-  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
+  msg: Click with the Edit Tool away from the Item Frame to select a mode first!
 copied:
-  msg: ArmorStand state copied to slot <x>.
+  msg: Armor Stand state copied to slot <x>.
 pasted:
-  msg: ArmorStand state pasted from slot <x>.
+  msg: Armor Stand state pasted from slot <x>.
 disabledslots:
   msg: Toggled Equipment locks
 toggleinvulnerability:
-  msg: ArmorStand vulnerability state has been toggled to <x>.
+  msg: Armor Stand vulnerability state has been toggled to <x>.
   true: invulnerable
   false: vulnerable
 target:
-  msg: ArmorStand target locked.
+  msg: Armor Stand target locked.
 notarget:
   msg: <x> target unlocked.
-  armorstand: ArmorStand
-  itemframe: ItemFrame
+  armorstand: Armor Stand
+  itemframe: Item Frame
 frametarget:
-  msg: Itemframe target locked.
+  msg: Item Frame target locked.
 give:
   msg: Player given Item with CustomModelData
 doubletarget:
-  msg: Please look at either an ArmorStand or an ItemFrame, not both!
+  msg: Please look at either an Armor Stand or an Item Frame, not both!
 nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+  msg: Please look at an Armor Stand or an Item Frame before switching hands!
 reloaded:
   msg: Configuration File has been reloaded.
 unabledestroycreative:
-  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+  msg: Unable to destroy this invulnerable Armor Stand in creative mode.
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 help:
@@ -106,26 +107,27 @@ helpdiscord:
 
 #warn
 asinuse:
-  msg: Unable to edit ArmorStand as it is currently being edited by another player!
+  msg: Unable to edit Armor Stand as it is currently being edited by another player!
 cantedit:
   msg: Sorry, you cannot edit armor stands here!
 noperm:
   msg: You don't have permission to use this!
 nopermoption:
   msg: You don't have permission to use the <x> Option!
-  basic: Normal ArmorStand
+  basic: Normal Armor Stand
   showarms: Show Arms
-  armorstandvisibility: Armor Stand Visibility
+  visibility: Armor Stand Visibility
   baseplate: Set Baseplate Visibility
-  gravity: Toggle Gravity
-  vulnerability: Toggle Vulnerability
+  gravity: Gravity
+  vulnerability: Vulnerability
   itemframevisibility: Item Frame Visibility
-  size: Toggle ArmorStand Size
-  disableslots: Toggle Equipment Lock
-  paste: Paste ArmorStand Config
-  copy: Copy ArmorStand Config
-  reset: Reset ArmorStand Config
-  armorstandglow: Toggle ArmorStand Glow
+  size: Armor Stand Size
+  disableslots: Equipment Lock
+  paste: Paste Armor Stand Config
+  copy: Copy Armor Stand Config
+  reset: Reset Armor Stand Config
+  armorstandglow: Armor Stand Glow
+  itemframeglow: Item Frame Glow
 noconsolecom:
   msg: Sorry but this command only works from in-game and not from Console!
 
@@ -133,9 +135,9 @@ noconsolecom:
 mainmenutitle:
   msg: Armor Stand Editor Menu
 equiptitle:
-  msg: ArmorStand Equipment
+  msg: Armor Stand Equipment
 presettitle:
-  msg: Pre-Set ArmorStand Poses
+  msg: Pre-Set Armor Stand Poses
 
 #icons
 xaxis:
@@ -203,9 +205,9 @@ disableslots:
   description:
     msg: Enable and disable equipment lock
 vulnerability:
-  msg: Toggle Vulnerability
+  msg: Vulnerability
   description:
-    msg: Toggles an ArmorStand's vulnerability state
+    msg: Toggles an Armor Stand's vulnerability state
 gravity:
   msg: Gravity
   description:
@@ -243,13 +245,13 @@ helpgui:
   description:
     msg: Click here to get help!
 itemframevisible:
-  msg: Itemframe Visibility
+  msg: Item Frame Visibility
   description:
-    msg: Toggles an itemframes visibility
+    msg: Toggles an Item Frame's visibility
 armorstandglow:
-  msg: Toggle ArmorStand Glow
+  msg: Armor Stand Glow
   description:
-    msg: Turn ArmorStand Glowing on or off.
+    msg: Turn Armor Stand Glowing on or off.
 
 #icons (equipment menu)
 disabled:
@@ -275,7 +277,7 @@ equipslot:
 presetmenu:
   msg: Preset Poses
   description:
-    msg: Use a Preset Pose for your ArmorStand [Will Open another Menu]
+    msg: Use a Preset Pose for your Armor Stand [Will Open another Menu]
 
 #icons (Preset Menu)
 sitting:
@@ -313,7 +315,7 @@ hanging:
 present:
   msg: Present
   description:
-    msg: Your ArmorStand has a present for you <3
+    msg: Your Armor Stand has a present for you <3
 fishing:
   msg: Fishing
   description:
