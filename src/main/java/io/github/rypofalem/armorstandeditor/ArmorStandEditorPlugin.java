@@ -86,9 +86,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     double coarseRot;
     double fineRot;
 
-    //Misc Options
-    boolean adminOnlyNotifications = false;
-
     //Glow Entity Colors
     public Scoreboard scoreboard;
     public Team team;
@@ -208,8 +205,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 
-        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
-
         debugFlag = getConfig().getBoolean("debugFlag", false);
         if (debugFlag) {
             getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
@@ -293,10 +288,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public Integer getCustomModelDataInt() {
         return this.getConfig().getInt("customModelDataInt");
-    }
-
-    public boolean getAdminOnlyNotifications() {
-        return this.getConfig().getBoolean("adminOnlyNotifications");
     }
 
     public boolean isEditTool(ItemStack itemStk) {
@@ -447,9 +438,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
-
-        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
-
 
         // Add Debug Reload
         debugFlag = getConfig().getBoolean("debugFlag", false);
