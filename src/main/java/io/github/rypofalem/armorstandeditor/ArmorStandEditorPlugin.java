@@ -83,7 +83,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
     double minScaleValue;
 
     //GUI Settings
-    boolean requireSneaking = false;
     boolean sendToActionBar = true;
 
     //Armor Stand Specific Settings
@@ -165,9 +164,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
             }
         }
-
-        //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking", false);
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
@@ -407,9 +403,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
             }
         }
-
-        //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking", false);
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);

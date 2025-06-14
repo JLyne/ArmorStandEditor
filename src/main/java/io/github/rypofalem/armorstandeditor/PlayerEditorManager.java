@@ -315,7 +315,6 @@ public class PlayerEditorManager implements Listener {
         debug.log("Ran on Right Click Tool Event.");
         Player player = e.getPlayer();
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
-        if (plugin.requireSneaking && !player.isSneaking()) return;
         if (!player.hasPermission("asedit.basic")) return;
         if (plugin.enablePerWorld && (!plugin.allowedWorldList.contains(player.getWorld().getName()))) {
             //Implementation for Per World ASE

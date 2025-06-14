@@ -67,9 +67,6 @@ maxScaleValue: 10
 
 #------ GUI Options
 
-#If true, the GUI will only open if the player is sneaking
-requireSneaking: false
-
 #Sends messages to the ActionBar
 sendMessagesToActionBar: true
 
