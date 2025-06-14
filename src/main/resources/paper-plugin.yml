@@ -21,6 +21,10 @@ dependencies:
       load: BEFORE
       required: false
       join-classpath: true
+    CustomItems:
+      load: AFTER
+      required: false
+      join-classpath: true
 
 permissions:
   asedit.basic:

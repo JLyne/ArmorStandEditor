@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.customitems.CustomItemsHandler;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -37,6 +38,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
@@ -54,7 +57,6 @@ import java.util.logging.Level;
 @SuppressWarnings("UnstableApiUsage")
 public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
-    private Debug debug = new Debug(this);
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
@@ -99,9 +101,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
     //Debugging Options.... Not Exposed
     boolean debugFlag;
 
-    private static ArmorStandEditorPlugin plugin;
+	private CustomItemsHandler customItemsHandler;
 
-    public ArmorStandEditorPlugin() {
+	public ArmorStandEditorPlugin() {
         instance = this;
     }
 
@@ -186,6 +188,28 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
         initEditTool();
         initRecipe();
     }
+
+	@EventHandler
+	public void onPluginEnable(PluginEnableEvent event) {
+		switch (event.getPlugin().getName()) {
+			case "CustomItems" -> {
+				getLogger().info("Registering CustomItems provider");
+				customItemsHandler = new CustomItemsHandler(this);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onPluginDisable(PluginDisableEvent event) {
+		switch (event.getPlugin().getName()) {
+			case "CustomItems" -> {
+				if (customItemsHandler != null) {
+					getLogger().info("Disabling CustomItems provider");
+					customItemsHandler = null;
+				}
+			}
+		}
+	}
 
     @EventHandler
 	public void onServerResourcesReloaded(ServerResourcesReloadedEvent event) {
@@ -351,6 +375,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
             unregisterScoreboards(scoreboard);
         }
+
+		Bukkit.removeRecipe(recipeKey);
+
+		if(customItemsHandler != null) {
+			customItemsHandler.unregisterProvider();
+		}
     }
 
     public Language getLang() {
