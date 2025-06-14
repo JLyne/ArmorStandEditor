@@ -25,6 +25,7 @@ import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
 import io.papermc.paper.event.player.PlayerNameEntityEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -394,6 +395,7 @@ public class PlayerEditorManager implements Listener {
                 String command = item.getItemMeta().getPersistentDataContainer().get(plugin.getIconKey(), PersistentDataType.STRING);
                 if (command != null) {
                     player.performCommand(command);
+                    Bukkit.getScheduler().runTask(plugin, () -> player.closeInventory());
                     return;
                 }
             }
@@ -416,6 +418,7 @@ public class PlayerEditorManager implements Listener {
                 String itemName = item.getItemMeta().getPersistentDataContainer().get(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING);
                 PlayerEditor pe = players.get(player.getUniqueId());
                 pe.presetPoseMenu.handlePresetPose(itemName, player);
+                Bukkit.getScheduler().runTask(plugin, () -> player.closeInventory());
             }
         }
     }
