@@ -41,13 +41,12 @@ import java.util.ArrayList;
 public class Menu {
     private final Inventory menuInv;
     private final PlayerEditor pe;
-    private static Component name = Component.text("Armor Stand Editor Menu");
-    private Debug debug;
+	private final Debug debug;
 
     public Menu(PlayerEditor pe) {
         this.pe = pe;
         this.debug = new Debug(pe.plugin);
-        name = pe.plugin.getLang().getMessage("mainmenutitle", "menutitle");
+		Component name = pe.plugin.getLang().getMessage("mainmenutitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getMenuHolder(), 54, name);
         fillInventory();
     }
@@ -61,7 +60,7 @@ public class Menu {
         ItemStack zAxis;
         ItemStack coarseAdj;
         ItemStack fineAdj;
-        ItemStack rotate = null;
+        ItemStack rotate;
         ItemStack headPos;
         ItemStack rightArmPos;
         ItemStack bodyPos;
@@ -69,11 +68,11 @@ public class Menu {
         ItemStack reset;
         ItemStack showArms;
         ItemStack visibility;
-        ItemStack size = null;
+        ItemStack size;
         ItemStack rightLegPos;
         ItemStack glowing;
         ItemStack leftLegPos;
-        ItemStack plate = null;
+        ItemStack plate;
         ItemStack copy = null;
         ItemStack paste = null;
         ItemStack slot1 = null;
@@ -84,14 +83,14 @@ public class Menu {
         ItemStack itemFrameVisible;
         ItemStack itemFrameGlow;
         ItemStack blankSlot;
-        ItemStack presetItem = null;
+        ItemStack presetItem;
 
         //Variables that need to be Initialized
-        ItemStack place = null;
-        ItemStack equipment = null;
-        ItemStack disableSlots = null;
-        ItemStack gravity = null;
-        ItemStack toggleVulnerabilty = null;
+        ItemStack place;
+        ItemStack equipment;
+        ItemStack disableSlots;
+        ItemStack gravity;
+        ItemStack toggleVulnerabilty;
 
         //Slots with No Value
         blankSlot = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1),
@@ -297,12 +296,8 @@ public class Menu {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.basic")) {
             fillInventory();
-            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Main ASE Menu");
+            debug.log("Player '" + pe.getPlayer().getName() + "' has opened the Main ASE Menu");
             pe.getPlayer().openInventory(menuInv);
         }
-    }
-
-    public static Component getName() {
-        return name;
     }
 }

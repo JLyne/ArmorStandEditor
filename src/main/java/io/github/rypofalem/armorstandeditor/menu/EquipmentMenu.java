@@ -37,18 +37,16 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 
 public class EquipmentMenu {
-    Inventory menuInv;
-    private Debug debug;
-    private PlayerEditor pe;
-    private ArmorStand armorstand;
-    static Component name = Component.text("ArmorStand Equipment");
-    ItemStack helmet, chest, pants, feetsies, rightHand, leftHand;
+    private final Inventory menuInv;
+    private final Debug debug;
+    private final PlayerEditor pe;
+    private final ArmorStand armorstand;
 
-    public EquipmentMenu(PlayerEditor pe, ArmorStand as) {
+	public EquipmentMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
         this.debug = new Debug(pe.plugin);
-        name = pe.plugin.getLang().getMessage("equiptitle", "menutitle");
+		Component name = pe.plugin.getLang().getMessage("equiptitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getEquipmentHolder(), 18, name);
     }
 
@@ -100,18 +98,18 @@ public class EquipmentMenu {
         pe.getPlayer().closeInventory();
         if (EditMode.EQUIPMENT.hasPermission(pe.getPlayer())) {
             fillInventory();
-            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Equipment Menu.");
+            debug.log("Player '" + pe.getPlayer().getName() + "' has opened the Equipment Menu.");
             pe.getPlayer().openInventory(menuInv);
         }
     }
 
     public void equipArmorstand() {
-        helmet = menuInv.getItem(9);
-        chest = menuInv.getItem(10);
-        pants = menuInv.getItem(11);
-        feetsies = menuInv.getItem(12);
-        rightHand = menuInv.getItem(13);
-        leftHand = menuInv.getItem(14);
+		ItemStack helmet = menuInv.getItem(9);
+		ItemStack chest = menuInv.getItem(10);
+		ItemStack pants = menuInv.getItem(11);
+		ItemStack feetsies = menuInv.getItem(12);
+		ItemStack rightHand = menuInv.getItem(13);
+		ItemStack leftHand = menuInv.getItem(14);
 
         debug.log("Equipping the ArmorStand with the following items: ");
         debug.log("Helmet: " + helmet);
@@ -128,9 +126,5 @@ public class EquipmentMenu {
         armorstand.getEquipment().setBoots(feetsies);
         armorstand.getEquipment().setItemInMainHand(rightHand);
         armorstand.getEquipment().setItemInOffHand(leftHand);
-    }
-
-    public static Component getName() {
-        return name;
     }
 }

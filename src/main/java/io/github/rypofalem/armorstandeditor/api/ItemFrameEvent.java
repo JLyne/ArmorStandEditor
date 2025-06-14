@@ -22,6 +22,7 @@ package io.github.rypofalem.armorstandeditor.api;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.Event;
 
+@SuppressWarnings("unused")
 public abstract class ItemFrameEvent extends Event {
 	protected final ItemFrame itemFrame;
 

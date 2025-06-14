@@ -4,7 +4,7 @@ import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import org.bukkit.Bukkit;
 import uk.co.notnull.CustomItems.api.CustomItems;
 
-public final class CustomItemsHandler {;
+public final class CustomItemsHandler {
 	private final ArmorStandEditorItemProvider provider;
 	private final CustomItems customItems = (CustomItems) Bukkit.getPluginManager().getPlugin("CustomItems");
 

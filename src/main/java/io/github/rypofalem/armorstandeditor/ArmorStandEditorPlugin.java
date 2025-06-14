@@ -55,20 +55,14 @@ import java.util.*;
 import java.util.logging.Level;
 
 @SuppressWarnings("UnstableApiUsage")
-public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
+public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
     private Language lang;
 
-    //Server Version Detection
-    String languageFolderLocation = "lang/";
-    public boolean hasFolia = false;
-
-    //Hardcode the ASE Version
-    public static final String ASE_VERSION = "1.21.5-48.3";
-    public static final String SEPARATOR_FIELD = "================================";
+	public boolean hasFolia = false;
 
     public PlayerEditorManager editorManager;
 
@@ -81,8 +75,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
 
     boolean enablePerWorld = false;
     List<?> allowedWorldList = null;
-    double maxScaleValue;
-    double minScaleValue;
+    private double maxScaleValue;
+    private double minScaleValue;
 
     //GUI Settings
     boolean sendToActionBar = true;
@@ -93,13 +87,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
 
     //Glow Entity Colors
     public Scoreboard scoreboard;
-    public Team team;
-    List<String> asTeams = new ArrayList<>();
-    String lockedTeam = "ASLocked";
+	String lockedTeam = "ASLocked";
     String inUseTeam = "AS-InUse";
 
     //Debugging Options.... Not Exposed
-    boolean debugFlag;
+    private boolean debugFlag;
 
 	private CustomItemsHandler customItemsHandler;
 
@@ -113,14 +105,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
         if (!Util.isFolia())
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
-        //Load Messages in Console
-        getLogger().info("======= ArmorStandEditor =======");
-        getLogger().info("Plugin Version: v" + ASE_VERSION);
-
         hasFolia = Util.isFolia();
-
-        asTeams.add(lockedTeam);
-        asTeams.add(inUseTeam);
 
         if (!hasFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
@@ -129,12 +114,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
             getServer().getLogger().warning("Scoreboards currently do not work on Folia. Scoreboard Coloring will not work");
         }
 
-
-        getLogger().info(SEPARATOR_FIELD);
-
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
         updateConfig("", "config.yml");
-        updateConfig(languageFolderLocation, "de_DE.yml");
+		//Server Version Detection
+		String languageFolderLocation = "lang/";
+		updateConfig(languageFolderLocation, "de_DE.yml");
         updateConfig(languageFolderLocation, "es_ES.yml");
         updateConfig(languageFolderLocation, "fr_FR.yml");
         updateConfig(languageFolderLocation, "ja_JP.yml");
@@ -162,7 +146,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
         if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
-            if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
+            if (allowedWorldList != null && allowedWorldList.getFirst().equals("*")) {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
             }
         }
@@ -220,7 +204,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
     private void registerScoreboards(Scoreboard scoreboard) {
         getServer().getLogger().info("Registering Scoreboards required for Glowing Effects");
 
-        //Register the In Use Team First - It doesnt require a Glow Effect;'/
+        //Register the In Use Team First - It doesn't require a Glow Effect;'/
         scoreboard.registerNewTeam(inUseTeam);
 
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
@@ -236,7 +220,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
         getLogger().info("Removing Scoreboards required for Glowing Effects when Disabling Slots...");
 
         // Locked Team Removal
-        team = scoreboard.getTeam(lockedTeam);
+		Team team = scoreboard.getTeam(lockedTeam);
         if (team != null) { //Basic Sanity Check to ensure that the team is there
             team.unregister();
         } else {
@@ -429,7 +413,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
         if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
-            if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
+            if (allowedWorldList != null && allowedWorldList.getFirst().equals("*")) {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
             }
         }

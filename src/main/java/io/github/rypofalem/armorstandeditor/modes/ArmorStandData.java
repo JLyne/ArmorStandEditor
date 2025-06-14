@@ -19,7 +19,6 @@
 
 package io.github.rypofalem.armorstandeditor.modes;
 
-import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +29,6 @@ public class ArmorStandData {
     public boolean visible, size, basePlate, gravity, showArms;
     public ItemStack head, body, legs, feetsies, rightHand, leftHand;
     public double attributeScale;
-    private ArmorStandEditorPlugin plugin = ArmorStandEditorPlugin.instance();
 
     ArmorStandData(ArmorStand as) {
         this.headPos = as.getHeadPose();

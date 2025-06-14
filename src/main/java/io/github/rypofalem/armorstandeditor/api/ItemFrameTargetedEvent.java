@@ -23,7 +23,9 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class ItemFrameTargetedEvent extends ItemFrameEvent implements Cancellable {
 	/* Generated for Bukkit */
 	private static final HandlerList handlers = new HandlerList();
@@ -40,7 +42,7 @@ public class ItemFrameTargetedEvent extends ItemFrameEvent implements Cancellabl
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return (handlers);
 	}
 

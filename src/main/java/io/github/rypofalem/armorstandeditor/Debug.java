@@ -6,15 +6,14 @@ import java.util.logging.Level;
 
 public class Debug {
 
-    private boolean debugTurnedOn;
-    private ArmorStandEditorPlugin plugin;
+	private final ArmorStandEditorPlugin plugin;
 
     public Debug(ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void log(String msg) {
-        debugTurnedOn = plugin.isDebug();
+		boolean debugTurnedOn = plugin.isDebug();
         if (!debugTurnedOn) return;
         Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] " + msg);
     }

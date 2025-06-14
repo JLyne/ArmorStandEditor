@@ -53,22 +53,18 @@ import java.util.UUID;
 
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
-    private Debug debug;
-    private ArmorStandEditorPlugin plugin;
-    private HashMap<UUID, PlayerEditor> players;
-    private ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
-    private ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
-    private ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
+    private final Debug debug;
+    private final ArmorStandEditorPlugin plugin;
+    private final HashMap<UUID, PlayerEditor> players;
+    private final ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
+    private final ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
+    private final ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
     double coarseAdj;
     double fineAdj;
     double coarseMov;
     double fineMov;
-    private ArrayList<ArmorStand> as = null;
-    private ArrayList<ItemFrame> itemF = null;
-    private Integer noSize = 0;
-    Team team;
 
-    // Instantiate protections used to determine whether a player may edit an armor stand or item frame
+	// Instantiate protections used to determine whether a player may edit an armor stand or item frame
     private final List<Protection> protections = ImmutableList.of(
         new GriefPreventionProtection(),
         new PlotSquaredProtection(),
@@ -213,7 +209,7 @@ public class PlayerEditorManager implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
-        debug.log("PlayerSwapHandItemsEvent trigger for Player: " + event.getPlayer().getDisplayName());
+        debug.log("PlayerSwapHandItemsEvent trigger for Player: " + event.getPlayer().getName());
         if (!plugin.isEditTool(event.getOffHandItem())) {
             return; //event assumes they are already switched
         }
@@ -221,10 +217,10 @@ public class PlayerEditorManager implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
 
-        as = getTargets(player); //Get All ArmorStand closest to player
-        itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
+		ArrayList<ArmorStand> as = getTargets(player); //Get All ArmorStand closest to player
+		ArrayList<ItemFrame> itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
 
-        // Check for null and empty lists
+		// Check for null and empty lists
         if (as != null && itemF != null && !as.isEmpty() && !itemF.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
         } else if (as != null && !as.isEmpty()) {
@@ -442,7 +438,7 @@ public class PlayerEditorManager implements Listener {
 
             // Remove the In Use Lock
             if (!Util.isFolia()) {
-                team = plugin.scoreboard.getTeam(plugin.inUseTeam);
+				Team team = plugin.scoreboard.getTeam(plugin.inUseTeam);
                 if (team != null) {
                     team.removeEntry(pe.armorStandInUseId.toString());
                 }

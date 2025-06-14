@@ -23,7 +23,9 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class ArmorStandTargetedEvent extends ArmorStandEvent implements Cancellable {
 	/* Generated for Bukkit */
 	private static final HandlerList handlers = new HandlerList();
@@ -40,7 +42,7 @@ public class ArmorStandTargetedEvent extends ArmorStandEvent implements Cancella
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public @NotNull HandlerList getHandlers() {
 		return (handlers);
 	}
 

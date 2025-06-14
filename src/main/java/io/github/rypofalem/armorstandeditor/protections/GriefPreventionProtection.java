@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
 
 public class GriefPreventionProtection implements Protection {
 
-    private boolean gpEnabled;
+    private final boolean gpEnabled;
     private GriefPrevention griefPrevention = null;
 
     public GriefPreventionProtection() {

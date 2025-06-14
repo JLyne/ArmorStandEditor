@@ -50,29 +50,29 @@ import org.bukkit.util.EulerAngle;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PlayerEditor {
+public final class PlayerEditor {
     public ArmorStandEditorPlugin plugin;
-    private Debug debug;
-    Team team;
-    private UUID uuid;
+    private final Debug debug;
+    private Team team;
+    private final UUID uuid;
     public UUID armorStandInUseId;
-    UUID armorStandID;
-    EditMode eMode;
-    AdjustmentMode adjMode;
-    CopySlots copySlots;
-    Axis axis;
-    double eulerAngleChange;
-    double degreeAngleChange;
-    double movChange;
-    Menu chestMenu;
-    ArmorStand target;
-    ArrayList<ArmorStand> targetList = null;
+    private UUID armorStandID;
+    private EditMode eMode;
+    private AdjustmentMode adjMode;
+    private final CopySlots copySlots;
+    private Axis axis;
+    private double eulerAngleChange;
+    private double degreeAngleChange;
+    private double movChange;
+    private final Menu chestMenu;
+    private ArmorStand target;
+    private ArrayList<ArmorStand> targetList = null;
 
     //NEW: ItemFrame Stuff
-    ItemFrame frameTarget;
-    ArrayList<ItemFrame> frameTargetList = null;
-    int targetIndex = 0;
-    int frameTargetIndex = 0;
+    private ItemFrame frameTarget;
+    private ArrayList<ItemFrame> frameTargetList = null;
+    private int targetIndex = 0;
+    private int frameTargetIndex = 0;
     EquipmentMenu equipMenu;
     PresetArmorPosesMenu presetPoseMenu;
 
@@ -245,7 +245,7 @@ public class PlayerEditor {
             debug.log("Is ArmorStand currently in use by another player?: " + team.hasEntry(armorStandInUseId.toString()));
     
             if(team != null && !team.hasEntry(armorStandInUseId.toString())){
-                debug.log("ArmorStand Not on a Team and Player '" + getPlayer().getDisplayName() + "' has triggered to Open the Equipment Menu, Adding to In Use Team");
+                debug.log("ArmorStand Not on a Team and Player '" + getPlayer().getName() + "' has triggered to Open the Equipment Menu, Adding to In Use Team");
                 team.addEntry(armorStandInUseId.toString());
                 getPlayer().closeInventory();
                 equipMenu = new EquipmentMenu(this, armorStand);
@@ -254,7 +254,7 @@ public class PlayerEditor {
                 sendMessage("asinuse", "warn");
             }
         } else { 
-                debug.log("ArmorStand Not on a Team and Player '" + getPlayer().getDisplayName() + "' has triggered to Open the Equipment Menu. Folia.");
+                debug.log("ArmorStand Not on a Team and Player '" + getPlayer().getName() + "' has triggered to Open the Equipment Menu. Folia.");
                 getPlayer().closeInventory();
                 equipMenu = new EquipmentMenu(this, armorStand);
                 equipMenu.openMenu();
@@ -262,7 +262,7 @@ public class PlayerEditor {
     }
 
     private void choosePreset(ArmorStand armorStand) {
-        debug.log("Player '" + getPlayer().getDisplayName() + "' has triggered the Preset Poses Menu");
+        debug.log("Player '" + getPlayer().getName() + "' has triggered the Preset Poses Menu");
         getPlayer().closeInventory();
         presetPoseMenu = new PresetArmorPosesMenu(this, armorStand);
         presetPoseMenu.openMenu();
@@ -331,7 +331,7 @@ public class PlayerEditor {
             return;
         }
 
-        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
+        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getName());
         armorStand.teleportAsync(loc);
     }
 
@@ -353,7 +353,7 @@ public class PlayerEditor {
             return;
         }
 
-        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
+        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getName());
         armorStand.teleportAsync(loc);
     }
 
@@ -361,7 +361,7 @@ public class PlayerEditor {
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 + (float) degreeAngleChange) % 360 - 180);
-        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
+        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getName());
         armorStand.teleportAsync(loc);
     }
 
@@ -369,20 +369,20 @@ public class PlayerEditor {
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 - (float) degreeAngleChange) % 360 - 180);
-        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getDisplayName());
+        debug.log("Armorstand will be teleported to: " + loc.getX() + ", " + loc.getY()+ ", " + loc.getZ() + ", near player " + getPlayer().getName());
         armorStand.teleportAsync(loc);
     }
 
     private void copy(ArmorStand armorStand) {
         copySlots.copyDataToSlot(armorStand);
-        debug.log("ArmorStand Items, Stats and Attributes has been copied to " + (copySlots.currentSlot + 1) + ", near player " + getPlayer().getDisplayName());
+        debug.log("ArmorStand Items, Stats and Attributes has been copied to " + (copySlots.currentSlot + 1) + ", near player " + getPlayer().getName());
         sendMessage("copied", "" + (copySlots.currentSlot + 1));
         setMode(EditMode.PASTE);
     }
 
     private void paste(ArmorStand armorStand) {
         ArmorStandData data = copySlots.getDataToPaste();
-        debug.log("Pasting ArmorStand Attributes and Settings from: " + (copySlots.currentSlot + 1) + ", near player " + getPlayer().getDisplayName());
+        debug.log("Pasting ArmorStand Attributes and Settings from: " + (copySlots.currentSlot + 1) + ", near player " + getPlayer().getName());
         if (data == null) return;
         armorStand.setHeadPose(data.headPos);
         armorStand.setBodyPose(data.bodyPos);
@@ -412,7 +412,7 @@ public class PlayerEditor {
     }
 
     private void resetPosition(ArmorStand armorStand) {
-        debug.log("Resetting ArmorStand near the Player " + getPlayer().getDisplayName());
+        debug.log("Resetting ArmorStand near the Player " + getPlayer().getName());
         armorStand.setHeadPose(new EulerAngle(0, 0, 0));
         armorStand.setBodyPose(new EulerAngle(0, 0, 0));
         armorStand.setLeftArmPose(new EulerAngle(0, 0, 0));
@@ -422,7 +422,7 @@ public class PlayerEditor {
     }
 
     private void toggleDisableSlots(ArmorStand armorStand) {
-        debug.log("Adding DisabledSlots on ArmorStand near the Player " + getPlayer().getDisplayName());
+        debug.log("Adding DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
         if (armorStand.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING)) { //Adds a lock to every slot or removes it
             team = Util.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
             armorStandID = armorStand.getUniqueId();
@@ -440,7 +440,7 @@ public class PlayerEditor {
 
 
         } else {
-            debug.log("Removing DisabledSlots on ArmorStand near the Player " + getPlayer().getDisplayName());
+            debug.log("Removing DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
             for (final EquipmentSlot slot : EquipmentSlot.values()) { //LOCKED
                 armorStand.addEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING);
                 armorStand.addEquipmentLock(slot, ArmorStand.LockType.ADDING);
@@ -456,24 +456,24 @@ public class PlayerEditor {
     }
 
     private void toggleInvulnerability(ArmorStand armorStand) { //See NewFeature-Request #256 for more info
-        debug.log("Making an ArmorStand vulnerable/invulnerable (set armorStand.isInvulnerable() = '"+ !armorStand.isInvulnerable() +"') near player: " + getPlayer().getDisplayName());
+        debug.log("Making an ArmorStand vulnerable/invulnerable (set armorStand.isInvulnerable() = '"+ !armorStand.isInvulnerable() +"') near player: " + getPlayer().getName());
         armorStand.setInvulnerable(!armorStand.isInvulnerable());
         sendMessage("toggleinvulnerability", String.valueOf(armorStand.isInvulnerable()));
     }
 
     private void toggleGravity(ArmorStand armorStand) {
-        debug.log("Toggling the Gravity of an ArmorStand near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Gravity of an ArmorStand near player: " + getPlayer().getName());
         armorStand.setGravity(!armorStand.hasGravity());
         sendMessage("setgravity", String.valueOf(armorStand.hasGravity()));//Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
     }
 
     void togglePlate(ArmorStand armorStand) {
-        debug.log("Toggling the Baseplate of an ArmorStand near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Baseplate of an ArmorStand near player: " + getPlayer().getName());
         armorStand.setBasePlate(!armorStand.hasBasePlate());
     }
 
     void toggleGlowing(ArmorStand armorStand) {
-        debug.log("Toggling the Glowing Ability of an ArmorStand near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Glowing Ability of an ArmorStand near player: " + getPlayer().getName());
 
         //Will only make it glow white - Not something we can do like with Locking. Do not request this!
         //Otherwise, this simple function becomes a mess to maintain. As you would need a Team generated with each
@@ -482,22 +482,22 @@ public class PlayerEditor {
     }
 
     void toggleArms(ArmorStand armorStand) {
-        debug.log("Toggling the Showing of Arms of an ArmorStand near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Showing of Arms of an ArmorStand near player: " + getPlayer().getName());
         armorStand.setArms(!armorStand.hasArms());
     }
 
     void toggleVisible(ArmorStand armorStand) {
-        debug.log("Toggling the Visiblity of an ArmorStand near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Visiblity of an ArmorStand near player: " + getPlayer().getName());
         armorStand.setVisible(!armorStand.isVisible());
     }
 
     void toggleItemFrameVisible(ItemFrame itemFrame) {
-        debug.log("Toggling the Visibility of an ItemFrame near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Visibility of an ItemFrame near player: " + getPlayer().getName());
         itemFrame.setVisible(!itemFrame.isVisible());
     }
 
     private void toggleItemFrameGlow(ItemFrame itemFrame) {
-        debug.log("Toggling the Glow of an ItemFrame near player: " + getPlayer().getDisplayName());
+        debug.log("Toggling the Glow of an ItemFrame near player: " + getPlayer().getName());
         ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, getPlayer());
         Bukkit.getPluginManager().callEvent(e);
 

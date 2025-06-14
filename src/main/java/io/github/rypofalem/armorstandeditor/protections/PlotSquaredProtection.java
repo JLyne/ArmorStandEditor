@@ -38,8 +38,6 @@ public class PlotSquaredProtection implements Protection {
 
     public PlotSquaredProtection() {
         psEnabled = Bukkit.getPluginManager().isPluginEnabled("PlotSquared");
-
-        if (!psEnabled) return;
     }
 
     public boolean checkPermission(Block block, Player player) {

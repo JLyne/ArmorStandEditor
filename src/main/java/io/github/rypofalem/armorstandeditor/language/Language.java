@@ -29,12 +29,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class Language {
-    final String DEFAULT_LANG = "en_US.yml";
-    private YamlConfiguration langConfig = null;
+public final class Language {
+	private YamlConfiguration langConfig = null;
     private YamlConfiguration defConfig = null;
     private File langFile = null;
-    ArmorStandEditorPlugin plugin;
+    private final ArmorStandEditorPlugin plugin;
 
     public Language(String langFileName, ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
@@ -42,7 +41,8 @@ public class Language {
     }
 
     public void reloadLang(String langFileName) {
-        if (langFileName == null) langFileName = DEFAULT_LANG;
+		String DEFAULT_LANG = "en_US.yml";
+		if (langFileName == null) langFileName = DEFAULT_LANG;
         File langFolder = new File(plugin.getDataFolder().getPath() + File.separator + "lang");
         langFile = new File(langFolder, langFileName);
 
@@ -51,8 +51,7 @@ public class Language {
         Reader defaultLangStream = new InputStreamReader(input, StandardCharsets.UTF_8);
         defConfig = YamlConfiguration.loadConfiguration(defaultLangStream);
 
-        input = null;
-        try {
+		try {
             input = new FileInputStream(langFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

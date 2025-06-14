@@ -22,6 +22,7 @@ package io.github.rypofalem.armorstandeditor.api;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.event.Event;
 
+@SuppressWarnings("unused")
 public abstract class ArmorStandEvent extends Event {
 	protected final ArmorStand armorStand;
 
