@@ -29,12 +29,9 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
-import java.util.Objects;
 
 import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static io.papermc.paper.command.brigadier.Commands.argument;
@@ -131,21 +128,13 @@ public class Commands {
                           List.of("asedit", "armorstandeditor"));
     }
 
-    // Implemented to fix:
-    // https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/35 &
-    // https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/30 - See Remarks OTHER
     private int commandGive(CommandSender sender) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage(plugin.getLang().getMessage("noconsolecom", "warn"));
             return com.mojang.brigadier.Command.SINGLE_SUCCESS;
         }
 
-        ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
-        ItemMeta meta = stack.getItemMeta();
-        Objects.requireNonNull(meta).setCustomModelData(plugin.getCustomModelDataInt());
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        stack.setItemMeta(meta);
+        ItemStack stack = plugin.getEditTool();
         player.getInventory().addItem(stack);
         player.sendMessage(plugin.getLang().getMessage("give", "info"));
 
@@ -204,7 +193,7 @@ public class Commands {
 
         player.closeInventory();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-        player.sendMessage(plugin.getLang().getMessage("help", "info", plugin.editTool.name()));
+        player.sendMessage(plugin.getLang().getMessage("help", "info"));
         player.sendMessage("");
         player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
         player.sendMessage("");

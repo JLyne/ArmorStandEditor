@@ -69,7 +69,7 @@ toggleinvulnerability:
   true: 不可破坏
   false: 可破坏
 help:
-  msg: "1. 手持编辑工具(<x>).
+  msg: "1. 手持编辑工具.
 
       2. 对着盔甲架“左键或右键”来打开菜单.
 

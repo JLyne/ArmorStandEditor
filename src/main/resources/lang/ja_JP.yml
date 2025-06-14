@@ -73,7 +73,7 @@ unabledestroycreative:
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 help:
-  msg: "1. 編集ツール(<x>)を手に持ちます。
+  msg: "1. 編集ツールを手に持ちます。
 
       2. 右か左クリックをしてアーマースタンドのメニューを開きます。
 

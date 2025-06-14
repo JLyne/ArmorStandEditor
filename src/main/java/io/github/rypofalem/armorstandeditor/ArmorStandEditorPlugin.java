@@ -21,18 +21,26 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.language.Language;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.event.server.ServerResourcesReloadedEvent;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.recipe.CraftingBookCategory;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -44,8 +52,8 @@ import java.util.*;
 import java.util.logging.Level;
 
 @SuppressWarnings("UnstableApiUsage")
-public class ArmorStandEditorPlugin extends JavaPlugin {
-
+public class ArmorStandEditorPlugin extends JavaPlugin implements Listener {
+    private static final MiniMessage miniMessage = MiniMessage.miniMessage();
     private Debug debug = new Debug(this);
 
     private NamespacedKey iconKey;
@@ -62,19 +70,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public PlayerEditorManager editorManager;
 
-    //Edit Tool Information
-    Material editTool;
-    String toolType;
-    int editToolData = Integer.MIN_VALUE;
-    boolean requireToolData = false;
-    boolean requireToolName = false;
-    Component editToolName = null;
-    boolean requireToolLore = false;
-    List<?> editToolLore = null;
+    //Edit Tool
+    private final NamespacedKey editToolKey = new NamespacedKey(this, "edit_tool");
+    private final NamespacedKey recipeKey = new NamespacedKey(this, "edit_tool");
+    private Material editToolMaterial;
+    private ItemStack editTool;
+    private boolean pluginManagedEditTool;
+
     boolean enablePerWorld = false;
     List<?> allowedWorldList = null;
-    boolean allowCustomModelData = false;
-    Integer customModelDataInt = Integer.MIN_VALUE;
     double maxScaleValue;
     double minScaleValue;
 
@@ -154,43 +158,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         maxScaleValue = getConfig().getDouble("maxScaleValue");
         minScaleValue = getConfig().getDouble("minScaleValue");
 
-        //Set Tool to be used in game
-        toolType = getConfig().getString("tool");
-        if (toolType != null) {
-            editTool = Material.getMaterial(toolType); //Ignore Warning
-        } else {
-            getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
-            getLogger().info(SEPARATOR_FIELD);
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
-        //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
-        if (requireToolName) {
-            editToolName = getConfig().getRichMessage("toolName", null);
-        }
-
-        //Custom Model Data
-        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
-
-        if (allowCustomModelData) {
-            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
-        }
-
-        //Is there NBT Required for the tool
-        requireToolData = getConfig().getBoolean("requireToolData", false);
-
-        if (requireToolData) {
-            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
-        }
-
-        requireToolLore = getConfig().getBoolean("requireToolLore", false);
-
-        if (requireToolLore) {
-            editToolLore = getConfig().getList("toolLore", null);
-        }
-
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
         if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
@@ -217,7 +184,17 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
                                      event -> new Commands(this, event.registrar()));
 
         getServer().getPluginManager().registerEvents(editorManager, this);
+        getServer().getPluginManager().registerEvents(this, this);
+
+        pluginManagedEditTool = getConfig().getBoolean("pluginManagedTool", false);
+        initEditTool();
+        initRecipe();
     }
+
+    @EventHandler
+	public void onServerResourcesReloaded(ServerResourcesReloadedEvent event) {
+		initRecipe();
+	}
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
     private void registerScoreboards(Scoreboard scoreboard) {
@@ -233,7 +210,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         } else {
             getServer().getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
         }
-
     }
 
     private void unregisterScoreboards(Scoreboard scoreboard) {
@@ -255,6 +231,113 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
         }
     }
+
+    private void initEditTool() {
+        String toolMaterialName = getConfig().getString("toolMaterial", Material.FLINT.key().toString());
+
+        Component editToolItemName = getConfig().getRichMessage("toolItemName", null);
+        List<Component> editToolLore = getConfig().getStringList("toolLore").stream()
+                .map(miniMessage::deserialize).toList();
+
+        NamespacedKey editToolItemModel = NamespacedKey.fromString(getConfig().getString("toolItemModel", ""));
+
+        Material editToolMaterial = Material.matchMaterial(toolMaterialName);
+
+        if(editToolMaterial == null || !editToolMaterial.isItem()) {
+            throw new IllegalArgumentException("Invalid material for edit tool " + toolMaterialName);
+        }
+
+		this.editToolMaterial = editToolMaterial;
+        ItemStack editTool = new ItemStack(editToolMaterial, 1);
+
+        if (!pluginManagedEditTool) {
+            return;
+        }
+
+		editTool.editPersistentDataContainer(
+				pdc -> pdc.set(editToolKey, PersistentDataType.BOOLEAN, true));
+
+        if (editToolItemName != null) {
+		    editTool.setData(DataComponentTypes.ITEM_NAME, editToolItemName);
+        }
+
+		editTool.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
+		editTool.setData(DataComponentTypes.UNBREAKABLE);
+		editTool.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+				.addHiddenComponents(DataComponentTypes.UNBREAKABLE).build());
+
+		if(!editToolLore.isEmpty()) {
+			editTool.setData(DataComponentTypes.LORE, ItemLore.lore(editToolLore));
+		}
+
+		if(editToolItemModel != null) {
+			editTool.setData(DataComponentTypes.ITEM_MODEL, editToolItemModel);
+		}
+
+		this.editTool = editTool;
+    }
+
+    private void initRecipe() {
+		if(Bukkit.getRecipe(recipeKey) != null) {
+			Bukkit.removeRecipe(recipeKey);
+		}
+
+        if (!getConfig().getBoolean("toolAllowCrafting") || editTool == null) {
+            return;
+        }
+
+		List<String> shape = getConfig().getStringList("toolRecipeShape");
+		Map<Character, Material> ingredients = new HashMap<>();
+		boolean recipeNotEmpty = false;
+
+		if(shape.isEmpty() || shape.size() > 3) {
+			throw new IllegalArgumentException("Recipe shape must contain 1-3 rows");
+		}
+
+		for (String s : shape) {
+			if(s.length() > 3) {
+				throw new IllegalArgumentException("Recipe rows must contain 1-3 columns");
+			}
+
+			if(!s.isEmpty()) {
+				recipeNotEmpty = true;
+			}
+
+			for(int i = 0; i < s.length(); i++) {
+				char c = s.charAt(i);
+
+				if(c == ' ') {
+					continue;
+				}
+
+				String ingredient = getConfig().getString("toolRecipeIngredients." + c);
+
+				if(ingredient == null) {
+					throw new IllegalArgumentException("Missing recipe ingredient: " + c);
+				}
+
+				Material material = Material.matchMaterial(ingredient);
+
+				if(material == null) {
+					throw new IllegalArgumentException("Invalid recipe ingredient for " + c + ": " + ingredient);
+				}
+
+				ingredients.put(c, material);
+			}
+		}
+
+		if(!recipeNotEmpty) {
+			throw new IllegalArgumentException("Recipe must not be empty");
+		}
+
+		ShapedRecipe recipe = new ShapedRecipe(recipeKey, editTool);
+		recipe.setCategory(CraftingBookCategory.EQUIPMENT);
+
+		recipe.shape(shape.toArray(new String[0]));
+		ingredients.forEach(recipe::setIngredient);
+
+		Bukkit.addRecipe(recipe);
+	}
 
     private void updateConfig(String folder, String config) {
         if (!new File(getDataFolder() + File.separator + folder + config).exists()) {
@@ -278,93 +361,19 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return lang;
     }
 
-    public boolean getAllowCustomModelData() {
-        return this.getConfig().getBoolean("allowCustomModelData");
-    }
-
-    public Material getEditTool() {
+    public ItemStack getEditTool() {
         return this.editTool;
     }
 
-    public Integer getCustomModelDataInt() {
-        return this.getConfig().getInt("customModelDataInt");
-    }
-
-    public boolean isEditTool(ItemStack itemStk) {
-        if (itemStk == null) {
-            return false;
-        }
-        if (editTool != itemStk.getType()) {
-            return false;
+    public boolean isEditTool(ItemStack item) {
+        if (!pluginManagedEditTool) {
+            return item != null && item.getType() == editToolMaterial;
         }
 
-        ItemMeta itemMeta = itemStk.getItemMeta();
-        if (itemMeta == null) return false;
-
-        //FIX: Depreciated Stack for getDurability
-        if (requireToolData) {
-            Damageable d1 = (Damageable) itemMeta; //Get the Damageable Options for itemStk
-            if (d1 != null) { //We do this to prevent NullPointers
-                if (d1.getDamage() != (short) editToolData) {
-                    return false;
-                }
-            }
-        }
-
-        if (requireToolName && editToolName != null) {
-            if (!itemStk.hasItemMeta()) {
-                return false;
-            }
-
-            //Get the name of the Edit Tool - If Null, return false
-            Component itemName = itemMeta.displayName();
-
-            //If the name of the Edit Tool is not the Name specified in Config then Return false
-            if (!itemName.equals(editToolName)) {
-                return false;
-            }
-
-        }
-
-        if (requireToolLore && editToolLore != null) {
-
-            //If the ItemStack does not have Metadata then we return false
-            if (!itemStk.hasItemMeta()) {
-                return false;
-            }
-
-            //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = itemMeta.getLore();
-
-            //If the Item does not have Lore - Return False
-            boolean hasTheItemLore = itemMeta.hasLore();
-            if (!hasTheItemLore) {
-                return false;
-            }
-
-            //Get the localised ListString of editToolLore
-            List<String> listStringOfEditToolLore = (List<String>) editToolLore;
-
-            //Return False if itemLore on the item does not match what we expect in the config.
-            if (!itemLore.equals(listStringOfEditToolLore)) {
-                return false;
-            }
-
-        }
-
-        if (allowCustomModelData && customModelDataInt != null) {
-            //If the ItemStack does not have Metadata then we return false
-            if (!itemStk.hasItemMeta()) {
-                return false;
-            }
-            Integer itemCustomModel = itemMeta.getCustomModelData();
-            return itemCustomModel.equals(customModelDataInt);
-        }
-        return true;
+        return item != null && item.getPersistentDataContainer().has(editToolKey);
     }
 
     public void performReload() {
-
         //Unregister Scoreboard before before performing the reload
         if (!hasFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
@@ -383,7 +392,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Set Language
         lang = new Language(getConfig().getString("lang"), this);
 
-
         //Rotation
         coarseRot = getConfig().getDouble("coarse");
         fineRot = getConfig().getDouble("fine");
@@ -391,39 +399,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         // Scale Values for Size
         maxScaleValue = getConfig().getDouble("maxScaleValue");
         minScaleValue = getConfig().getDouble("minScaleValue");
-
-        //Set Tool to be used in game
-        toolType = getConfig().getString("tool");
-        if (toolType != null) {
-            editTool = Material.getMaterial(toolType); //Ignore Warning
-        }
-
-        //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
-        if (requireToolName) {
-            editToolName = getConfig().getRichMessage("toolName", null);
-        }
-
-        //Custom Model Data
-        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
-
-        if (allowCustomModelData) {
-            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
-        }
-
-        //Is there NBT Required for the tool
-        requireToolData = getConfig().getBoolean("requireToolData", false);
-
-        if (requireToolData) {
-            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
-        }
-
-        requireToolLore = getConfig().getBoolean("requireToolLore", false);
-
-        if (requireToolLore) {
-            editToolLore = getConfig().getList("toolLore", null);
-        }
-
 
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
         if (enablePerWorld) {
@@ -444,6 +419,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         if (debugFlag) {
             getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
         }
+
+		pluginManagedEditTool = getConfig().getBoolean("pluginManagedTool", false);
+        initEditTool();
+        initRecipe();
     }
 
     public static ArmorStandEditorPlugin instance() {

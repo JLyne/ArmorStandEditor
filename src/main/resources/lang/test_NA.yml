@@ -82,7 +82,7 @@ unabledestroycreative:
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 help:
-  msg: "1. Hold the editing tool(<x>) in your main hand
+  msg: "1. Hold the editing tool in your main hand
 
       2. Left or right click away from an armor stand to open menu.
 

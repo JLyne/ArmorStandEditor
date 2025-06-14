@@ -75,7 +75,7 @@ notincorrectworld:
 unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 help:
-  msg: "1. Tenez l'outil d'édition (<x>) dans votre main principale.
+  msg: "1. Tenez l'outil d'édition dans votre main principale.
   
       2. Cliquez à gauche ou à droite à partir d'un support d'armure pour ouvrir le menu.
       

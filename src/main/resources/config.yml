@@ -24,33 +24,33 @@ allowed-worlds:
 #----------- TOOL SETTINGS
 
 #Name of the edit tool's item Material.
-#You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-tool: FLINT
+toolMaterial: minecraft:flint
 
-#(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
-requireToolData: false
-toolData: 0
+#Whether edit tools should be managed solely by the plugin instead of the above material check.
+#When enabled, only items created by the plugin will be usable to edit armor stands.
+#The below settings will also be respected for further customising the item.
+pluginManagedTool: false
 
-#(Optional) data that the plugin looks for to identify the name of the Edit Tool. Useful for Public Servers that do not want
-#normal use of Flint to be impacted.
-requireToolName: false
-toolName: Example Name here
+#Item model to use for edit tool (requires pluginManagedItem: true)
+toolItemModel: minecraft:flint
 
-#(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool. - Now has MultiLine Support
-#NOTE: If you wish to make use of single line tool lore, please remove the 2nd item in the list and replace the first
-#      text with what you want your ToolLore to be
-requireToolLore: false
+#Item name to add to edit tool (requires pluginManagedItem: true)
+toolItemName: Example Name here
+
+#Lore to add to edit tool (requires pluginManagedItem: true)
 toolLore:
-  - "TIME TO GET REALLY" #Replace if you want SingleLine ToolLore
-  - "REALLY DANGEROUS!"  #Remove if you don't want MultiLine ToolLore
+  - Example lore 1
+  - Example lore 2
 
-#(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
-#and at the Int set here to know what to set.
-
-#Also please if you are using this, ensure that you also give people the ability asedit.give in
-#order to allow them to change their edit tool for the right Custom Model Data
-allowCustomModelData: false
-customModelDataInt: 0
+# Enable the below crafting recipe for the edit tool (requires pluginManagedItem: true)
+toolAllowCrafting: false
+toolRecipeShape:
+  - '  #'
+  - ' $ '
+  - '   '
+toolRecipeIngredients:
+  '#': minecraft:iron_ingot
+  $: minecraft:stick
 
 #----------- ARMOR STAND SPECIFICS
 

@@ -63,7 +63,7 @@ noframetarget:
 doubletarget:
   msg: Bitte schaue entweder auf einen Rüstungsständer oder einem ItemFrame, nicht beides!
 help:
-  msg: "1. Halte das Bearbeitungswerkzeug(<x>) in deiner Haupthand.
+  msg: "1. Halte das Bearbeitungswerkzeug in deiner Haupthand.
 
       2. Links oder Rechsklicke entfernt von einem Rüstungsständer um das Menü zu öffnen.
 

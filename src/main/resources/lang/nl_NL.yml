@@ -74,7 +74,7 @@ notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 #Help
 help:
-  msg: "1. Houd het wijzigingsgereedschap (<x>) in uw hoofdhand.
+  msg: "1. Houd het wijzigingsgereedschap in uw hoofdhand.
 
       2. Links of rechts klikken vanaf een armor stand om het menu te openen.
 
