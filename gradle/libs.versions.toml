@@ -1,0 +1,19 @@
+[versions]
+pluginYmlPaper = "0.7.1"
+paperApi = "1.21.5-R0.1-SNAPSHOT"
+griefPrevention = "17.0.0"
+worldguard = "7.0.14"
+customItems = "1.0-SNAPSHOT"
+intellectualsitesBom = "1.52"
+
+[libraries]
+paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
+griefPrevention = { group = "com.github.TechFortress", name = "GriefPrevention", version.ref  = "griefPrevention" }
+worldguard =  { group = "com.sk89q.worldguard", name = "worldguard-bukkit", version.ref  = "worldguard" }
+customItems =  { group = "uk.co.notnull", name = "CustomItemsAPI", version.ref  = "customItems" }
+plotsquaredCore = { group = "com.intellectualsites.plotsquared", name = "plotsquared-core" }
+plotsquaredBukkit = { group = "com.intellectualsites.plotsquared", name = "plotsquared-bukkit" }
+intellectualsitesBom = { group = "com.intellectualsites.bom", name = "bom-newest", version.ref = "intellectualsitesBom" }
+
+[plugins]
+pluginYmlPaper = { id = "de.eldoria.plugin-yml.paper", version.ref = "pluginYmlPaper" }
