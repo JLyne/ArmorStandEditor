@@ -158,7 +158,7 @@ public class Menu {
 
         if (EditMode.ITEMFRAMEGLOW.hasPermission(pe.getPlayer())) {
             itemFrameGlow = new ItemStack(Material.GLOW_ITEM_FRAME, 1);
-            createIcon(itemFrameGlow, "itemframevisible", "mode itemframeglow");
+            createIcon(itemFrameGlow, "itemframeglow", "mode itemframeglow");
         } else {
             itemFrameGlow = blankSlot;
         }

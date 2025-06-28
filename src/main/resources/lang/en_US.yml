@@ -248,6 +248,10 @@ itemframevisible:
   msg: Item Frame Visibility
   description:
     msg: Toggles an Item Frame's visibility
+itemframeglow:
+  msg: Item Frame Glow
+  description:
+    msg: Toggles between regular and Glow Item Frame
 armorstandglow:
   msg: Armor Stand Glow
   description:
