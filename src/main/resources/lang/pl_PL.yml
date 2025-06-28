@@ -69,7 +69,7 @@ toggleinvulnerability:
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 give:
-  msg: Player given Item with CustomModelData
+  msg: You have been given the armor stand editor item
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
 notincorrectworld:

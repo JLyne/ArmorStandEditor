@@ -70,7 +70,7 @@ notarget:
 frametarget:
   msg: Itemframe target locked.
 give:
-  msg: Player given Item with CustomModelData
+  msg: You have been given the armor stand editor item
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 nodoubletarget:

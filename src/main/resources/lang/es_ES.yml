@@ -95,7 +95,7 @@ helpurl:
 helpdiscord:
   msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 give:
-  msg: Player given Item with CustomModelData
+  msg: You have been given the armor stand editor item
 
 #warn
 cantedit:

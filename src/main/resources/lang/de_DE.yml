@@ -83,7 +83,7 @@ helptips:
 helpurl:
   msg: "Weitere Infos: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 give:
-  msg: Player given Item with CustomModelData
+  msg: You have been given the armor stand editor item
 
 #warn
 cantedit:
