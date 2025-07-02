@@ -17,11 +17,9 @@ public class ArmorStandEditorComponentPopulator implements ItemComponentPopulato
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,
 								   CreativeItemFilterConfiguration creativeItemFilterConfiguration) {
 		if(!plugin.isEditTool(oldItem)) {
-			plugin.getLogger().info("Not edit tool?");
 			return;
 		}
 
-		plugin.getLogger().info("Doing stuff");
 		newItem.copyDataFrom(plugin.getEditTool(), c -> true);
 	}
 }
