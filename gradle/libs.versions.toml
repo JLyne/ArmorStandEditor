@@ -5,6 +5,7 @@ griefPrevention = "17.0.0"
 worldguard = "7.0.14"
 customItems = "1.0-SNAPSHOT"
 intellectualsitesBom = "1.52"
+creativeItemFilter = "3.0-SNAPSHOT"
 
 [libraries]
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
@@ -14,6 +15,7 @@ customItems =  { group = "uk.co.notnull", name = "CustomItemsAPI", version.ref  
 plotsquaredCore = { group = "com.intellectualsites.plotsquared", name = "plotsquared-core" }
 plotsquaredBukkit = { group = "com.intellectualsites.plotsquared", name = "plotsquared-bukkit" }
 intellectualsitesBom = { group = "com.intellectualsites.bom", name = "bom-newest", version.ref = "intellectualsitesBom" }
+creativeItemFilter = { group = "org.hurricanegames", name = "CreativeItemFilter", version.ref  = "creativeItemFilter" }
 
 [plugins]
 pluginYmlPaper = { id = "de.eldoria.plugin-yml.paper", version.ref = "pluginYmlPaper" }

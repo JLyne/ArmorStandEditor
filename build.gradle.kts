@@ -39,6 +39,7 @@ dependencies {
     compileOnly(libs.plotsquaredBukkit)
     implementation(platform(libs.intellectualsitesBom))
 	compileOnly(libs.customItems)
+    compileOnly(libs.creativeItemFilter)
 }
 
 paper {
@@ -154,6 +155,10 @@ paper {
             required = false
         }
         register("CustomItems") {
+            load = PaperPluginDescription.RelativeLoadOrder.AFTER
+            required = false
+        }
+        register("CreativeItemFilter") {
             load = PaperPluginDescription.RelativeLoadOrder.AFTER
             required = false
         }

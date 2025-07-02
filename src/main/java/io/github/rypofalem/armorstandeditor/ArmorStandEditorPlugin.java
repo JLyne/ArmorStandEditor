@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.creativeitemfilter.CreativeItemFilterHandler;
 import io.github.rypofalem.armorstandeditor.customitems.CustomItemsHandler;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
@@ -94,6 +95,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
     private boolean debugFlag;
 
 	private CustomItemsHandler customItemsHandler;
+	private CreativeItemFilterHandler creativeItemFilterHandler;
 
 	public ArmorStandEditorPlugin() {
         instance = this;
@@ -180,6 +182,10 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 				getLogger().info("Registering CustomItems provider");
 				customItemsHandler = new CustomItemsHandler(this);
 			}
+			case "CreativeItemFilter" -> {
+				getLogger().info("Initialising CreativeItemFilter handler");
+				creativeItemFilterHandler = new CreativeItemFilterHandler(this);
+			}
 		}
 	}
 
@@ -190,6 +196,12 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 				if (customItemsHandler != null) {
 					getLogger().info("Disabling CustomItems provider");
 					customItemsHandler = null;
+				}
+			}
+			case "CreativeItemFilter" -> {
+				if (creativeItemFilterHandler != null) {
+					getLogger().info("Disabling WorldGuard handler");
+					creativeItemFilterHandler = null;
 				}
 			}
 		}
