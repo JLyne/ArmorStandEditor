@@ -529,7 +529,7 @@ public final class PlayerEditor {
         double currentScaleValue = armorStand.getAttribute(Attribute.SCALE).getBaseValue();
 
         if (currentScaleValue >= plugin.getMaxScaleValue()) {
-            getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn", "warn"));
+            sendMessage("scalemaxwarn", "warn");
             return;
         }
 
