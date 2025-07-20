@@ -92,56 +92,56 @@ public class Menu {
         ItemStack toggleVulnerabilty;
 
         //Slots with No Value
-        blankSlot = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1),
+        blankSlot = createIcon(ItemStack.of(Material.BLACK_STAINED_GLASS_PANE),
             "blankslot", "");
 
         //Axis - X, Y, Z for Movement
-        xAxis = createIcon(new ItemStack(Material.RED_CONCRETE, 1),
+        xAxis = createIcon(ItemStack.of(Material.RED_CONCRETE),
             "xaxis", "axis x");
 
-        yAxis = createIcon(new ItemStack(Material.GREEN_CONCRETE, 1),
+        yAxis = createIcon(ItemStack.of(Material.GREEN_CONCRETE),
             "yaxis", "axis y");
 
-        zAxis = createIcon(new ItemStack(Material.BLUE_CONCRETE, 1),
+        zAxis = createIcon(ItemStack.of(Material.BLUE_CONCRETE),
             "zaxis", "axis z");
 
         //Movement Speed
-        coarseAdj = createIcon(new ItemStack(Material.COARSE_DIRT, 1),
+        coarseAdj = createIcon(ItemStack.of(Material.COARSE_DIRT),
             "coarseadj", "adjustment coarse");
 
-        fineAdj = createIcon(new ItemStack(Material.SMOOTH_SANDSTONE),
+        fineAdj = createIcon(ItemStack.of(Material.SMOOTH_SANDSTONE),
             "fineadj", "adjustment fine");
 
         //Reset Changes
-        reset = createIcon(new ItemStack(Material.WATER_BUCKET),
+        reset = createIcon(ItemStack.of(Material.WATER_BUCKET),
             "reset", "mode reset");
 
         //Which Part to Move
-        headPos = createIcon(new ItemStack(Material.IRON_HELMET),
+        headPos = createIcon(ItemStack.of(Material.IRON_HELMET),
             "head", "mode head");
 
-        bodyPos = createIcon(new ItemStack(Material.IRON_CHESTPLATE),
+        bodyPos = createIcon(ItemStack.of(Material.IRON_CHESTPLATE),
             "body", "mode body");
 
-        leftLegPos = createIcon(new ItemStack(Material.IRON_LEGGINGS),
+        leftLegPos = createIcon(ItemStack.of(Material.IRON_LEGGINGS),
             "leftleg", "mode leftleg");
 
-        rightLegPos = createIcon(new ItemStack(Material.IRON_LEGGINGS),
+        rightLegPos = createIcon(ItemStack.of(Material.IRON_LEGGINGS),
             "rightleg", "mode rightleg");
 
-        leftArmPos = createIcon(new ItemStack(Material.STICK),
+        leftArmPos = createIcon(ItemStack.of(Material.STICK),
             "leftarm", "mode leftarm");
 
-        rightArmPos = createIcon(new ItemStack(Material.STICK),
+        rightArmPos = createIcon(ItemStack.of(Material.STICK),
             "rightarm", "mode rightarm");
 
-        showArms = createIcon(new ItemStack(Material.STICK),
+        showArms = createIcon(ItemStack.of(Material.STICK),
             "showarms", "mode showarms");
 
-        presetItem = createIcon(new ItemStack(Material.BOOKSHELF), "presetmenu", "mode preset");
+        presetItem = createIcon(ItemStack.of(Material.BOOKSHELF), "presetmenu", "mode preset");
 
         if (EditMode.VISIBILITY.hasPermission(pe.getPlayer())) {
-            visibility = new ItemStack(Material.POTION, 1);
+            visibility = ItemStack.of(Material.POTION);
             visibility.setData(DataComponentTypes.POTION_CONTENTS,
                                PotionContents.potionContents().potion(PotionType.INVISIBILITY).build());
             createIcon(visibility, "invisible", "mode visibility");
@@ -150,104 +150,104 @@ public class Menu {
         }
 
         if (EditMode.ITEMFRAMEVISIBILITY.hasPermission(pe.getPlayer())) {
-            itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
+            itemFrameVisible = ItemStack.of(Material.ITEM_FRAME);
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframevisibility");
         } else {
             itemFrameVisible = blankSlot;
         }
 
         if (EditMode.ITEMFRAMEGLOW.hasPermission(pe.getPlayer())) {
-            itemFrameGlow = new ItemStack(Material.GLOW_ITEM_FRAME, 1);
+            itemFrameGlow = ItemStack.of(Material.GLOW_ITEM_FRAME);
             createIcon(itemFrameGlow, "itemframeglow", "mode itemframeglow");
         } else {
             itemFrameGlow = blankSlot;
         }
 
         if (EditMode.VULNERABILITY.hasPermission(pe.getPlayer())) {
-            toggleVulnerabilty = createIcon(new ItemStack(Material.TOTEM_OF_UNDYING, 1),
+            toggleVulnerabilty = createIcon(ItemStack.of(Material.TOTEM_OF_UNDYING),
                 "vulnerability", "mode vulnerability");
         } else {
             toggleVulnerabilty = blankSlot;
         }
 
         if (EditMode.SIZE.hasPermission(pe.getPlayer())) {
-            size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
+            size = createIcon(ItemStack.of(Material.PUFFERFISH),
                 "size", "mode size");
         } else {
             size = blankSlot;
         }
 
         if (EditMode.DISABLESLOTS.hasPermission(pe.getPlayer())) {
-            disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
+            disableSlots = createIcon(ItemStack.of(Material.BARRIER), "disableslots", "mode disableslots");
         } else {
             disableSlots = blankSlot;
         }
 
         if (EditMode.GRAVITY.hasPermission(pe.getPlayer())) {
-            gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
+            gravity = createIcon(ItemStack.of(Material.SAND), "gravity", "mode gravity");
         } else {
             gravity = blankSlot;
         }
 
         if (EditMode.BASEPLATE.hasPermission(pe.getPlayer())) {
-            plate = createIcon(new ItemStack(Material.SMOOTH_STONE_SLAB, 1),
+            plate = createIcon(ItemStack.of(Material.SMOOTH_STONE_SLAB),
                 "baseplate", "mode baseplate");
         } else {
             plate = blankSlot;
         }
 
         if (EditMode.PLACEMENT.hasPermission(pe.getPlayer())) {
-            place = createIcon(new ItemStack(Material.RAIL, 1),
+            place = createIcon(ItemStack.of(Material.RAIL),
                 "placement", "mode placement");
         } else {
             place = blankSlot;
         }
 
         if (EditMode.ROTATE.hasPermission(pe.getPlayer())) {
-            rotate = createIcon(new ItemStack(Material.COMPASS, 1),
+            rotate = createIcon(ItemStack.of(Material.COMPASS),
                 "rotate", "mode rotate");
         } else {
             rotate = blankSlot;
         }
 
         if (EditMode.EQUIPMENT.hasPermission(pe.getPlayer())) {
-            equipment = createIcon(new ItemStack(Material.CHEST, 1),
+            equipment = createIcon(ItemStack.of(Material.CHEST),
                 "equipment", "mode equipment");
         } else {
             equipment = blankSlot;
         }
 
         if (EditMode.COPY.hasPermission(pe.getPlayer())) {
-            copy = createIcon(new ItemStack(Material.FLOWER_BANNER_PATTERN),
+            copy = createIcon(ItemStack.of(Material.FLOWER_BANNER_PATTERN),
                 "copy", "mode copy");
 
-            slot1 = createIcon(new ItemStack(Material.BOOK),
+            slot1 = createIcon(ItemStack.of(Material.BOOK),
                 "copyslot", "slot 1", "1");
 
-            slot2 = createIcon(new ItemStack(Material.BOOK, 2),
+            slot2 = createIcon(ItemStack.of(Material.BOOK, 2),
                 "copyslot", "slot 2", "2");
 
-            slot3 = createIcon(new ItemStack(Material.BOOK, 3),
+            slot3 = createIcon(ItemStack.of(Material.BOOK, 3),
                 "copyslot", "slot 3", "3");
 
-            slot4 = createIcon(new ItemStack(Material.BOOK, 4),
+            slot4 = createIcon(ItemStack.of(Material.BOOK, 4),
                 "copyslot", "slot 4", "4");
         }
 
         if (EditMode.PASTE.hasPermission(pe.getPlayer())) {
-            paste = createIcon(new ItemStack(Material.FEATHER),
+            paste = createIcon(ItemStack.of(Material.FEATHER),
                 "paste", "mode paste");
         }
 
         if (EditMode.GLOW.hasPermission(pe.getPlayer())) {
-            glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
+            glowing = createIcon(ItemStack.of(Material.GLOW_INK_SAC),
                 "armorstandglow",
                 "mode glow");
         } else {
             glowing = blankSlot;
         }
 
-        help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
+        help = createIcon(ItemStack.of(Material.NETHER_STAR), "helpgui", "help");
 
         ItemStack[] items = {
             help, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, itemFrameVisible, itemFrameGlow,

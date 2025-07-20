@@ -57,23 +57,23 @@ public class PresetArmorPosesMenu {
         menuInv.clear();
 
         //Blank Slots
-        ItemStack blank = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1), "blankslot");
+        ItemStack blank = createIcon(ItemStack.of(Material.BLACK_STAINED_GLASS_PANE), "blankslot");
 
         //Presets -- Here to test things out, will get better names soon TM
-        ItemStack sitting = createIcon(new ItemStack(Material.ARMOR_STAND, 1), "sitting");
-        ItemStack waving = createIcon(new ItemStack(Material.ARMOR_STAND, 2), "waving");
-        ItemStack greet1 = createIcon(new ItemStack(Material.ARMOR_STAND, 3), "greeting 1");
-        ItemStack greet2 = createIcon(new ItemStack(Material.ARMOR_STAND, 4), "greeting 2");
-        ItemStack cheer = createIcon(new ItemStack(Material.ARMOR_STAND, 5), "cheers");
-        ItemStack archer = createIcon(new ItemStack(Material.ARMOR_STAND, 6), "archer");
-        ItemStack dancing = createIcon(new ItemStack(Material.ARMOR_STAND, 7), "dancing");
-        ItemStack hanging = createIcon(new ItemStack(Material.ARMOR_STAND, 8), "hanging");
-        ItemStack present = createIcon(new ItemStack(Material.ARMOR_STAND, 9), "present");
-        ItemStack fishing = createIcon(new ItemStack(Material.ARMOR_STAND, 10), "fishing");
+        ItemStack sitting = createIcon(ItemStack.of(Material.ARMOR_STAND), "sitting");
+        ItemStack waving = createIcon(ItemStack.of(Material.ARMOR_STAND, 2), "waving");
+        ItemStack greet1 = createIcon(ItemStack.of(Material.ARMOR_STAND, 3), "greeting 1");
+        ItemStack greet2 = createIcon(ItemStack.of(Material.ARMOR_STAND, 4), "greeting 2");
+        ItemStack cheer = createIcon(ItemStack.of(Material.ARMOR_STAND, 5), "cheers");
+        ItemStack archer = createIcon(ItemStack.of(Material.ARMOR_STAND, 6), "archer");
+        ItemStack dancing = createIcon(ItemStack.of(Material.ARMOR_STAND, 7), "dancing");
+        ItemStack hanging = createIcon(ItemStack.of(Material.ARMOR_STAND, 8), "hanging");
+        ItemStack present = createIcon(ItemStack.of(Material.ARMOR_STAND, 9), "present");
+        ItemStack fishing = createIcon(ItemStack.of(Material.ARMOR_STAND, 10), "fishing");
 
         //Utilities
-        ItemStack backToMenu = createIcon(new ItemStack(Material.RED_WOOL, 1), "backtomenu");
-        ItemStack howToPreset = createIcon(new ItemStack(Material.BOOK, 1), "howtopreset");
+        ItemStack backToMenu = createIcon(ItemStack.of(Material.RED_WOOL), "backtomenu");
+        ItemStack howToPreset = createIcon(ItemStack.of(Material.BOOK), "howtopreset");
 
         //Build for the Menu ---- DO NOT MODIFY THIS UNLESS YOU KNOW WHAT YOU ARE DOING!
         ItemStack[] items = {

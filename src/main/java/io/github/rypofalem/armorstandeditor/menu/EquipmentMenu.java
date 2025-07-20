@@ -61,7 +61,7 @@ public class EquipmentMenu {
         ItemStack leftHand = equipment.getItemInOffHand();
         equipment.clear();
         
-        ItemStack disabledIcon = new ItemStack(Material.BARRIER);
+        ItemStack disabledIcon = ItemStack.of(Material.BARRIER);
         disabledIcon.setData(DataComponentTypes.CUSTOM_NAME,
                              pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
         disabledIcon.editPersistentDataContainer(
@@ -81,7 +81,7 @@ public class EquipmentMenu {
     }
 
     private ItemStack createIcon(Material mat, String slot) {
-        ItemStack icon = new ItemStack(mat);
+        ItemStack icon = ItemStack.of(mat);
 
         icon.editPersistentDataContainer(
                 pdc -> pdc.set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"));

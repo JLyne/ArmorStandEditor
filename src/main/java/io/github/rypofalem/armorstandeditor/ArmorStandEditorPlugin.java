@@ -264,7 +264,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
         }
 
 		this.editToolMaterial = editToolMaterial;
-        ItemStack editTool = new ItemStack(editToolMaterial, 1);
+        ItemStack editTool = ItemStack.of(editToolMaterial);
 
         if (!pluginManagedEditTool) {
             return;
