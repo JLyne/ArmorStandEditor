@@ -95,8 +95,7 @@ public class PresetArmorPosesMenu {
         icon.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(getIconDescription(path)).build());
         icon.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
 				.addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS).build());
-;
-        return icon;
+		return icon;
     }
 
     private Component getIconName(String path) {

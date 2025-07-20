@@ -88,8 +88,8 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 
     //Glow Entity Colors
     public Scoreboard scoreboard;
-	String lockedTeam = "ASLocked";
-    String inUseTeam = "AS-InUse";
+	final String lockedTeam = "ASLocked";
+    final String inUseTeam = "AS-InUse";
 
     //Debugging Options.... Not Exposed
     private boolean debugFlag;

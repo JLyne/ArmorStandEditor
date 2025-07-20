@@ -60,10 +60,10 @@ public class PlayerEditorManager implements Listener {
     private final ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
     private final ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
     private final ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
-    double coarseAdj;
-    double fineAdj;
-    double coarseMov;
-    double fineMov;
+    final double coarseAdj;
+    final double fineAdj;
+    final double coarseMov;
+    final double fineMov;
 
 	// Instantiate protections used to determine whether a player may edit an armor stand or item frame
     private final List<Protection> protections = ImmutableList.of(

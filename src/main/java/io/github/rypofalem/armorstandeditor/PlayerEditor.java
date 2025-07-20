@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public final class PlayerEditor {
-    public ArmorStandEditorPlugin plugin;
+    public final ArmorStandEditorPlugin plugin;
     private final Debug debug;
     private Team team;
     private final UUID uuid;

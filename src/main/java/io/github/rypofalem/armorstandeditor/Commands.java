@@ -37,7 +37,6 @@ import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
 
-@SuppressWarnings("UnstableApiUsage")
 public class Commands {
     private final ArmorStandEditorPlugin plugin;
     private final Debug debug;

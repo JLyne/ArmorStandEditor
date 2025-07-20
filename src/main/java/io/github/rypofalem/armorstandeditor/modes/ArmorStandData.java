@@ -25,10 +25,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
 public class ArmorStandData {
-    public EulerAngle headPos, leftArmPos, rightArmPos, bodyPos, leftLegPos, rightLegPos;
-    public boolean visible, size, basePlate, gravity, showArms;
-    public ItemStack head, body, legs, feetsies, rightHand, leftHand;
-    public double attributeScale;
+    public final EulerAngle headPos, leftArmPos, rightArmPos, bodyPos, leftLegPos, rightLegPos;
+    public final boolean visible, basePlate, gravity, showArms;
+    public final ItemStack head, body, legs, feetsies, rightHand, leftHand;
+    public final double attributeScale;
 
     ArmorStandData(ArmorStand as) {
         this.headPos = as.getHeadPose();
@@ -37,7 +37,6 @@ public class ArmorStandData {
         this.bodyPos = as.getBodyPose();
         this.leftLegPos = as.getLeftLegPose();
         this.rightLegPos = as.getRightLegPose();
-        this.size = as.isSmall();
         this.attributeScale = as.getAttribute(Attribute.SCALE).getValue();
         this.basePlate = as.hasBasePlate();
         this.gravity = as.hasGravity();
