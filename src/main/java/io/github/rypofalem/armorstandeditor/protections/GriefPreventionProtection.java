@@ -20,13 +20,15 @@
 package io.github.rypofalem.armorstandeditor.protections;
 
 import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.util.function.Supplier;
 
 public class GriefPreventionProtection implements Protection {
 
@@ -49,11 +51,15 @@ public class GriefPreventionProtection implements Protection {
         if (GriefPrevention.instance.claimsEnabledForWorld(blockLoc.getWorld())) {
 
             Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
-            Material blockMat = block.getType();
 
-            if (landClaim != null && landClaim.allowEdit(player) != null && landClaim.allowBuild(player, blockMat) != null) {
-                player.sendRichMessage("<red>" + landClaim.allowEdit(player));
-                player.sendRichMessage("<red>" + landClaim.allowBuild(player, blockMat));
+            if (landClaim == null) {
+                return true;
+            }
+
+            Supplier<String> result = landClaim.checkPermission(player, ClaimPermission.Build, null);
+
+            if (result != null) {
+                player.sendRichMessage("<red>" + result.get());
                 return false;
             }
         } else {
