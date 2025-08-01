@@ -46,8 +46,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.EulerAngle;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public final class PlayerEditor {
@@ -66,11 +67,11 @@ public final class PlayerEditor {
     private double movChange;
     private final Menu chestMenu;
     private ArmorStand target;
-    private ArrayList<ArmorStand> targetList = null;
+    private List<ArmorStand> targetList = null;
 
     //NEW: ItemFrame Stuff
     private ItemFrame frameTarget;
-    private ArrayList<ItemFrame> frameTargetList = null;
+    private List<ItemFrame> frameTargetList = null;
     private int targetIndex = 0;
     private int frameTargetIndex = 0;
     EquipmentMenu equipMenu;
@@ -602,22 +603,21 @@ public final class PlayerEditor {
     }
 
 
-    public void setTarget(ArrayList<ArmorStand> armorStands) {
-        if (armorStands == null || armorStands.isEmpty()) {
-            target = null;
+    public void setTarget(@NotNull List<ArmorStand> armorStands) {
+        if (armorStands.isEmpty()) {
             targetList = null;
-            sendMessage("notarget", "armorstand");
+
+            if (target != null) {
+                target = null;
+                sendMessage("notarget", "armorstand");
+            }
         } else {
             if (targetList == null) {
                 targetList = armorStands;
                 targetIndex = 0;
                 sendMessage("target", null);
             } else {
-                boolean same = targetList.size() == armorStands.size();
-                if (same) for (ArmorStand as : armorStands) {
-                    same = targetList.contains(as);
-                    if (!same) break;
-                }
+                boolean same = armorStands.equals(targetList);
 
                 if (same) {
                     targetIndex = ++targetIndex % targetList.size();
@@ -641,23 +641,21 @@ public final class PlayerEditor {
     }
 
 
-    public void setFrameTarget(ArrayList<ItemFrame> itemFrames) {
-        if (itemFrames == null || itemFrames.isEmpty()) {
-            frameTarget = null;
+    public void setFrameTarget(List<ItemFrame> itemFrames) {
+        if (itemFrames.isEmpty()) {
             frameTargetList = null;
-            sendMessage("notarget", "itemframe");
-        } else {
 
+            if (frameTarget != null) {
+                frameTarget = null;
+                sendMessage("notarget", "itemframe");
+            }
+        } else {
             if (frameTargetList == null) {
                 frameTargetList = itemFrames;
                 frameTargetIndex = 0;
                 sendMessage("frametarget", null);
             } else {
-                boolean same = frameTargetList.size() == itemFrames.size();
-                if (same) for (final ItemFrame itemf : itemFrames) {
-                    same = frameTargetList.contains(itemf);
-                    if (!same) break;
-                }
+                boolean same = itemFrames.equals(frameTargetList);
 
                 if (same) {
                     frameTargetIndex = ++frameTargetIndex % frameTargetList.size();
@@ -675,6 +673,14 @@ public final class PlayerEditor {
                 frameTarget = frameTargetList.get(frameTargetIndex);
             }
         }
+    }
+
+    public boolean isTargeting() {
+        return target != null;
+    }
+
+    public boolean isTargetingFrame() {
+        return frameTarget != null;
     }
 
 

@@ -208,32 +208,39 @@ public class PlayerEditorManager implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
 
-		ArrayList<ArmorStand> as = getTargets(player); //Get All ArmorStand closest to player
-		ArrayList<ItemFrame> itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
+		List<ArmorStand> as = getTargets(player); //Get All ArmorStand closest to player
+		List<ItemFrame> itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
+
+        PlayerEditor editor = getPlayerEditor(player.getUniqueId());
 
 		// Check for null and empty lists
-        if (as != null && itemF != null && !as.isEmpty() && !itemF.isEmpty()) {
-            getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
-        } else if (as != null && !as.isEmpty()) {
-            getPlayerEditor(player.getUniqueId()).setTarget(as);
-        } else if (itemF != null && !itemF.isEmpty()) {
-            getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
+        if (!as.isEmpty() && !itemF.isEmpty()) {
+            editor.sendMessage("doubletarget", "warn");
+        } else if (!as.isEmpty()) {
+            editor.setTarget(as);
+        } else if (!itemF.isEmpty()) {
+            editor.setFrameTarget(itemF);
         } else {
-            getPlayerEditor(player.getUniqueId()).sendMessage("nodoubletarget", "warn");
+            if (editor.isTargeting() || editor.isTargetingFrame()) {
+                editor.setTarget(as);
+                editor.setFrameTarget(itemF);
+            } else {
+                editor.sendMessage("nodoubletarget", "warn");
+            }
         }
     }
 
-    private ArrayList<ArmorStand> getTargets(Player player) {
+    private List<ArmorStand> getTargets(Player player) {
         Location eyeLaser = player.getEyeLocation();
         Vector direction = player.getLocation().getDirection();
-        ArrayList<ArmorStand> armorStands = new ArrayList<>();
+        List<ArmorStand> armorStands = new ArrayList<>();
 
         double STEPSIZE = .5;
         Vector STEP = direction.multiply(STEPSIZE);
         double RANGE = 10;
         double LASERRADIUS = .3;
         List<Entity> nearbyEntities = player.getNearbyEntities(RANGE, RANGE, RANGE);
-        if (nearbyEntities.isEmpty()) return null;
+        if (nearbyEntities.isEmpty()) return armorStands;
 
         for (double i = 0; i < RANGE; i += STEPSIZE) {
             List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
@@ -254,17 +261,17 @@ public class PlayerEditorManager implements Listener {
         return armorStands;
     }
 
-    private ArrayList<ItemFrame> getFrameTargets(Player player) {
+    private List<ItemFrame> getFrameTargets(Player player) {
         Location eyeLaser = player.getEyeLocation();
         Vector direction = player.getLocation().getDirection();
-        ArrayList<ItemFrame> itemFrames = new ArrayList<>();
+        List<ItemFrame> itemFrames = new ArrayList<>();
 
         double STEPSIZE = .5;
         Vector STEP = direction.multiply(STEPSIZE);
         double RANGE = 10;
         double LASERRADIUS = .3;
         List<Entity> nearbyEntities = player.getNearbyEntities(RANGE, RANGE, RANGE);
-        if (nearbyEntities.isEmpty()) return null;
+        if (nearbyEntities.isEmpty()) return itemFrames;
 
         for (double i = 0; i < RANGE; i += STEPSIZE) {
             List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
