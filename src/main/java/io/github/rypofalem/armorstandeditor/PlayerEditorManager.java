@@ -26,7 +26,6 @@ import io.github.rypofalem.armorstandeditor.protections.*;
 
 import io.papermc.paper.event.player.PlayerNameEntityEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
@@ -37,6 +36,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
@@ -186,25 +186,15 @@ public class PlayerEditorManager implements Listener {
         armorStand.setCustomNameVisible(true);
     }
 
+    // Prevent breaking of invulnerable armorstands in creative mode. Fixes issue #309
     @EventHandler(ignoreCancelled = true)
-    void onArmorStandBreak(EntityDamageByEntityEvent event) { // Fixes issue #309
-        if (!(event.getDamager() instanceof Player player)) {
-            return; // If the damager is not a player, ignore.
-        }
-
+    void onArmorStandBreak(EntityDeathEvent event) {
         if (!(event.getEntity() instanceof ArmorStand armorStand)) {
             return; // If the damaged entity is not an ArmorStand, ignore.
         }
 
-        // Check if the ArmorStand is invulnerable and if the damager is a player.
         if (armorStand.isInvulnerable()) {
-            // Check if the player is in Creative mode.
-            if (player.getGameMode() == GameMode.CREATIVE) {
-                // If the player is in Creative mode and the ArmorStand is invulnerable,
-                // cancel the event to prevent breaking the ArmorStand.
-                player.sendMessage(plugin.getLang().getMessage("unabledestroycreative"));
-                event.setCancelled(true); // Cancel the event to prevent ArmorStand destruction.
-            }
+            event.setCancelled(true);
         }
     }
 
