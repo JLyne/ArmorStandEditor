@@ -59,7 +59,7 @@ public class GriefPreventionProtection implements Protection {
             Supplier<String> result = landClaim.checkPermission(player, ClaimPermission.Build, null);
 
             if (result != null) {
-                player.sendRichMessage("<red>" + result.get());
+                player.sendMessage(result.get());
                 return false;
             }
         } else {
