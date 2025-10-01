@@ -1,6 +1,6 @@
 [versions]
 pluginYmlPaper = "0.7.1"
-paperApi = "1.21.8-R0.1-SNAPSHOT"
+paperApi = "1.21.9-R0.1-SNAPSHOT"
 griefPrevention = "17.0.0"
 worldguard = "7.0.14"
 customItems = "1.0-SNAPSHOT"
