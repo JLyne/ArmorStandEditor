@@ -1,5 +1,5 @@
 [versions]
-pluginYmlPaper = "0.7.1"
+pluginYmlPaper = "0.8.0"
 paperApi = "1.21.9-R0.1-SNAPSHOT"
 griefPrevention = "17.0.0"
 worldguard = "7.0.14"
