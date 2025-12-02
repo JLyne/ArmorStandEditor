@@ -4,7 +4,7 @@ import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import uk.co.notnull.CustomItems.api.items.CustomItem;
@@ -27,11 +27,11 @@ public final class ArmorStandEditorItemProvider implements CustomItemProvider {
 	}
 
 	@Override
-	public @NotNull JavaPlugin getPlugin() {
+	public @NotNull Plugin getPlugin() {
 		return plugin;
 	}
 
-	public List<CustomItem> provideItems() {
+	public @NotNull List<CustomItem> provideItems() {
 		return Collections.singletonList(editToolItem);
 	}
 
