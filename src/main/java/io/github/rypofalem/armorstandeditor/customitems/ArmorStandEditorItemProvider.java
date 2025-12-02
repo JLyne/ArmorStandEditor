@@ -4,6 +4,9 @@ import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
 import uk.co.notnull.CustomItems.api.items.CustomItem;
 import uk.co.notnull.CustomItems.api.items.provider.CustomItemProvider;
 
@@ -21,6 +24,11 @@ public final class ArmorStandEditorItemProvider implements CustomItemProvider {
 			.displayName(Component.text("Edit Tool"))
 			.generator((player, quantity) -> plugin.getEditTool())
 			.build();
+	}
+
+	@Override
+	public @NotNull JavaPlugin getPlugin() {
+		return plugin;
 	}
 
 	public List<CustomItem> provideItems() {
