@@ -1,9 +1,5 @@
 package io.github.rypofalem.armorstandeditor;
 
-import org.bukkit.Bukkit;
-
-import java.util.logging.Level;
-
 public class Debug {
 
 	private final ArmorStandEditorPlugin plugin;
@@ -15,6 +11,6 @@ public class Debug {
     public void log(String msg) {
 		boolean debugTurnedOn = plugin.isDebug();
         if (!debugTurnedOn) return;
-        Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] " + msg);
+        plugin.getLogger().fine(msg);
     }
 }

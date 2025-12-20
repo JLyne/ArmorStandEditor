@@ -26,6 +26,7 @@ import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -193,9 +194,9 @@ public class Commands {
         player.closeInventory();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         player.sendMessage(plugin.getLang().getMessage("help", "info"));
-        player.sendMessage("");
+        player.sendMessage(Component.empty());
         player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
-        player.sendMessage("");
+        player.sendMessage(Component.empty());
         player.sendMessage(plugin.getLang().getMessage("helpurl"));
         player.sendMessage(plugin.getLang().getMessage("helpdiscord"));
         return com.mojang.brigadier.Command.SINGLE_SUCCESS;
