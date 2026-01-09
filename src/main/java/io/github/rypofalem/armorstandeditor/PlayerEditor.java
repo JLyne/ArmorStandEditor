@@ -438,8 +438,7 @@ public final class PlayerEditor {
                 team.removeEntry(armorStandID.toString());
                 armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 50, 1, false, false)); //300 Ticks = 15 seconds
             }
-
-
+            sendMessage("enabledslots", null);
         } else {
             debug.log("Removing DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
             for (final EquipmentSlot slot : EquipmentSlot.values()) { //LOCKED
@@ -451,9 +450,8 @@ public final class PlayerEditor {
                 team.addEntry(armorStandID.toString());
                 armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 50, 1, false, false)); //300 Ticks = 15 seconds
             }
+            sendMessage("enabledslots", null);
         }
-
-        sendMessage("disabledslots", null);
     }
 
     private void toggleInvulnerability(ArmorStand armorStand) { //See NewFeature-Request #256 for more info

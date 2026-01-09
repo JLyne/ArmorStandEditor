@@ -57,7 +57,9 @@ copied:
 pasted:
   msg: Armor Stand state pasted from slot <x>.
 disabledslots:
-  msg: Toggled Equipment locks
+  msg: Equipment locked
+enabledslots:
+  msg: Equipment unlocked
 toggleinvulnerability:
   msg: Armor Stand vulnerability state has been toggled to <x>.
   true: invulnerable
