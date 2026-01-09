@@ -44,7 +44,6 @@ public class GriefPreventionProtection implements Protection {
 
     public boolean checkPermission(Block block, Player player) {
         if (!gpEnabled) return true;
-        if (player.hasPermission("asedit.ignoreProtection.griefPrevention")) return true;
 
         Location blockLoc = block.getLocation();
 

@@ -42,8 +42,6 @@ public class PlotSquaredProtection implements Protection {
 
     public boolean checkPermission(Block block, Player player) {
         if (!psEnabled) return true;
-        if (player.isOp()) return true;
-        if (player.hasPermission("asedit.ignoreProtection.plotSquared")) return true;
         if (plotAPI == null) plotAPI = new PlotAPI();
 
         //Get the Location of the Plot

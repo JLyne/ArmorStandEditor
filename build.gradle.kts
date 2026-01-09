@@ -113,19 +113,6 @@ paper {
             description = "Allows toggling of the Glowing State of an ItemFrame."
         }
 
-        register("asedit.ignoreProtection.griefProtection") {
-            description = "Allows user to ignore GriefProtection's Protection Limitations."
-            default = BukkitPluginDescription.Permission.Default.FALSE
-        }
-        register("asedit.ignoreProtection.plotSquared") {
-            description = "Allows user to ignore PlotSquared's Protection Limitations."
-            default = BukkitPluginDescription.Permission.Default.FALSE
-        }
-        register("asedit.ignoreProtection.worldGuard") {
-            description = "Allows user to ignore WorldGuard's Protection Limitations."
-            default = BukkitPluginDescription.Permission.Default.FALSE
-        }
-
         register("asedit.permpack.basic") {
             default = BukkitPluginDescription.Permission.Default.TRUE
             children = listOf("asedit.basic", "asedit.equipment", "asedit.togglegravity", "asedit.movement",
@@ -137,7 +124,7 @@ paper {
 
         register("asedit.permpack.admin") {
             default = BukkitPluginDescription.Permission.Default.OP
-            children = listOf("asedit.ignorePermissions.*", "asedit.permpack.basic", "asedit.reload", "asedit.give")
+            children = listOf("asedit.permpack.basic", "asedit.reload", "asedit.give")
         }
     }
 
