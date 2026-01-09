@@ -27,6 +27,7 @@ import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
 import io.papermc.paper.event.player.PlayerNameEntityEvent;
+import io.papermc.paper.event.player.PrePlayerAttackEntityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -38,8 +39,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
@@ -120,30 +119,34 @@ public class PlayerEditorManager implements Listener {
         }, 0, 1L);
     }
 
-    @EventHandler(ignoreCancelled = true)
-    void onArmorStandDamage(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player player)) {
-            return;
-        }
+    @EventHandler
+    void onArmorStandAttack(PrePlayerAttackEntityEvent event) {
+        Player player = event.getPlayer();
 
 		if (player.isSneaking() || !plugin.isEditTool(player.getInventory().getItemInMainHand())) {
             return;
         }
 
-        if (!((event.getEntity() instanceof ArmorStand) || event.getEntity() instanceof ItemFrame)) {
+        if (!((event.getAttacked() instanceof ArmorStand) || event.getAttacked() instanceof ItemFrame)) {
             event.setCancelled(true);
             debug.log("Open Menu Called for Player: " + player.getName());
             getPlayerEditor(player.getUniqueId()).openMenu();
             return;
         }
 
-        if (event.getEntity() instanceof ArmorStand armorStand) {
+        if (event.getAttacked() instanceof ArmorStand armorStand) {
             debug.log("Player '" + player.getName() + "' has left clicked the ArmorStand");
             event.setCancelled(true);
+
             if (canEdit(player, armorStand)) {
                 applyLeftTool(player, armorStand);
             }
-        } else if (event.getEntity() instanceof ItemFrame itemFrame) {
+
+            // Prevent breaking of invulnerable armorstands in creative mode. Fixes issue #309
+            if (armorStand.isInvulnerable()) {
+                event.setCancelled(true);
+            }
+        } else if (event.getAttacked() instanceof ItemFrame itemFrame) {
             debug.log(" Player '" + player.getName() + "' has right clicked on an ItemFrame");
             event.setCancelled(true);
             if (canEdit(player, itemFrame)) applyLeftTool(player, itemFrame);
@@ -223,18 +226,6 @@ public class PlayerEditorManager implements Listener {
 
         // Make new name visible
         armorStand.setCustomNameVisible(true);
-    }
-
-    // Prevent breaking of invulnerable armorstands in creative mode. Fixes issue #309
-    @EventHandler(ignoreCancelled = true)
-    void onArmorStandBreak(EntityDeathEvent event) {
-        if (!(event.getEntity() instanceof ArmorStand armorStand)) {
-            return; // If the damaged entity is not an ArmorStand, ignore.
-        }
-
-        if (armorStand.isInvulnerable()) {
-            event.setCancelled(true);
-        }
     }
 
     @EventHandler(ignoreCancelled = true)
