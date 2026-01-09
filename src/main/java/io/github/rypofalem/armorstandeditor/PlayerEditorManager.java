@@ -123,6 +123,11 @@ public class PlayerEditorManager implements Listener {
     void onArmorStandAttack(PrePlayerAttackEntityEvent event) {
         Player player = event.getPlayer();
 
+        // Prevent breaking of invulnerable armorstands in creative mode. Fixes issue #309
+        if (event.getAttacked() instanceof ArmorStand armorStand && armorStand.isInvulnerable()) {
+            event.setCancelled(true);
+        }
+
 		if (player.isSneaking() || !plugin.isEditTool(player.getInventory().getItemInMainHand())) {
             return;
         }
@@ -140,11 +145,6 @@ public class PlayerEditorManager implements Listener {
 
             if (canEdit(player, armorStand)) {
                 applyLeftTool(player, armorStand);
-            }
-
-            // Prevent breaking of invulnerable armorstands in creative mode. Fixes issue #309
-            if (armorStand.isInvulnerable()) {
-                event.setCancelled(true);
             }
         } else if (event.getAttacked() instanceof ItemFrame itemFrame) {
             debug.log(" Player '" + player.getName() + "' has right clicked on an ItemFrame");
