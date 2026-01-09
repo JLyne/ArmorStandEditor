@@ -19,6 +19,8 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.destroystokyo.paper.event.entity.EntityAddToWorldEvent;
+import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.google.common.collect.ImmutableList;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
@@ -27,6 +29,7 @@ import io.github.rypofalem.armorstandeditor.protections.*;
 import io.papermc.paper.event.player.PlayerNameEntityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -43,23 +46,32 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
+    private final NamespacedKey highlightKey;
+
     private final Debug debug;
     private final ArmorStandEditorPlugin plugin;
     private final HashMap<UUID, PlayerEditor> players;
     private final ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
     private final ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
     private final ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
+    private final Set<ArmorStand> highlights = new HashSet<>();
     final double coarseAdj;
     final double fineAdj;
     final double coarseMov;
@@ -79,6 +91,33 @@ public class PlayerEditorManager implements Listener {
         fineAdj = Util.FULL_CIRCLE / plugin.fineRot;
         coarseMov = 1;
         fineMov = .03125; // 1/32
+
+        highlightKey = new NamespacedKey(plugin, "highlight_end_time");
+
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            Iterator<ArmorStand> iterator = highlights.iterator();
+
+            while (iterator.hasNext()) {
+                ArmorStand entry = iterator.next();
+
+                if (!entry.isValid()) {
+                    iterator.remove();
+                    continue;
+                }
+
+                PersistentDataContainer pdc = entry.getPersistentDataContainer();
+
+                if (!pdc.has(highlightKey)) {
+                    iterator.remove();
+                    continue;
+                }
+
+                if (pdc.getOrDefault(highlightKey, PersistentDataType.LONG, 0L) <= entry.getWorld().getGameTime()) {
+                    iterator.remove();
+                    removeHighlight(entry);
+                }
+            }
+        }, 0, 1L);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -228,6 +267,26 @@ public class PlayerEditorManager implements Listener {
                 editor.sendMessage("nodoubletarget", "warn");
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEntityAdded(EntityAddToWorldEvent event) {
+        if (!(event.getEntity() instanceof ArmorStand armorStand)) {
+            return;
+        }
+
+        if (armorStand.getPersistentDataContainer().has(highlightKey)) {
+            highlights.add(armorStand);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEntityRemoved(EntityRemoveFromWorldEvent event) {
+        if (!(event.getEntity() instanceof ArmorStand armorStand)) {
+            return;
+        }
+
+        highlights.remove(armorStand);
     }
 
     private List<ArmorStand> getTargets(Player player) {
@@ -448,6 +507,21 @@ public class PlayerEditorManager implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     void onPlayerLogOut(PlayerQuitEvent e) {
         removePlayerEditor(e.getPlayer().getUniqueId());
+    }
+
+    void highlight(ArmorStand armorStand) {
+        armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 1, false, false));
+
+        // Handle removing glow if armor stands ticking is disabled
+        long highlightEndTime = armorStand.getWorld().getGameTime() + 100L;
+        armorStand.getPersistentDataContainer().set(highlightKey, PersistentDataType.LONG, highlightEndTime);
+        highlights.add(armorStand);
+    }
+
+    void removeHighlight(ArmorStand armorStand) {
+        armorStand.removePotionEffect(PotionEffectType.GLOWING);
+        armorStand.getPersistentDataContainer().remove(highlightKey);
+        highlights.remove(armorStand);
     }
 
     public PlayerEditor getPlayerEditor(UUID uuid) {

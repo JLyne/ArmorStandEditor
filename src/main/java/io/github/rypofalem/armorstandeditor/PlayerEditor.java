@@ -42,8 +42,6 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.EulerAngle;
 import org.jetbrains.annotations.NotNull;
@@ -436,7 +434,7 @@ public final class PlayerEditor {
 
             if (team != null) {
                 team.removeEntry(armorStandID.toString());
-                armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 50, 1, false, false)); //300 Ticks = 15 seconds
+                getManager().highlight(armorStand);
             }
             sendMessage("enabledslots", null);
         } else {
@@ -448,7 +446,7 @@ public final class PlayerEditor {
             getPlayer().playSound(getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1.0f, 1.0f);
             if (team != null) {
                 team.addEntry(armorStandID.toString());
-                armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 50, 1, false, false)); //300 Ticks = 15 seconds
+                getManager().highlight(armorStand);
             }
             sendMessage("enabledslots", null);
         }
@@ -632,7 +630,7 @@ public final class PlayerEditor {
             if (e.isCancelled()) return;
 
             target = targetList.get(targetIndex);
-            highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
+            getManager().highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
             //      Otherwise, its unlocked and will display WHITE as its not in a team by default
 
         }
@@ -703,11 +701,6 @@ public final class PlayerEditor {
 
     void sendMessage(String path, String option) {
         sendMessage(path, "info", option);
-    }
-
-    private void highlight(ArmorStand armorStand) {
-        armorStand.removePotionEffect(PotionEffectType.GLOWING);
-        armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 50, 1, false, false)); //300 Ticks = 15 seconds
     }
 
     public PlayerEditorManager getManager() {
