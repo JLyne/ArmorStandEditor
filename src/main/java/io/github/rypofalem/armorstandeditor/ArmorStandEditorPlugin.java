@@ -35,6 +35,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +43,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.persistence.PersistentDataType;
@@ -52,7 +55,10 @@ import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -305,7 +311,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
         }
 
 		List<String> shape = getConfig().getStringList("toolRecipeShape");
-		Map<Character, Material> ingredients = new HashMap<>();
+		Map<Character, RecipeChoice> ingredients = new HashMap<>();
 		boolean recipeNotEmpty = false;
 
 		if(shape.isEmpty() || shape.size() > 3) {
@@ -334,13 +340,33 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 					throw new IllegalArgumentException("Missing recipe ingredient: " + c);
 				}
 
-				Material material = Material.matchMaterial(ingredient);
+				NamespacedKey key = NamespacedKey.fromString(ingredient);
 
-				if(material == null) {
+				if(key == null) {
 					throw new IllegalArgumentException("Invalid recipe ingredient for " + c + ": " + ingredient);
 				}
 
-				ingredients.put(c, material);
+				ItemType itemType = Registry.ITEM.get(key);
+
+				if(itemType == null) {
+					throw new IllegalArgumentException("Invalid recipe ingredient for " + c + ": " + ingredient);
+				}
+
+				RecipeChoice choice;
+
+				// Use Purpur's setPredicate when possible to exclude custom items from this and other plugins
+				// in crafting recipes
+				try {
+					choice = new RecipeChoice.ExactChoice(itemType.createItemStack());
+					Method setPredicate = choice.getClass().getMethod("setPredicate", Predicate.class);
+					Predicate<ItemStack> predicate = (ItemStack item) ->
+							item.getType().getKey().equals(itemType.key()) && item.getPersistentDataContainer().isEmpty();
+					setPredicate.invoke(choice, predicate);
+				} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+					choice = RecipeChoice.itemType(itemType);
+				}
+
+				ingredients.put(c, choice);
 			}
 		}
 
