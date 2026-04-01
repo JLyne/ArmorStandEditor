@@ -30,9 +30,9 @@ import io.papermc.paper.datacomponent.item.PotionContents;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionType;
 
@@ -92,56 +92,56 @@ public class Menu {
         ItemStack toggleVulnerabilty;
 
         //Slots with No Value
-        blankSlot = createIcon(ItemStack.of(Material.BLACK_STAINED_GLASS_PANE),
+        blankSlot = createIcon(ItemType.BLACK_STAINED_GLASS_PANE.createItemStack(),
             "blankslot", "");
 
         //Axis - X, Y, Z for Movement
-        xAxis = createIcon(ItemStack.of(Material.RED_CONCRETE),
+        xAxis = createIcon(ItemType.RED_CONCRETE.createItemStack(),
             "xaxis", "axis x");
 
-        yAxis = createIcon(ItemStack.of(Material.GREEN_CONCRETE),
+        yAxis = createIcon(ItemType.GREEN_CONCRETE.createItemStack(),
             "yaxis", "axis y");
 
-        zAxis = createIcon(ItemStack.of(Material.BLUE_CONCRETE),
+        zAxis = createIcon(ItemType.BLUE_CONCRETE.createItemStack(),
             "zaxis", "axis z");
 
         //Movement Speed
-        coarseAdj = createIcon(ItemStack.of(Material.COARSE_DIRT),
+        coarseAdj = createIcon(ItemType.COARSE_DIRT.createItemStack(),
             "coarseadj", "adjustment coarse");
 
-        fineAdj = createIcon(ItemStack.of(Material.SMOOTH_SANDSTONE),
+        fineAdj = createIcon(ItemType.SMOOTH_SANDSTONE.createItemStack(),
             "fineadj", "adjustment fine");
 
         //Reset Changes
-        reset = createIcon(ItemStack.of(Material.WATER_BUCKET),
+        reset = createIcon(ItemType.WATER_BUCKET.createItemStack(),
             "reset", "mode reset");
 
         //Which Part to Move
-        headPos = createIcon(ItemStack.of(Material.IRON_HELMET),
+        headPos = createIcon(ItemType.IRON_HELMET.createItemStack(),
             "head", "mode head");
 
-        bodyPos = createIcon(ItemStack.of(Material.IRON_CHESTPLATE),
+        bodyPos = createIcon(ItemType.IRON_CHESTPLATE.createItemStack(),
             "body", "mode body");
 
-        leftLegPos = createIcon(ItemStack.of(Material.IRON_LEGGINGS),
+        leftLegPos = createIcon(ItemType.IRON_LEGGINGS.createItemStack(),
             "leftleg", "mode leftleg");
 
-        rightLegPos = createIcon(ItemStack.of(Material.IRON_LEGGINGS),
+        rightLegPos = createIcon(ItemType.IRON_LEGGINGS.createItemStack(),
             "rightleg", "mode rightleg");
 
-        leftArmPos = createIcon(ItemStack.of(Material.STICK),
+        leftArmPos = createIcon(ItemType.STICK.createItemStack(),
             "leftarm", "mode leftarm");
 
-        rightArmPos = createIcon(ItemStack.of(Material.STICK),
+        rightArmPos = createIcon(ItemType.STICK.createItemStack(),
             "rightarm", "mode rightarm");
 
-        showArms = createIcon(ItemStack.of(Material.STICK),
+        showArms = createIcon(ItemType.STICK.createItemStack(),
             "showarms", "mode showarms");
 
-        presetItem = createIcon(ItemStack.of(Material.BOOKSHELF), "presetmenu", "mode preset");
+        presetItem = createIcon(ItemType.BOOKSHELF.createItemStack(), "presetmenu", "mode preset");
 
         if (EditMode.VISIBILITY.hasPermission(pe.getPlayer())) {
-            visibility = ItemStack.of(Material.POTION);
+            visibility = ItemType.POTION.createItemStack();
             visibility.setData(DataComponentTypes.POTION_CONTENTS,
                                PotionContents.potionContents().potion(PotionType.INVISIBILITY).build());
             createIcon(visibility, "invisible", "mode visibility");
@@ -150,104 +150,104 @@ public class Menu {
         }
 
         if (EditMode.ITEMFRAMEVISIBILITY.hasPermission(pe.getPlayer())) {
-            itemFrameVisible = ItemStack.of(Material.ITEM_FRAME);
+            itemFrameVisible = ItemType.ITEM_FRAME.createItemStack();
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframevisibility");
         } else {
             itemFrameVisible = blankSlot;
         }
 
         if (EditMode.ITEMFRAMEGLOW.hasPermission(pe.getPlayer())) {
-            itemFrameGlow = ItemStack.of(Material.GLOW_ITEM_FRAME);
+            itemFrameGlow = ItemType.GLOW_ITEM_FRAME.createItemStack();
             createIcon(itemFrameGlow, "itemframeglow", "mode itemframeglow");
         } else {
             itemFrameGlow = blankSlot;
         }
 
         if (EditMode.VULNERABILITY.hasPermission(pe.getPlayer())) {
-            toggleVulnerabilty = createIcon(ItemStack.of(Material.TOTEM_OF_UNDYING),
+            toggleVulnerabilty = createIcon(ItemType.TOTEM_OF_UNDYING.createItemStack(),
                 "vulnerability", "mode vulnerability");
         } else {
             toggleVulnerabilty = blankSlot;
         }
 
         if (EditMode.SIZE.hasPermission(pe.getPlayer())) {
-            size = createIcon(ItemStack.of(Material.PUFFERFISH),
+            size = createIcon(ItemType.PUFFERFISH.createItemStack(),
                 "size", "mode size");
         } else {
             size = blankSlot;
         }
 
         if (EditMode.DISABLESLOTS.hasPermission(pe.getPlayer())) {
-            disableSlots = createIcon(ItemStack.of(Material.BARRIER), "disableslots", "mode disableslots");
+            disableSlots = createIcon(ItemType.BARRIER.createItemStack(), "disableslots", "mode disableslots");
         } else {
             disableSlots = blankSlot;
         }
 
         if (EditMode.GRAVITY.hasPermission(pe.getPlayer())) {
-            gravity = createIcon(ItemStack.of(Material.SAND), "gravity", "mode gravity");
+            gravity = createIcon(ItemType.SAND.createItemStack(), "gravity", "mode gravity");
         } else {
             gravity = blankSlot;
         }
 
         if (EditMode.BASEPLATE.hasPermission(pe.getPlayer())) {
-            plate = createIcon(ItemStack.of(Material.SMOOTH_STONE_SLAB),
+            plate = createIcon(ItemType.SMOOTH_STONE_SLAB.createItemStack(),
                 "baseplate", "mode baseplate");
         } else {
             plate = blankSlot;
         }
 
         if (EditMode.PLACEMENT.hasPermission(pe.getPlayer())) {
-            place = createIcon(ItemStack.of(Material.RAIL),
+            place = createIcon(ItemType.RAIL.createItemStack(),
                 "placement", "mode placement");
         } else {
             place = blankSlot;
         }
 
         if (EditMode.ROTATE.hasPermission(pe.getPlayer())) {
-            rotate = createIcon(ItemStack.of(Material.COMPASS),
+            rotate = createIcon(ItemType.COMPASS.createItemStack(),
                 "rotate", "mode rotate");
         } else {
             rotate = blankSlot;
         }
 
         if (EditMode.EQUIPMENT.hasPermission(pe.getPlayer())) {
-            equipment = createIcon(ItemStack.of(Material.CHEST),
+            equipment = createIcon(ItemType.CHEST.createItemStack(),
                 "equipment", "mode equipment");
         } else {
             equipment = blankSlot;
         }
 
         if (EditMode.COPY.hasPermission(pe.getPlayer())) {
-            copy = createIcon(ItemStack.of(Material.FLOWER_BANNER_PATTERN),
+            copy = createIcon(ItemType.FLOWER_BANNER_PATTERN.createItemStack(),
                 "copy", "mode copy");
 
-            slot1 = createIcon(ItemStack.of(Material.BOOK),
+            slot1 = createIcon(ItemType.BOOK.createItemStack(),
                 "copyslot", "slot 1", "1");
 
-            slot2 = createIcon(ItemStack.of(Material.BOOK, 2),
+            slot2 = createIcon(ItemType.BOOK.createItemStack(2),
                 "copyslot", "slot 2", "2");
 
-            slot3 = createIcon(ItemStack.of(Material.BOOK, 3),
+            slot3 = createIcon(ItemType.BOOK.createItemStack(3),
                 "copyslot", "slot 3", "3");
 
-            slot4 = createIcon(ItemStack.of(Material.BOOK, 4),
+            slot4 = createIcon(ItemType.BOOK.createItemStack(4),
                 "copyslot", "slot 4", "4");
         }
 
         if (EditMode.PASTE.hasPermission(pe.getPlayer())) {
-            paste = createIcon(ItemStack.of(Material.FEATHER),
+            paste = createIcon(ItemType.FEATHER.createItemStack(),
                 "paste", "mode paste");
         }
 
         if (EditMode.GLOW.hasPermission(pe.getPlayer())) {
-            glowing = createIcon(ItemStack.of(Material.GLOW_INK_SAC),
+            glowing = createIcon(ItemType.GLOW_INK_SAC.createItemStack(),
                 "armorstandglow",
                 "mode glow");
         } else {
             glowing = blankSlot;
         }
 
-        help = createIcon(ItemStack.of(Material.NETHER_STAR), "helpgui", "help");
+        help = createIcon(ItemType.NETHER_STAR.createItemStack(), "helpgui", "help");
 
         ItemStack[] items = {
             help, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, itemFrameVisible, itemFrameGlow,

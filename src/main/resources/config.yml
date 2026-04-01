@@ -23,7 +23,7 @@ allowed-worlds:
 
 #----------- TOOL SETTINGS
 
-#Name of the edit tool's item Material.
+#Name of the edit tool's item type.
 toolMaterial: minecraft:flint
 
 #Whether edit tools should be managed solely by the plugin instead of the above material check.

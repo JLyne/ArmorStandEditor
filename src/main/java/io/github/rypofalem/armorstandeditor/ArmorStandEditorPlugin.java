@@ -33,7 +33,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.World;
@@ -76,7 +75,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
     //Edit Tool
     private final NamespacedKey editToolKey = new NamespacedKey(this, "edit_tool");
     private final NamespacedKey recipeKey = new NamespacedKey(this, "edit_tool");
-    private Material editToolMaterial;
+    private ItemType editToolItemType;
     private ItemStack editTool;
     private boolean pluginManagedEditTool;
 
@@ -257,22 +256,27 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
     }
 
     private void initEditTool() {
-        String toolMaterialName = getConfig().getString("toolMaterial", Material.FLINT.key().toString());
+        String toolItemTypeName = getConfig().getString("toolMaterial", ItemType.FLINT.key().toString());
 
         Component editToolItemName = getConfig().getRichMessage("toolItemName", null);
         List<Component> editToolLore = getConfig().getStringList("toolLore").stream()
                 .map(miniMessage::deserialize).toList();
 
         NamespacedKey editToolItemModel = NamespacedKey.fromString(getConfig().getString("toolItemModel", ""));
+		NamespacedKey key = NamespacedKey.fromString(toolItemTypeName);
 
-        Material editToolMaterial = Material.matchMaterial(toolMaterialName);
+		if(key == null) {
+			throw new IllegalArgumentException("Invalid type for edit tool: " + toolItemTypeName);
+		}
 
-        if(editToolMaterial == null || !editToolMaterial.isItem()) {
-            throw new IllegalArgumentException("Invalid material for edit tool " + toolMaterialName);
-        }
+		ItemType editToolItemType = Registry.ITEM.get(key);
 
-		this.editToolMaterial = editToolMaterial;
-        ItemStack editTool = ItemStack.of(editToolMaterial);
+		if(editToolItemType == null) {
+			throw new IllegalArgumentException("Invalid type for edit tool: " + toolItemTypeName);
+		}
+
+		this.editToolItemType = editToolItemType;
+        ItemStack editTool = editToolItemType.createItemStack();
 
         if (!pluginManagedEditTool) {
             return;
@@ -417,7 +421,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 
     public boolean isEditTool(ItemStack item) {
         if (!pluginManagedEditTool) {
-            return item != null && item.getType() == editToolMaterial;
+            return item != null && item.getType().asItemType() == editToolItemType;
         }
 
         return item != null && item.getPersistentDataContainer().has(editToolKey);

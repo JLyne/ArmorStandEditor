@@ -28,11 +28,11 @@ import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataType;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -61,18 +61,18 @@ public class EquipmentMenu {
         ItemStack leftHand = equipment.getItemInOffHand();
         equipment.clear();
         
-        ItemStack disabledIcon = ItemStack.of(Material.BARRIER);
+        ItemStack disabledIcon = ItemType.BARRIER.createItemStack();
         disabledIcon.setData(DataComponentTypes.CUSTOM_NAME,
                              pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
         disabledIcon.editPersistentDataContainer(
                 pdc -> pdc.set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon")); // mark as icon)
 
-        ItemStack helmetIcon = createIcon(Material.LEATHER_HELMET, "helm");
-        ItemStack chestIcon = createIcon(Material.LEATHER_CHESTPLATE, "chest");
-        ItemStack pantsIcon = createIcon(Material.LEATHER_LEGGINGS, "pants");
-        ItemStack feetsiesIcon = createIcon(Material.LEATHER_BOOTS, "boots");
-        ItemStack rightHandIcon = createIcon(Material.WOODEN_SWORD, "rhand");
-        ItemStack leftHandIcon = createIcon(Material.SHIELD, "lhand");
+        ItemStack helmetIcon = createIcon(ItemType.LEATHER_HELMET, "helm");
+        ItemStack chestIcon = createIcon(ItemType.LEATHER_CHESTPLATE, "chest");
+        ItemStack pantsIcon = createIcon(ItemType.LEATHER_LEGGINGS, "pants");
+        ItemStack feetsiesIcon = createIcon(ItemType.LEATHER_BOOTS, "boots");
+        ItemStack rightHandIcon = createIcon(ItemType.WOODEN_SWORD, "rhand");
+        ItemStack leftHandIcon = createIcon(ItemType.SHIELD, "lhand");
         ItemStack[] items =
             {helmetIcon, chestIcon, pantsIcon, feetsiesIcon, rightHandIcon, leftHandIcon, disabledIcon, disabledIcon, disabledIcon,
                 helmet, chest, pants, feetsies, rightHand, leftHand, disabledIcon, disabledIcon, disabledIcon
@@ -80,8 +80,8 @@ public class EquipmentMenu {
         menuInv.setContents(items);
     }
 
-    private ItemStack createIcon(Material mat, String slot) {
-        ItemStack icon = ItemStack.of(mat);
+    private ItemStack createIcon(ItemType type, String slot) {
+        ItemStack icon = type.createItemStack();
 
         icon.editPersistentDataContainer(
                 pdc -> pdc.set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"));

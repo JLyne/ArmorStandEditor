@@ -29,12 +29,12 @@ import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.EulerAngle;
 
@@ -53,27 +53,28 @@ public class PresetArmorPosesMenu {
         menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
 
-    private void fillInventory() {
+    @SuppressWarnings("UnstableApiUsage")
+	private void fillInventory() {
         menuInv.clear();
 
         //Blank Slots
-        ItemStack blank = createIcon(ItemStack.of(Material.BLACK_STAINED_GLASS_PANE), "blankslot");
+        ItemStack blank = createIcon(ItemType.BLACK_STAINED_GLASS_PANE.createItemStack(), "blankslot");
 
         //Presets -- Here to test things out, will get better names soon TM
-        ItemStack sitting = createIcon(ItemStack.of(Material.ARMOR_STAND), "sitting");
-        ItemStack waving = createIcon(ItemStack.of(Material.ARMOR_STAND, 2), "waving");
-        ItemStack greet1 = createIcon(ItemStack.of(Material.ARMOR_STAND, 3), "greeting 1");
-        ItemStack greet2 = createIcon(ItemStack.of(Material.ARMOR_STAND, 4), "greeting 2");
-        ItemStack cheer = createIcon(ItemStack.of(Material.ARMOR_STAND, 5), "cheers");
-        ItemStack archer = createIcon(ItemStack.of(Material.ARMOR_STAND, 6), "archer");
-        ItemStack dancing = createIcon(ItemStack.of(Material.ARMOR_STAND, 7), "dancing");
-        ItemStack hanging = createIcon(ItemStack.of(Material.ARMOR_STAND, 8), "hanging");
-        ItemStack present = createIcon(ItemStack.of(Material.ARMOR_STAND, 9), "present");
-        ItemStack fishing = createIcon(ItemStack.of(Material.ARMOR_STAND, 10), "fishing");
+        ItemStack sitting = createIcon(ItemType.ARMOR_STAND.createItemStack(), "sitting");
+        ItemStack waving = createIcon(ItemType.ARMOR_STAND.createItemStack(2), "waving");
+        ItemStack greet1 = createIcon(ItemType.ARMOR_STAND.createItemStack(3), "greeting 1");
+        ItemStack greet2 = createIcon(ItemType.ARMOR_STAND.createItemStack(4), "greeting 2");
+        ItemStack cheer = createIcon(ItemType.ARMOR_STAND.createItemStack(5), "cheers");
+        ItemStack archer = createIcon(ItemType.ARMOR_STAND.createItemStack(6), "archer");
+        ItemStack dancing = createIcon(ItemType.ARMOR_STAND.createItemStack(7), "dancing");
+        ItemStack hanging = createIcon(ItemType.ARMOR_STAND.createItemStack(8), "hanging");
+        ItemStack present = createIcon(ItemType.ARMOR_STAND.createItemStack(9), "present");
+        ItemStack fishing = createIcon(ItemType.ARMOR_STAND.createItemStack(10), "fishing");
 
         //Utilities
-        ItemStack backToMenu = createIcon(ItemStack.of(Material.RED_WOOL), "backtomenu");
-        ItemStack howToPreset = createIcon(ItemStack.of(Material.BOOK), "howtopreset");
+        ItemStack backToMenu = createIcon(ItemType.RED_WOOL.createItemStack(), "backtomenu");
+        ItemStack howToPreset = createIcon(ItemType.BOOK.createItemStack(), "howtopreset");
 
         //Build for the Menu ---- DO NOT MODIFY THIS UNLESS YOU KNOW WHAT YOU ARE DOING!
         ItemStack[] items = {
