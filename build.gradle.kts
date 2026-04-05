@@ -44,7 +44,7 @@ dependencies {
 
 paper {
     main = "io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin"
-    apiVersion = libs.versions.paperApi.get().replace(Regex("\\-R\\d.\\d-SNAPSHOT"), "")
+    apiVersion = libs.versions.paperApi.get().replace(".build.+", "")
     authors = listOf("Jim (AnEnragedPigeon)", "Wolfstorm", "DreiFxn", "Pinnkk", "Kugge", "Marfjeh", "miknes123",
         "rypofalem", "sekwah41", "Sikatsu1997", "Cool_boy", "sumdream", "Amaury Carrade", "nicuch", "kotarobo",
         "prettydude", "Jumpy91", "Niasio", "Patbox", "Puremin0rez", "Prof-Bloodstone", "PlanetTeamSpeak")
