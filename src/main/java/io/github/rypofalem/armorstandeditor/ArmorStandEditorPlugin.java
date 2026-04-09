@@ -96,6 +96,9 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 	final String lockedTeam = "ASLocked";
     final String inUseTeam = "AS-InUse";
 
+	//Blocked Names
+    List<String> blockedNames = new ArrayList<>();
+
     //Debugging Options.... Not Exposed
     private boolean debugFlag;
 
@@ -464,6 +467,8 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+
+		blockedNames = getConfig().getStringList("blocked-names");
 
         // Add Debug Reload
         debugFlag = getConfig().getBoolean("debugFlag", false);

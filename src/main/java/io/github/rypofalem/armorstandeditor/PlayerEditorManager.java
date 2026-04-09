@@ -60,6 +60,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText;
+
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
     private final NamespacedKey highlightKey;
@@ -344,6 +346,14 @@ public class PlayerEditorManager implements Listener {
     }
 
     boolean canEdit(Player player, Entity entity) {
+		// Check if the entity has a blocked name
+        if (entity.customName() != null) {
+            String name = plainText().serialize(entity.customName());
+            if (plugin.blockedNames.contains(name)) {
+                return false;
+            }
+        }
+
         return canMoveTo(player, entity.getLocation());
     }
 
