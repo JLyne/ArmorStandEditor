@@ -346,10 +346,10 @@ public class PlayerEditorManager implements Listener {
     }
 
     boolean canEdit(Player player, Entity entity) {
-		// Check if the entity has a blocked name
-        if (entity.customName() != null) {
+        // Check if the entity has a blocked name
+        if(entity.customName() != null && plugin.enableBlockedNames) {
             String name = plainText().serialize(entity.customName());
-            if (plugin.blockedNames.contains(name)) {
+            if (plugin.blockedNames.stream().anyMatch(name::equalsIgnoreCase)) {
                 return false;
             }
         }

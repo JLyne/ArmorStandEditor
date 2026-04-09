@@ -96,7 +96,8 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 	final String lockedTeam = "ASLocked";
     final String inUseTeam = "AS-InUse";
 
-	//Blocked Names
+    //Blocked Names
+    boolean enableBlockedNames = false;
     List<String> blockedNames = new ArrayList<>();
 
     //Debugging Options.... Not Exposed
@@ -468,7 +469,16 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 
-		blockedNames = getConfig().getStringList("blocked-names");
+		enableBlockedNames = getConfig().getBoolean("enableBlockedNames", true);
+        if(enableBlockedNames){
+            blockedNames = getConfig().getStringList("blocked-names");
+            if (!blockedNames.isEmpty()) {
+                getLogger().info("Blocked Names Enabled. The following names are blocked from being used on Armor Stands:");
+                for (String name : blockedNames) {
+                    getLogger().info("- " + name);
+                }
+            }
+        }
 
         // Add Debug Reload
         debugFlag = getConfig().getBoolean("debugFlag", false);
