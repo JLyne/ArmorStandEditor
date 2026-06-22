@@ -158,3 +158,11 @@ tasks {
         options.encoding = "UTF-8"
     }
 }
+
+// Required until IntellectualSites BOM updates
+configurations.all {
+    resolutionStrategy {
+        force("com.google.guava:guava:33.6.0-jre")
+        force("com.google.code.gson:gson:2.14.0")
+    }
+}
