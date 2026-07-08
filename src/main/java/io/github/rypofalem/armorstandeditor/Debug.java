@@ -11,6 +11,6 @@ public class Debug {
     public void log(String msg) {
 		boolean debugTurnedOn = plugin.isDebug();
         if (!debugTurnedOn) return;
-        plugin.getLogger().fine(msg);
+        plugin.getLogger().info(msg);
     }
 }
