@@ -52,10 +52,8 @@ import java.util.UUID;
 public final class PlayerEditor {
     public final ArmorStandEditorPlugin plugin;
     private final Debug debug;
-    private Team team;
     private final UUID uuid;
     public UUID armorStandInUseId;
-    private UUID armorStandID;
     private EditMode eMode;
     private AdjustmentMode adjMode;
     private final CopySlots copySlots;
@@ -238,10 +236,8 @@ public final class PlayerEditor {
         // Dont allow Editing the ArmorStand if the Stand is on the AS-InUse Team
         // Means No 2 Players can edit the Equipment at the same time
         if(!plugin.hasFolia){
-            team = plugin.scoreboard.getTeam(plugin.inUseTeam);
+            Team team = plugin.scoreboard.getTeam(plugin.inUseTeam);
             armorStandInUseId = armorStand.getUniqueId();
-    
-            debug.log("Is ArmorStand currently in use by another player?: " + team.hasEntry(armorStandInUseId.toString()));
     
             if(team != null && !team.hasEntry(armorStandInUseId.toString())){
                 debug.log("ArmorStand Not on a Team and Player '" + getPlayer().getName() + "' has triggered to Open the Equipment Menu, Adding to In Use Team");
@@ -396,6 +392,13 @@ public final class PlayerEditor {
         armorStand.setBasePlate(data.basePlate);
         armorStand.setArms(data.showArms);
         armorStand.setVisible(data.visible);
+        armorStand.setInvulnerable(data.invulnerable);
+        
+        if (data.locked) {
+            disableSlots(armorStand);
+        } else {
+            enableSlots(armorStand);
+        }
 
         //Only Paste the Items on the stand if in Creative Mode
         // - Do not run elsewhere for good fecking reason!
@@ -421,34 +424,75 @@ public final class PlayerEditor {
     }
 
     private void toggleDisableSlots(ArmorStand armorStand) {
-        debug.log("Adding DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
         if (armorStand.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING)) { //Adds a lock to every slot or removes it
-            team = Util.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
-            armorStandID = armorStand.getUniqueId();
-
-            for (final EquipmentSlot slot : EquipmentSlot.values()) { // UNLOCKED
-                armorStand.removeEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING);
-                armorStand.removeEquipmentLock(slot, ArmorStand.LockType.ADDING);
-            }
-            getPlayer().playSound(getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
-
-            if (team != null) {
-                team.removeEntry(armorStandID.toString());
-                getManager().highlight(armorStand);
-            }
+            enableSlots(armorStand);
             sendMessage("enabledslots", null);
         } else {
-            debug.log("Removing DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
-            for (final EquipmentSlot slot : EquipmentSlot.values()) { //LOCKED
-                armorStand.addEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING);
-                armorStand.addEquipmentLock(slot, ArmorStand.LockType.ADDING);
+            disableSlots(armorStand);
+            sendMessage("disabledslots", null);
+        }
+    }
+    
+    private void enableSlots(ArmorStand armorStand) {
+        debug.log("Removing DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
+        Team team = Util.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
+        boolean changed = false;
+
+        for (final EquipmentSlot slot : EquipmentSlot.values()) { // UNLOCKED
+            if (armorStand.hasEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING)) {
+                armorStand.removeEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING);
+                changed = true;
             }
-            getPlayer().playSound(getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            if (team != null) {
-                team.addEntry(armorStandID.toString());
+            
+            if (armorStand.hasEquipmentLock(slot, ArmorStand.LockType.ADDING)) {
+                armorStand.removeEquipmentLock(slot, ArmorStand.LockType.ADDING);
+                changed = true;
+            }
+        }
+        
+        if (changed) {
+            getPlayer().playSound(getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        }
+        
+        if (team != null) {
+            team.removeEntry(armorStand.getUniqueId().toString());
+            
+            if (changed) {
                 getManager().highlight(armorStand);
             }
-            sendMessage("enabledslots", null);
+        }
+    }
+    
+    private void disableSlots(ArmorStand armorStand) {
+        debug.log("Adding DisabledSlots on ArmorStand near the Player " + getPlayer().getName());
+        Team team = Util.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
+        boolean changed = false;
+         
+        for (final EquipmentSlot slot : EquipmentSlot.values()) { //LOCKED
+            if (!armorStand.hasEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING)) {
+                armorStand.addEquipmentLock(slot, ArmorStand.LockType.REMOVING_OR_CHANGING);
+                changed = true;
+            }
+            
+            if (!armorStand.hasEquipmentLock(slot, ArmorStand.LockType.ADDING)) {
+                armorStand.addEquipmentLock(slot, ArmorStand.LockType.ADDING);
+                changed = true;
+            }
+        }
+        
+        if (changed) {
+            getPlayer().playSound(getPlayer().getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1.0f,
+                                  1.0f);
+        }
+
+        UUID uuid = armorStand.getUniqueId();
+        
+        if (team != null) {
+            team.addEntry(uuid.toString());
+            
+            if (changed) {
+                getManager().highlight(armorStand);
+            }
         }
     }
 

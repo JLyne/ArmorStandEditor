@@ -21,12 +21,13 @@ package io.github.rypofalem.armorstandeditor.modes;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
 public class ArmorStandData {
     public final EulerAngle headPos, leftArmPos, rightArmPos, bodyPos, leftLegPos, rightLegPos;
-    public final boolean visible, basePlate, gravity, showArms;
+    public final boolean visible, basePlate, gravity, showArms, invulnerable, locked;
     public final ItemStack head, body, legs, feetsies, rightHand, leftHand;
     public final double attributeScale;
 
@@ -42,6 +43,8 @@ public class ArmorStandData {
         this.gravity = as.hasGravity();
         this.showArms = as.hasArms();
         this.visible = as.isVisible();
+        this.invulnerable = as.isInvulnerable();
+        this.locked = as.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING);
 
         //Fix for Depreciate Armor Stand STuff
         this.head = as.getEquipment().getHelmet();
