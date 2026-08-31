@@ -54,10 +54,11 @@ import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -360,21 +361,11 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
 					throw new IllegalArgumentException("Invalid recipe ingredient for " + c + ": " + ingredient);
 				}
 
-				RecipeChoice choice;
-
-				// Use Purpur's setPredicate when possible to exclude custom items from this and other plugins
-				// in crafting recipes
-				try {
-					choice = new RecipeChoice.ExactChoice(itemType.createItemStack());
-					Method setPredicate = choice.getClass().getMethod("setPredicate", Predicate.class);
-					Predicate<ItemStack> predicate = (ItemStack item) ->
-							item.getType().getKey().equals(itemType.key()) && item.getPersistentDataContainer().isEmpty();
-					setPredicate.invoke(choice, predicate);
-				} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-					choice = RecipeChoice.itemType(itemType);
-				}
-
-				ingredients.put(c, choice);
+				// Exclude items with custom data which likely belong to other plugins
+				ingredients.put(c,  RecipeChoice.predicateChoice(
+						(ItemStack item) -> item.getType().getKey().equals(itemType.key()) 
+								&& item.getPersistentDataContainer().isEmpty(), 
+						itemType.createItemStack()));
 			}
 		}
 
