@@ -87,7 +87,6 @@ public class PresetArmorPosesMenu {
         menuInv.setContents(items);
     }
 
-    @SuppressWarnings("UnstableApiUsage")
 	private ItemStack createIcon(ItemStack icon, String path) {
         icon.setData(DataComponentTypes.CUSTOM_NAME, getIconName(path));
         icon.editPersistentDataContainer(

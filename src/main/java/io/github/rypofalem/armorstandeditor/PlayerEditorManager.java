@@ -178,22 +178,7 @@ public class PlayerEditorManager implements Listener {
                 event.setCancelled(true);
                 applyRightTool(player, armorStand);
             }
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    void onEntityInteract(PlayerInteractEntityEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND) {
-            return;
-        }
-
-        Player player = event.getPlayer();
-
-        if (player.isSneaking()) {
-            return;
-        }
-
-        if (event.getRightClicked() instanceof ItemFrame itemFrame) {
+        } else if (event.getRightClicked() instanceof ItemFrame itemFrame) {
 			if (!canEdit(player, itemFrame)) {
                 return;
             }
@@ -401,7 +386,7 @@ public class PlayerEditorManager implements Listener {
             return;
         }
 
-        if (plugin.enablePerWorld && (!plugin.allowedWorldList.contains(player.getWorld().getName()))) {
+        if (plugin.enablePerWorld && (!plugin.allowedWorldList.contains(player.getWorld().getKey()))) {
             //Implementation for Per World ASE
             getPlayerEditor(player.getUniqueId()).sendMessage("notincorrectworld", "warn");
             e.setCancelled(true);

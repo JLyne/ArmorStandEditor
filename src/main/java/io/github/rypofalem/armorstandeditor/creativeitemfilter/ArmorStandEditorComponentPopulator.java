@@ -13,7 +13,6 @@ public class ArmorStandEditorComponentPopulator implements ItemComponentPopulato
 		this.plugin = plugin;
 	}
 
-	@SuppressWarnings("UnstableApiUsage")
 	public void populateComponents(@NotNull ItemStack oldItem, @NotNull ItemStack newItem,
 								   CreativeItemFilterConfiguration creativeItemFilterConfiguration) {
 		if(!plugin.isEditTool(oldItem)) {

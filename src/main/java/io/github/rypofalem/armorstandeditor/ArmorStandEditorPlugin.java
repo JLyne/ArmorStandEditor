@@ -159,7 +159,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
         if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
             if (allowedWorldList != null && allowedWorldList.getFirst().equals("*")) {
-                allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+                allowedWorldList = getServer().getWorlds().stream().map(World::getKey).toList();
             }
         }
 
@@ -453,7 +453,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin implements Listener
         if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
             if (allowedWorldList != null && allowedWorldList.getFirst().equals("*")) {
-                allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+                allowedWorldList = getServer().getWorlds().stream().map(World::getKey).toList();
             }
         }
 

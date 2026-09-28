@@ -265,7 +265,6 @@ public class Menu {
         return createIcon(icon, path, command, null);
     }
 
-    @SuppressWarnings("UnstableApiUsage")
 	private ItemStack createIcon(ItemStack icon, String path, String command, String option) {
         if (!command.isEmpty()) {
             icon.editPersistentDataContainer(
