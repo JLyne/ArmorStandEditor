@@ -9,7 +9,7 @@ creativeItemFilter = "3.0-SNAPSHOT"
 
 [libraries]
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
-griefPrevention = { group = "com.github.TechFortress", name = "GriefPrevention", version.ref  = "griefPrevention" }
+griefPrevention = { group = "com.github.GriefPrevention", name = "GriefPrevention", version.ref  = "griefPrevention" }
 worldguard =  { group = "com.sk89q.worldguard", name = "worldguard-bukkit", version.ref  = "worldguard" }
 customItems =  { group = "uk.co.notnull", name = "CustomItemsAPI", version.ref  = "customItems" }
 plotsquaredCore = { group = "com.intellectualsites.plotsquared", name = "plotsquared-core" }
